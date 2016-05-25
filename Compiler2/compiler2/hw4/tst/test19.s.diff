@@ -1,0 +1,6 @@
+18,19c18,19
+< 	movq $0,%r10
+< 	cmpq %r10,%rbx
+---
+> 	movq $0,%r11
+> 	cmpq %r11,%rbx

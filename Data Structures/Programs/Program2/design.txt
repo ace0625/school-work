@@ -1,0 +1,47 @@
+//CS163
+//Assignment #2
+//Design write up
+//Hyunchan Kim
+
+The first design issue was how to separate the program into manageable parts
+that could be maintained and developed separately. I made the decision to
+separate two classes, queue and stack. Queue manages the line people waiting for 
+their food. When an order comes in, enqueue is implemented, and when an order is paid,
+dequeue is implemented. Stacks manages statistics of average waiting time and total 
+waiting time. The base data is managed in service class which creates an order,
+copy, display, and so on.
+Next, I needed a way for these separate parts to communicate between each other,
+most notably the communication between the service, queeue and stack had to be handled. 
+This was solved by using node structures for each, queue noed and stack node.They fairly
+well communicate each other giving and receiving information. And also, the main parts
+adding a wating line(a customer), removing a wating line, adding a waiting time(stack push)
+, and removing a waiting time(stack pop) work well. The information is based on the service 
+class that has basic functions from creating a service to displaying. 
+I actually tried to use 'cart' class. However, I decided not to implement this class, 
+because even though the class would substantially clean up, I felt that implementing it
+would make too many presumptions on how the user would eventually implement the program.
+It is true I could've further implemented setter methods for this
+class to provide the user with a way to manipulate and their specifications, but realistically 
+I was running out of time to implement this extra layer of abstraction.
+The data structure chosen for the queue(order line), performed 
+very well, but there was no real reason for it to be a circular linked list. 
+A linear linked list with a tail pointer could've accomplished much the 
+same thing. I do not believe another data structure would work any better for a
+queue. 
+The data structure for the stack(dealing with statistics), peformed adequately. 
+It seems to me though that a Linear linked list of arrays doesn't offer much
+benefit in this situation, especially when dealing with such small array sizes. 
+A Linear Linked list where we add/remove at the head might've been better
+suited.
+One good design decision in efficiency for this program is that I've started to 
+implement more functions that specialize in doing one thing. This ultimately 
+leads to easier readability and debugging. 
+One thing that was inefficient about this service is the stack function. It was
+hard to manage statistics and waiting line simultaneously.  
+If I had more time, I would probably more focus on the stack functions. 
+It occured to me later in the process of designing how inefficient is was 
+that I was deleting and allocating new memory as I passed values between classes. 
+This was one of the problems. I could make more efficient memory data.
+
+
+

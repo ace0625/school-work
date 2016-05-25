@@ -1,0 +1,10 @@
+//CS201
+//Hw#6, P8.10
+//Hyunchan kim
+
+A. Called once, returns twice - fork() :(the fork function is called once by the parent, but it returns twice.
+				once to the parent and once to the newly created child.
+
+B. Called once, never returns - longjmp :  
+
+C. Called once, returns one or more times - setjmp

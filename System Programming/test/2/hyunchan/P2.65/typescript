@@ -1,0 +1,27 @@
+Script started on Tue 21 Jan 2014 10:12:33 AM PST
+hyunchan@royal:~/cs201/hyunchan/P2.65$ make
+make: Nothing to be done for `all'.
+hyunchan@royal:~/cs201/hyunchan/P2.65$ a[K.a[K/a.out
+x = 2
+
+return 1
+hyunchan@royal:~/cs201/hyunchan/P2.65$ ./a.out
+x = 3
+
+return 0
+hyunchan@royal:~/cs201/hyunchan/P2.65$ ./a.out
+x = 4
+
+return 1
+hyunchan@royal:~/cs201/hyunchan/P2.65$ ./a.out
+x = 5
+
+return 0
+hyunchan@royal:~/cs201/hyunchan/P2.65$ ./a.out
+x = 16
+
+return 1
+hyunchan@royal:~/cs201/hyunchan/P2.65$ exit
+exit
+
+Script done on Tue 21 Jan 2014 10:13:01 AM PST

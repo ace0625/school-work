@@ -1,0 +1,4 @@
+#!/bin/bash
+tr B-Za-yAa A-Ya-yZz < $1 
+tr B-Za-yAa A-Ya-yZz < $2
+

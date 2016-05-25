@@ -1,0 +1,18 @@
+44,45c44,45
+< 	movq $0,%r10
+< 	cmpq %r10,%rax
+---
+> 	movq $0,%r11
+> 	cmpq %r11,%rax
+201,202c201,202
+< 	movq $10,%r10
+< 	cmpq %r10,%rbp
+---
+> 	movq $10,%r11
+> 	cmpq %r11,%rbp
+245,246c245,246
+< 	movq $10,%r10
+< 	cmpq %r10,%rbp
+---
+> 	movq $10,%r11
+> 	cmpq %r11,%rbp

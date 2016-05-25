@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Unop, inappropriate operand type: ! IntType
+---
+> Checker$TypeException: (In Unop) Bad operand type: ! IntType

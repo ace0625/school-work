@@ -1,0 +1,17 @@
+Script started on Tue 14 Jan 2014 10:52:10 AM PST
+hyunchan@yellow-eyed:~$ cd cs201/hyunchan/P2.55
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.55$ ls
+a.out  Makefile  P2.55(answers)  show-bytes  show-bytes.c  show-bytes.o
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.55$ make
+make: Nothing to be done for `all'.
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.55$ a[K.a[K/a.ou[K[Kout
+value is = 15213
+0x7ffffaaaa65c	 0x6d
+0x7ffffaaaa65d	 0x3b
+0x7ffffaaaa65e	 0x00
+0x7ffffaaaa65f	 0x00
+
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.55$ exit
+exit
+
+Script done on Tue 14 Jan 2014 10:52:57 AM PST

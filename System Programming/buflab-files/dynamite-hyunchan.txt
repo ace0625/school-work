@@ -1,0 +1,5 @@
+0000000000000000 <.text>:
+   0:   b8 b8 06 6e 17          mov    $0x176e06b8,%eax
+   5:   bd f0 5f 68 55          mov    $0x55685ff0,%ebp
+   a:   68 d5 8d 04 08          pushq  $0x8048dd5
+   f:   c3                      retq

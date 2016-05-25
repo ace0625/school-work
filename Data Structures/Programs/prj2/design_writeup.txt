@@ -1,0 +1,68 @@
+//CS163
+//Assignment #2
+//Design write up
+//Hyunchan Kim
+
+
+1) What functions your ADT will need to have
+2) How each function will report success/failure back to the calling routine
+3) How each function will shield the client program from the details of the data structure
+4) What data structures you will be using and how each of the special cases. Consider
+ drawing pointer diagrams with “before” and “after” diagrams for each special case.
+5) Include a “test plan”, which outlines each test case and the expected outcomes.
+
+For this program 2, we will basically need three abstract data types which are 
+a linear linked list, a queue, and a stack. First, the linear linked list shows the entire
+information of proddcts (product description, barcode, manufacturer, and quantity)
+in the warehouse. The information comes from an external data file. 
+Secondly, the queue abstract data type show the list you ordered. You can add an order with
+enqueue function and dequeue when the order list is processed by the warehouse. And there is
+a peek function that displays the next order. 
+Lastly, the stack abstract data type keep products stacked in the case of when it's out of
+stock or other issues. You can use push and pop to add and remove the list. And also, there
+is a peek function that presents the recent order at the top of the stack. 
+About the design, there will be three classes which are ordered_list, queue, and stack 
+that could be maintained and developed separately. Ordered list will read in an external file
+and make a linear linked list. And also, displays all the information it has. 
+Queue will have functions enqueue to add an order to the list, dequeue to delete an order 
+from the list, peek to retrieve an order at the front at the list, and display to present 
+all products ordered in the list implementations. Stack will have functions push to add an order
+at the top of the list, pop top remove an order from the list, peek to display the order at 
+the top of the list, and display top show all lists implementations.
+The data structure for the stack(dealing with prodcuts that are not proceeded yet),
+peformed adequately. It seems to me though that linear linked list and stack should be 
+managed together. 
+For the ordered list desgined with linear linked list, I will challenge to use doubly linked
+list. I think it is quite confusing to develope first but it is really good to manage many 
+products. 
+As using linear linked list, the client program will be covered. Users will not be able to know how the data is dealt with
+or what the data structure is implemented.
+Here is a brief ADT algorithm explanation for this program.
+
+- If passed in a new data, determine the address of the data which in the context of this program is 
+the amount of traversal and the array index that is needed to access the next newest piece of data. 
+If a new node is necessary, append one to the end of the linear linked list that holds the nodes. And access 
+the address location and copy the passed data into the already existsing structure.
+
+- If passed a display all command, go through all of the currently existing data. If a cycled data member is valid,
+output it to the screen.
+
+-If passed in a remove request, make sure the numnber is within valid terms, not below zero, not above the current 
+number of data. Then, find the location of the data to be removed. Set the valid boolean to false, 
+indicating that is no longer valid data
+
+- If passed in peek function, recieve passed product name, go to the matching address, 
+and copy the data into the recieved structure.
+
+-If asked to delete all, run code that is similar to the destructor, to deallocate memory.
+append a node to the end so that the ADT is ready to recieve more data
+
+
+	
+	
+	
+	
+
+
+
+

@@ -1,0 +1,36 @@
+RegExp
+  isAbstract=true
+  Args
+  Methods
+  Classes
+    Epsilon
+      isAbstract=false
+      Args
+      Methods
+      Classes
+    Char
+      isAbstract=false
+      Args
+        private int c
+      Methods
+      Classes
+    Alt
+      isAbstract=false
+      Args
+        private RegExp r1
+        private RegExp r2
+      Methods
+      Classes
+    Rep
+      isAbstract=false
+      Args
+        private RegExp r
+      Methods
+      Classes
+    Seq
+      isAbstract=false
+      Args
+        private RegExp r1
+        private RegExp r2
+      Methods
+      Classes

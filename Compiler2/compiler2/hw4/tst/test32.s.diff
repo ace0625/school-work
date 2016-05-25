@@ -1,0 +1,6 @@
+11,12c11,12
+< 	movq $1,%r10
+< 	cmpq %r10,%rdi
+---
+> 	movq $1,%r11
+> 	cmpq %r11,%rdi

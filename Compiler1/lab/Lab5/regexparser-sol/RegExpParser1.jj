@@ -1,0 +1,39 @@
+//-- Define a program that consumes tokens: ----------------------------------
+
+PARSER_BEGIN(RegExpParser1)
+
+public class RegExpParser1 {
+  public static void main(String args[]) throws ParseException {
+      new RegExpParser1(System.in);  // Read from standard input
+      Top();
+      System.out.println("Input syntax is valid");
+  }
+}
+
+PARSER_END(RegExpParser1)
+
+//-- Define the grammatical rules of the input language: ---------------------
+
+void Top() : { } {
+  R() <EOF>
+}
+
+void R() : { } {
+   ( "%"
+   | <LETTER>
+   | R() "|" R()
+   | R() R()
+   | R() "*"
+   | "(" R() ")" )
+}
+
+//-- Define the lexical structure of an input language: ----------------------
+
+// Input elements that should be ignored/skipped:
+SKIP : { " " | "\t" | "\n" | "\r" }
+
+// Lexemes that should be reported as valid tokens:
+TOKEN : {
+ <LETTER : ["a"-"z"]>
+}
+

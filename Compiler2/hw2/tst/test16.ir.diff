@@ -1,0 +1,14 @@
+7,8c7,8
+<  t3 = call _B_go(b)
+<  call _printInt(t3)
+---
+>  t1 = call _B_go(b)
+>  call _printInt(t1)
+12c12
+< _A-echo (obj, a)
+---
+> _A_echo (obj, a)
+17c17
+< _B-go (obj)
+---
+> _B_go (obj)

@@ -1,0 +1,39 @@
+Script started on Tue 14 Jan 2014 10:56:20 AM PST
+hyunchan@yellow-eyed:~$ exit./a.out[3Pmake[2Plscd cs201/hyunchan/P2.55[6Pnano show-bytes.ccd cs201/hyunchan/P2.55[K6
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.56$ ls
+a.out  Makefile  show-bytes  show-bytes.c  show-bytes.o
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.56$ make
+make: Nothing to be done for `all'.
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.56$ make[2Plscd cs201/hyunchan/P2.56exit[K./a.out[3Pmake[2Plsmake./a.out
+Enter a integer value(type 0 to exit): 123423
+value is = 123423
+0x7fff9fc39cdc	 0x1f
+0x7fff9fc39cdd	 0xe2
+0x7fff9fc39cde	 0x01
+0x7fff9fc39cdf	 0x00
+
+Enter a integer value(type 0 to exit): 999933
+value is = 999933
+0x7fff9fc39cdc	 0xfd
+0x7fff9fc39cdd	 0x41
+0x7fff9fc39cde	 0x0f
+0x7fff9fc39cdf	 0x00
+
+Enter a integer value(type 0 to exit): 345662
+value is = 345662
+0x7fff9fc39cdc	 0x3e
+0x7fff9fc39cdd	 0x46
+0x7fff9fc39cde	 0x05
+0x7fff9fc39cdf	 0x00
+
+Enter a integer value(type 0 to exit): 0
+value is = 0
+0x7fff9fc39cdc	 0x00
+0x7fff9fc39cdd	 0x00
+0x7fff9fc39cde	 0x00
+0x7fff9fc39cdf	 0x00
+
+hyunchan@yellow-eyed:~/cs201/hyunchan/P2.56$ xi[K[Kexit
+exit
+
+Script done on Tue 14 Jan 2014 10:56:56 AM PST

@@ -1,0 +1,12 @@
+//CS201
+//HW#6, P6.28
+//Hyunchan Kim
+
+// A. List all of the hex memory addresses that will hit in set 1.
+ - Set 1 has 0x45 tag and 4bytes each. The addresses on line 0 are 0000 1000 1010 01xx -> 
+   0x08A4, 0x08A5, 0x08A6, 0x08A7. Likewise The aadresses on line 1 are 0000 0111 0000 01xx ->
+   0x0704, 0x0705, 0x0706, 0xo707
+
+// B. List all of the hex memory addresses that will hit in set 6.
+ - Set 6 has  0x91 tag on line 1. The addresses on line 1 are 
+   0001 0010 0011 10xx -> 0x1238, 0x1239, 0x123A, 0x123B

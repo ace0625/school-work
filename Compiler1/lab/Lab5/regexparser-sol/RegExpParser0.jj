@@ -1,0 +1,32 @@
+//-- Define a program that consumes tokens: ----------------------------------
+
+PARSER_BEGIN(RegExpParser0)
+
+public class RegExpParser0 {
+  public static void main(String args[]) throws ParseException {
+      new RegExpParser0(System.in);  // Read from standard input
+      while (getNextToken().kind!=EOF) {
+          System.out.println("Token kind is " + token.kind +
+                             ", image is " + token.image);
+      }
+      System.out.println("Last token has been read");
+  }
+}
+
+PARSER_END(RegExpParser0)
+
+//-- Define the lexical structure of an input language: ----------------------
+
+// Input elements that should be ignored/skipped:
+SKIP : { " " | "\t" | "\n" | "\r" }
+
+// Lexemes that should be reported as valid tokens:
+TOKEN : {
+  <EMPTY  : "%">
+| <OPEN   : "(">
+| <CLOSE  : ")">
+| <ALT    : "|">
+| <STAR   : "*">
+| <LETTER : ["a"-"z"]>
+}
+

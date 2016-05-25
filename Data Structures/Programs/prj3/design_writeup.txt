@@ -1,0 +1,78 @@
+// CS163
+// Program #3
+// Hyunchan Kim
+
+==>> Design Write_up
+==>> Program #3 
+
+1) What functions your ADT will need to have
+2) How each function will report success/failure back to the calling routine
+3) How each function will shield the client program from the details of the data structure
+4) What data structures you will be using and how each of the special cases. Consider
+ drawing pointer diagrams with “before” and “after” diagrams for each special case.
+5) Include a “test plan”, which outlines each test case and the expected outcomes.
+
+
+In this program, the design is based on three class files including main file. 
+One class was mainly responsible for handling the news items and operations 
+on one info entry, hence, the info_entry class. Next, I implemented a hash table class 
+to take care of the hashing and importing and storing the list of data. 
+The main data structure performed vary for the task at hand. Each news item data was placed
+within its own linked list with a key value which is key word, and also for when searching by key word,
+that gave me instant access to a list already sorted by my key (key word). 
+One of the major tasks to this design was the traversal that was a result of
+chaining. 
+A different data structure might work depending on the number of entries or how the data would be 
+stored and used.  
+Given a large number of entries, the hash table that was used would prove to
+distribute the lists nicely. If a smaller number of entries were being dealt with,
+just a simple array may have been more than enough, as it would eliminate the
+need for traversal.
+The most important thing in this program would be dealing with hash key word. Key word could be more 
+than one for an application. Even if it could be many, I will set to have up to three key words. 
+I was not able to file more efficient way to do that and I was not sure how to take the 
+key words to store/retrieve so I happened to repeat it over and over again the 
+needed functions, at least by making it more runnable. 
+I also missed a step somewhere when validating something. Maybe it's a display
+function. When displayAll() outputs there is some garbage displayed. There's
+probably a simple answer to why this is happening. I might not be initializing
+everything right. Maybe I should be type checking before I output. 
+Just more checks all around are needed. 
+One thing I will manage about my data structure is the hashing function. 
+I found that it does a very effective job at randomly and evenly distributing 
+the data. Also, inputting the data, and setting the data into the activity
+objects, I feel that, even though it is not easy to design and somewhat I could make it not efficient,
+it does what you think it does. It's very easy to parse it, because it's very much the same
+thing happening over and over. It's horribly UN-DRY coding, but at the very
+least it's very readable. 
+
+
+Here is the rough data structure I will use for the prgram 3
+
+struct node
+{
+	info_entry entry;
+	node * next;
+};
+
+class table
+{
+public:
+	table(int size=5); //constructor	
+	~table(); //destructor
+	int hash(char key_value[]); //hash function
+	int insert(char * key_value, const info_entry & to_add); //inserting function
+	int retrieve_table(char * keyword_to_find, info_entry & found); //retrieve function
+	int display_all_table(); //display all data
+	
+private:
+	node ** hash_table;  //a dynamically allocated array of head pointers
+	int hash_table_size;
+
+};
+
+
+
+
+
+

@@ -1,0 +1,119 @@
+//CS163
+//Program #3
+//Hyunchan KIm
+
+
+<<Efficiency Write-up>>
+
+1) How well did the data structure selected perform for the assigned application? 
+2) Would a different data structure work better? If so, which one and why... 
+3) What was efficient about your design and use of the data structure? 
+4) What was not efficient? 
+5) What would you do differently if you had more time to solve the problem?
+6) Different table size
+
+In this program, the design is based on three class files including main file. 
+One class was mainly responsible for handling the news items and operations 
+on one info entry, hence, the info_entry class. Next, I implemented a hash table class 
+to take care of the hashing and importing and storing the list of data. 
+The main data structure performed vary for the task at hand. Each news item data was placed
+within its own linked list with a key value which is key word, and also for when searching by key word,
+that gave me instant access to a list already sorted by my key (key word). 
+One of the major tasks to this design was the traversal that was a result of
+chaining.  
+A different data structure might work depending on the number of entries or how the data would be 
+stored and used. Given a large number of entries, the hash table that was used would prove to
+distribute the lists nicely. If a smaller number of entries were being dealt with,
+just a simple array may have been more than enough, as it would eliminate the
+need for traversal.
+One major problem with my design would be dealing with key word. Key word could be more 
+than one for a post information. Even if it could be many, I first tried to set to have up 
+to three key words. However, I was not able to file more efficient way to do that and 
+I was not sure how to take the key words to store/retrieve so I happened to repeat it over 
+and over again the needed functions, at least by making it more runnable. 
+I also did not get the retrieve part perfectly right. My program retrieves the right posts that
+have only one key word. However, if there are more than one key words, it sometimes retrieves 
+wrong posts. I have no idea how to retrieve with two or three key words checking step by step.
+One thing I did like about my data structure was the hashing function I used. 
+I find that it does a very effective job at randomly and evenly distributing 
+the data. Also, inputting the data, and setting the data into the activity
+objects, I feel that, even though the code is a bit wordy and some not efficient,
+it does what you think it does. It's very easy to parse it, because it's very much the same
+thing happening over and over. It's horribly UN-DRY coding, but at the very
+least it's very readable. 
+If I had more time, I would try to have another hash table that managed by name who posted.
+Therefore, it would be more efficient to sort the posts by name. 
+And I would try something more in main to be more attractive and intuitive and generally more fleshed out. 
+ About the different size of hash function and performance, to avoid clustering of values into a small number of buckets, 
+hash table size uses a prime number. As I tried to use different size in this program I was not able to find big differences. 
+When I changed to inefficient hash function including multiflication for hash value,
+the result is surely different. Hash table size using a prime number is much efficence.
+Here are the some tests for different size of hash function and see the performance.
+
+//** Using efficient hash function
+for (int i = 0; i < keyLen; i++) {
+	temp = key_value[i];
+	sum += temp;
+}
+return sum % hash_table_size;
+
+* Hash Table Size: 10
+size of chain in hash_table[0]: 5
+size of chain in hash_table[1]: 3
+size of chain in hash_table[2]: 2
+size of chain in hash_table[3]: 8
+size of chain in hash_table[4]: 0
+size of chain in hash_table[5]: 5
+size of chain in hash_table[6]: 7
+size of chain in hash_table[7]: 3
+size of chain in hash_table[8]: 6
+size of chain in hash_table[9]: 8
+
+* Hash Table Size: 11
+size of chain in hash_table[0]: 3
+size of chain in hash_table[1]: 4
+size of chain in hash_table[2]: 8
+size of chain in hash_table[3]: 3
+size of chain in hash_table[4]: 1
+size of chain in hash_table[5]: 4
+size of chain in hash_table[6]: 5
+size of chain in hash_table[7]: 4
+size of chain in hash_table[8]: 6
+size of chain in hash_table[9]: 4
+size of chain in hash_table[10]: 4
+
+----------------------------------------------------
+//** Using inefficient hash function
+for (int i = 0; i < keyLen; i++) {
+	temp = key_value[i] * 2; // <<--- inefficient
+	sum += temp;
+}
+return sum % hash_table_size;
+
+* Hash Table Size: 10
+size of chain in hash_table[0]: 11
+size of chain in hash_table[1]: 0
+size of chain in hash_table[2]: 11
+size of chain in hash_table[3]: 0
+size of chain in hash_table[4]: 6
+size of chain in hash_table[5]: 0
+size of chain in hash_table[6]: 15
+size of chain in hash_table[7]: 0
+size of chain in hash_table[8]: 9
+size of chain in hash_table[9]: 0
+
+* Hash Table Size: 11
+size of chain in hash_table[0]: 3
+size of chain in hash_table[1]: 5
+size of chain in hash_table[2]: 4
+size of chain in hash_table[3]: 4
+size of chain in hash_table[4]: 8
+size of chain in hash_table[5]: 6
+size of chain in hash_table[6]: 3
+size of chain in hash_table[7]: 4
+size of chain in hash_table[8]: 1
+size of chain in hash_table[9]: 4
+
+
+
+

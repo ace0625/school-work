@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Binop, Operand types aren't matching: BoolType == IntType
+---
+> Checker$TypeException: (In Binop) Operand types don't match: BoolType == IntType

@@ -1,0 +1,52 @@
+//CS163
+//Review Write-up
+//Program #2
+//Hyunchan Kim
+
+
+
+1) How well did the data structure selected perform for the assigned application? 
+-> For this program 2, we will basically need three abstract data types which are a linear linked list, 
+a queue, and a stack. First, the linear linked list shows the entire information of products 
+(product description, barcode, manufacturer, and quantity) in the warehouse. 
+The information comes from an external data file. Secondly, the queue abstract data type show 
+the list you ordered. You can add an order with enqueue function and dequeue when the order list is 
+processed by the warehouse. And there is a peek function that displays the next order. Lastly, 
+the stack abstract data type keep products stacked in the case of when it's out of
+stock or other issues. You can use push and pop to add and remove the list. And also, there is a peek 
+function that presents the recent order at the top of the stack. About the design, there will be three 
+classes which are ordered_list, queue, and stack that could be maintained and developed separately. 
+Ordered list will read in an external file and make a linear linked list. And also, displays all the 
+information it has. Queue will have functions enqueue to add an order to the list, dequeue to delete an 
+order from the list, peek to retrieve an order at the front at the list, and display to present all products
+ordered in the list implementations. Stack will have functions push to add an order at the top of the list,
+pop top remove an order from the list, peek to display the order at the top of the list, and display top 
+show all lists implementations. The data structure for the stack(dealing with prodcuts that are not 
+proceeded yet), peformed adequately. It seems to me though that linear linked list and stack should be 
+managed together. For the ordered list desgined with linear linked list I think it is quite confusing to 
+develope first but it is really good to manage many products. As using linear linked list, the client program will be covered. Users will not be able to know how the data is dealt with
+or what the data structure is implemented.
+
+2) Would a different data structure work better? If so, which one and why... 
+-> If I would use a different data structure, I would store the products with using hash tables. Therefore, 
+	the products are stored by hash keys. it would be easier to find products and to manage many different 
+	implementations. 
+
+3) What was efficient about your design and use of the data structure? 
+-> Basically, as using data structures the data have been stored in the dynamically allocated spaces and the 
+   linear linked list, queue, and stack provide ordered structure so that it is easily re-used for 
+   any information needed. Furthermore, the structure can be many different uses depending 
+   on what data you want to use or where the data are stored.
+
+4) What was not efficient? 
+-> As using three different data structure which are linear linked list, queue, and stack, they look quite
+	well-organized that each structure has their own tasks that manages shopping cart, ordered list, and
+	waiting list. However, I think it is somehow complicated to deal with because the three data structures
+	are not operated organically. I would have to modify them to be more sophisticated.
+
+5) What would you do differently if you had more time to solve the problem?
+->  If I would use a different data structure, I would store the products with using hash tables. Therefore, 
+	the products are stored by hash keys. it would be easier to find products and to manage many different 
+	implementations. 
+
+

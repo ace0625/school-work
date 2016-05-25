@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>My Syntax Colored Web Page</title>
+<style type="text/css">
+  body     {white-space:pre;
+            background-color:#ffffcc;
+            color:black;
+            font-family:"Lucida Console","Courier New",Monotype}
+  .date {background-color:white; color:green}
+</style>
+</head>
+<body>
+[You can find a plain text version of the text in this file on
+the web at: http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.txt]
+
+This is a test file that includes a number of date references.
+It is provided for you in support of a homework assignment that
+is due on <span class="date">February 2, 2016</span>.  If you are reading this on the
+web at http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.html,
+then you should have noticed how that date was highlighted; in
+any case, there are plenty more highlights in the rest of this
+file!
+
+A lot of people use a calendar that starts on <span class="date">Jan 1</span>.  As you
+know, there are common abbreviations for months such as Feb,
+Mar, and Apr for people who don't like to use the full names of
+February, March, and April.  And although it's not technically
+correct to do so (because they are proper nouns) some people
+don't capitalize the first letter in the name of a month (and
+we'll assume that all other letters in month names are written
+in lower case).  There are also times when people write the day
+of the month before the name of the month, and other times when
+they write the month first.  As such, you might also see the
+first day of the calendar written as <span class="date">january 1</span>, <span class="date">jan 1</span>, <span class="date">1 Jan</span>, <span class="date">1
+January</span>, and so on.  Most people would recognize each of these
+as a valid date, so I hope that your programs will too!  Notice
+that one of these examples had a line break in the middle, but
+it is still recognizable as a date, and hence should still be
+highlighted.
+
+Although we're not requiring that each of the dates that we
+recognize includes a year component, there's certainly no reason
+not to highlight year information too when it is provided.
+Sometimes people like to separate the month and day information
+from the year with a comma, as in <span class="date">20 July, 1969</span> (which you might
+recognize as the date of the first moon landing), but it is also
+common to see it written without as <span class="date">20 July 1969</span>.  For current
+purposes, we'll only worry about years between 1500 and 2500.
+As such, we might debate whether the next millenium begins on
+<span class="date">Jan 1</span>, 3000, or on <span class="date">1 january</span> 3001, but only the first part of
+each of these dates will be highlighted.  (On the other hand,
+both <span class="date">Jan 1, 2000</span> and <span class="date">1 january 2001</span> will be highlighted in full
+because their associated years are in the range that we
+recognize.) (You can find out more about the Millenium debate at
+http://en.wikipedia.org/wiki/Millenium.)
+
+Dates are also commonly written in a more compact form with
+(short) sequences of numbers separated by slashes, sometimes
+including a year, but sometimes not.  For instance, Most people
+would consider <span class="date">10/10/10</span> to be a valid date, in addition to
+examples like <span class="date">10/10/2010</span>, <span class="date">1/1/12</span>, or even <span class="date">9/30</span>.  But few of us
+are likely to mistake 12<span class="date">3/12</span>, or even 9<span class="date">9/3</span>3 for a date because
+some of the numbers in these examples are out of range.  Of
+course, something like <span class="date">10/10/10</span>/10 contains substrings that look
+like a date, but clearly should not be treated as date itself
+because it has too many parts to it.  It is also worth noting
+that single digit numbers are commonly used for the month and
+day numbers when dates are written in this way, although it is
+also quite common to see them padded with leading zeros so that
+the month and day fields are exactly two characters wide.  For
+example, we can expect that the following examples will all be
+highlighted: <span class="date">1/1</span>, <span class="date">01/01</span>, <span class="date">12/01</span>, and <span class="date">02/14</span>.  When years are
+included, however, they are usually either abbreviated to the
+last two digits (as in <span class="date">1/20/16</span>, which is a short notation for
+<span class="date">January 20, 2016</span>) or written with all four digits, as in
+<span class="date">1/20/2016</span>.
+
+Different months have different numbers of days in them, and you
+should be sensitive to that.  You can assume that <span class="date">February 29</span> is
+always a valid date (i.e., you're not expected to worry about
+leap years), but April, June, September, and November only have
+30 days in them, so you would want to highlight <span class="date">June 30</span> but not
+<span class="date">June 3</span>1.  All of the other months, of course, have 31 days in
+them, so <span class="date">31 dec</span> is good, but <span class="date">January 3</span>2 and March 0 are not.
+There are different conventions in different parts of
+the world about whether the month or day number should come
+first in a date like <span class="date">6/23</span>.  We will require the US ordering
+here, which places the month first, before the day, and hence
+we will not consider 2<span class="date">3/6</span> to be a valid date.  Of course there
+are dates like <span class="date">1/7/10</span> that might be interpreted differently
+in the US (as <span class="date">January 7</span>) or the UK (as <span class="date">July 1</span>); this ambiguity
+can be a problem for readers, but our highlighting program
+isn't able to help with that!
+
+For the purposes of this exercise, we'll assume that dates
+reference specific combinations, at least, of a month and a day
+within that month.  As such, phrases like "Monday", "next
+Thursday", or "in April" should not be considered as dates.  Nor
+should you feel any need to highlight the names of days that
+appear next to a date, as in a phrase like "Monday, <span class="date">June 3</span>"; the
+"<span class="date">June 3</span>" portion should be highlighted here, but not the
+"Monday, " section.  I'm not sure what "Bu<span class="date">nov 21</span>" or "re<span class="date">mar 6</span>"
+might be, but it's clear that neither of them are dates, so
+neither should be marked a such (even though "<span class="date">nov 21</span>" and
+"<span class="date">mar 6</span>", which appear as substrings in these examples, are
+clearly recognizable as dates and will be highlighted).
+
+In the interests of providing a few more examples, I hope you'll
+forgive me for writing a little nonsense to end this file.  I'll
+mention, for example, that <span class="date">March 22</span> is my favorite day, second
+only to <span class="date">29 April</span>.  (I know that last sentence doesn't make
+sense, but it was not intended to be either true or logically
+consistent, just an example of text that mentions dates like <span class="date">22
+March</span>.)  I'll also note that I'm not a big fan of <span class="date">April 9</span>9,
+mostly because there is no such day on my calendar.  (It is true
+that people sometimes refer to periods of time such as <span class="date">July
+20</span>01, which you might interpret as a date.  However, for the
+purposes of this exercise, we won't consider that to be valid
+because it references a whole month, and we are only looking for
+dates that refer to a specific day.
+</body>
+</html>

@@ -1,0 +1,5 @@
+class C(protected int x) {
+   class D1(private int y)
+   class D2(int z)
+}
+

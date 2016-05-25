@@ -1,0 +1,14 @@
+7,8c7,8
+<  t3 = call _Body_go(b)
+<  call _printInt(t3)
+---
+>  t1 = call _Body_go(b)
+>  call _printInt(t1)
+12c12
+< _Body-echo (obj, i)
+---
+> _Body_echo (obj, i)
+17c17
+< _Body-go (obj)
+---
+> _Body_go (obj)

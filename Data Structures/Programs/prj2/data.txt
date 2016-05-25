@@ -1,0 +1,10 @@
+1;Canon PowerShot SX400 Digital Camera $136.93;ABC-abc-1234;Canon;10
+2;Seiki SE32HY 32-Inch 720p 60Hz LED TV $179.99;ddv-dsc-5884;Seiki;5
+3;Sony KDL40R510C 40-Inch 1080p 60Hz Smart LED TV $459.90;daa-tyy-9444;Sony;3
+4;Walker Edison Soreno 3-Piece Corner Desk, Black with Black Glass $109.99;jjd-cad-5666;Walker Edison;3
+5;Parsons Desk with Drawer, White Finish $58.99;lla-bbd-dd34;Altra Furniture;50
+6;Nike Mens Athletic Active Dri-Fit Tee Shirt $25,98;yrr-zde-1234;Nike;38
+7;Nike Men's Roshe One Running Shoes $60.93;red-abc-663;Nike;7
+8;Samsung SSD 128G $60.93;zda-ddc-663;Samsung;5
+9;Iphone6 $600;dad-jgc-33;Apple;11
+10;Dell notebook 13inch $499.93;poe-ddc-64;Dell;3

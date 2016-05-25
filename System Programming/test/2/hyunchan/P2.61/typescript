@@ -1,0 +1,33 @@
+Script started on Tue 21 Jan 2014 01:54:12 AM PST
+hyunchan@erect-crested:~/cs201/hyunchan/P2.61$ make
+make: Nothing to be done for `all'.
+hyunchan@erect-crested:~/cs201/hyunchan/P2.61$ ./a.out
+Any bit of x equals 1
+x = 1
+result = 1
+Any bit of x equals 0
+x = 14
+result = 1
+Any bit in the least significant byte of x equals 1
+x = 32
+result = 1
+Any bit in the most significant byte of x equals 0
+x = 15
+result = 1
+hyunchan@erect-crested:~/cs201/hyunchan/P2.61$ ./a.out
+Any bit of x equals 1
+x = 3
+result = 1
+Any bit of x equals 0
+x = 6
+result = 1
+Any bit in the least significant byte of x equals 1
+x = 54
+result = 1
+Any bit in the most significant byte of x equals 0
+x = 99
+result = 1
+hyunchan@erect-crested:~/cs201/hyunchan/P2.61$ exit
+exit
+
+Script done on Tue 21 Jan 2014 01:54:59 AM PST

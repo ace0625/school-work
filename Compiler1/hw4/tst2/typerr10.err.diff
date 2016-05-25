@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From ArrayElm, index isn't integer: BoolType
+---
+> Checker$TypeException: (In ArrayElm) Index is not integer: BoolType

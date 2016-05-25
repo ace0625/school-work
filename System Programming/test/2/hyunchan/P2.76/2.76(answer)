@@ -1,0 +1,13 @@
+% For the multiplication using shift(<<) operation 
+
+operated by 2 to the power of N (2^N) then shift the bits N times to the left.
+
+For example, 
+
+         1 x 4 = 4
+         1 x 2^2 = 4
+         N = 2, so 2bit shift
+
+	 0000 0001 = 1
+                  <-- 2 shift    
+         0000 0100 = 4  

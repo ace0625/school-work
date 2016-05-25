@@ -1,0 +1,120 @@
+------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I, Winter 2016
+
+Assignment 2: "lexer"
+------------------------------------------------------------------------
+
+Preamble:
+---------
+Submissions for this assignment should be created as a single JFlex
+source file called HighlightDates.jflex, and should be uploaded to
+the hw2 dropbox that will be made available on D2L starting on
+January 27.  All submissions must be received by 10pm on February 2.
+Solutions that are submitted in other formats, or by other means, may
+not be accepted/graded.  For example, please do NOT submit a solution
+in Word, pdf, zip, or tar format, and please do not use email to
+submit a solution.  Please contact the instructor at the earliest
+possible opportunity if you think that you may not be able to meet
+these requirements for submission.  Read and follow the instructions
+carefully, noting that you may not be able to earn full marks if you
+do not follow the instructions or do not address all of the listed
+requirements and expectations.
+
+This assignment assumes that you have reviewed the slides about the
+lex familily of lexical analyzer generators, and that you have worked
+through and understood the exercises in the Week 3 jflextour lab.
+While you are welcome to use the JFlex documentation at any time, you
+should be able to complete this assignment using only the features of
+JFlex that have been covered in those resources.  If you find that
+you are tempted to use some more advanced feature of JFlex, then it
+may be that you have misunderstood some part of the assignment, or
+that you are making the task more complicated than it needs to be.
+In this happens to you, please contact the instructor to ask for
+advice.
+
+This assignment will be graded out of 100 points and will contribute
+up to 10% towards your final grade for the class.  Partial solutions
+are acceptable, but please recall that, as a condition of passing the
+class, every student is required, at a minimum, to earn a non zero
+score on every assignment.
+
+Please ask for help or clarification if you need it.  And remember
+also that, to avoid a conflict with the academic integrity policy for
+the class, all submissions must be INDIVIDUAL WORK ONLY.  Discussion
+of general concepts and ideas with classmates is permitted, but there
+should not be any sharing of JFlex code fragments or of testing or
+other support infrastructure unless it has been specifically
+authorized by the instructor.
+
+Task description:
+-----------------
+Your task in this assignment is to use jflex to produce a utility
+program that will scan an input text file and output an HTML version of
+the same document that highlights all (and only) the dates that are
+mentioned in the text.  The details about exactly what constitutes a
+date, of course, are somewhat open to interpretation.  This is one of
+the issues that you will resolve by means of the regular expressions
+that you write in your jflex code.  But to give you a better
+understanding of what is intended, there is a sample text available at:
+
+   http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.txt
+
+and you can find a sample output from a worked solution to this
+problem at:
+
+  http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.html
+
+Once you have completed an implementation of HighlightDates, you should
+be able to generate the latter from the former by running:
+
+  java HighlightDates lexer-sample.txt > lexer-sample.html
+
+You will need to study the sample files carefully because they provide
+quite a few examples and informal descriptions to document how your
+HighlightDates program should work.  If you need any further
+interpretation beyond what is shown in the sample about what constitutes
+a date, then you are expected to ask for clarification.  As best as you
+can, try to avoid making any assumptions about which input strings
+should be recognized as dates unless there are specific examples in the
+sample files to support your assumptions.
+
+You are expected to use the MiniColor syntax coloring program for
+mini that was provided in Folder 10 of the Week 3 lab materials as a
+starting point for this exercise.  You should, however: rename the
+program to HighlightDates.jflex, and set the generated class name to
+HighlightDates; remove all parts of MiniColor that are not relevant
+to the task described here, including comments that are no longer
+applicable; and insert comments to explain the new sections that you
+have added.  If you wish to emulate the output format that is used by
+the sample referenced above (which, hint, hint, might be a good idea
+for testing purposes), then you should use the "literal"
+classification for dates that causes them to be shown in green.  To
+add further emphasis, the sample solution also incorporates a change
+to use a white background for highlighted words.  You can do the same
+in your solution by changing the HTML line for literals to read as
+follows:
+
+     "  .literal {background-color:white; color:green}"
+
+(The original version, without the white background, appears
+on Line 59 of 10/MiniColor.jflex.)
+
+The bulk of your score for this assignment will be determined by
+automated testing, so it is essential that you submit your solution
+in the required format. In addition, however, some points will be
+reserved for:
+
+- Documentation that you provide, in the form of comments in your
+  submitted .jflex file, to explain the details of your solution.
+
+- Appropriate use of jflex features, particularly (1) the use of
+  "macros" or "abbreviations" to make your definitions of regular
+  expressions easier to read and understand; and (2) appropriate
+  ordering of lexical rules to ensure that more specific cases
+  are listed before more general, catch-all cases.  (Remember
+  the examples that you've seen in the Week 3 labs!)
+
+- The extent to which you have pruned out comments and code from
+  MiniColor that are not relevant to this particular problem.
+
+------------------------------------------------------------------------

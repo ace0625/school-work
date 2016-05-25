@@ -1,0 +1,7 @@
+abstract class RegExp {
+  class Epsilon
+  class Char(private int c)
+  class Alt(private RegExp r1, private RegExp r2)
+  class Rep(private RegExp r)
+  class Seq(private RegExp r1, private RegExp r2)
+}

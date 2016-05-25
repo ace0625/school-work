@@ -1,0 +1,69 @@
+== 1
+select * from (select bid as red_id, bname as red_name from boats
+where color = 'red') b1,
+(select bid as blue_id, bname as blue_name from boats
+where color = 'blue') b2;
+
+== 2
+select b1.bid as red_id, b1.bname as red_name,
+b2.bid as blue_id, b2.bname as blue_name
+from boats b1, boats b2
+where b1.color = 'red' and b2.color = 'blue';
+
+== 3
+select a.agent_id, a.first, a.middle, a.last,
+(select avg(a.salary::numeric::float) as "French average" from agent a)
+from agent a
+where a.country = 'France'
+order by salary;
+
+
+== 4
+select a.agent_id, a.first, a.middle, a.last
+from agent a
+where a.country != 'France'
+and a.salary IN (select a2.salary from agent a2 where a2.country = 'France');
+
+
+== 5
+SELECT a.agent_id, a.first, a.middle, a.last
+FROM agent a
+GROUP BY a.agent_id
+HAVING (( SELECT count(l.lang_id) AS count FROM languagerel l
+WHERE l.agent_id = a.agent_id)) >= (4 * (( SELECT count(sr.skill_id) AS count 
+FROM skillrel sr WHERE sr.agent_id = a.agent_id)));
+
+
+== 6 
+select a.agent_id
+from (select lang_id from languagerel 
+group by lang_id having count(*) >= all (select count(*) from languagerel 
+group by lang_id)) pl, agent a 
+where (pl.lang_id, a.agent_id) in (select * from languagerel);
+
+== 7 
+select p.store, p.beverage, p.size
+from pricelist p
+where
+p.price::numeric < (select avg(p2.price::numeric)
+from pricelist p2
+where p2.beverage = p.beverage and p2.size = p.size and p2.store != p.store);
+
+
+== 8 
+select p.store,p.beverage from pricelist p
+group by p.store,p.beverage
+having count(distinct p.price::numeric) >= all (select count(distinct p2.price ::numeric)
+from pricelist p2
+where p2.beverage = p.beverage and p2.store !=p.store
+group by p2.store,p2.beverage);
+
+
+alter table rocks
+add constraint rocks_pkey
+primary key (rid);
+
+alter table enrolled
+add foreign key (cid)
+references class(cid);
+

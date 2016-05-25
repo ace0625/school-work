@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From if, Cond exp type is not boolean: IntType
+---
+> Checker$TypeException: (In If) Cond exp type is not boolean: IntType

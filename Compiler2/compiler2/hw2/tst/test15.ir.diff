@@ -1,0 +1,25 @@
+4,6c4,6
+<  t4 = a + 1
+<  t5 = b - 1
+<  if t4 <= t5 goto L1
+---
+>  t1 = a + 1
+>  t2 = b - 1
+>  if t1 <= t2 goto L0
+7a8
+> L0:
+9,12c10,12
+< L3:
+<  t9 = a + 1
+<  t10 = b + 1
+<  if t9 <= t10 goto L3
+---
+>  t3 = a + 1
+>  t4 = b + 1
+>  if t3 <= t4 goto L2
+14,15c14,15
+<  goto L3
+< L4:
+---
+>  goto L1
+> L2:

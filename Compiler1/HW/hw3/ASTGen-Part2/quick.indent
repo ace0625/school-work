@@ -1,0 +1,28 @@
+Expr
+  isAbstract=true
+  Args
+  Methods
+    Method eval
+      ReturnType=int
+      Params
+  Classes
+    IntExpr
+      isAbstract=false
+      Args
+        private int value
+      Methods
+        Method eval
+          ReturnType=int
+          Params
+      Classes
+    BinExpr
+      isAbstract=false
+      Args
+        private char op
+        private Expr left
+        private Expr right
+      Methods
+        Method eval
+          ReturnType=int
+          Params
+      Classes

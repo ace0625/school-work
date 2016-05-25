@@ -1,0 +1,3 @@
+While I was making basic data for courses, I met a 'Segmentation fault.' To figure out this problem I ran 'gdb' program. Since the error is occurred after file loading, I make a break point for 'load_courses'. While I was tracking the data, I found that error was occurred in 'strlen' function. Because text data from the file is not proffer, the error was took place. After modifing the data file, the problem was resolved.
+
+

@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Assign, lhs and rhs types don't match: IntType <- BoolType
+---
+> Checker$TypeException: (In Assign) lhs and rhs types don't match: IntType <- BoolType

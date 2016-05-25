@@ -1,0 +1,16 @@
+6,7c6,7
+<  t2 = call _malloc(5)
+<  b = t2
+---
+>  t1 = call _malloc(5)
+>  b = t1
+10,11c10,11
+<  t3 = 4[b]:B
+<  if t3 == false goto L0
+---
+>  t2 = 4[b]:B
+>  if t2 == false goto L0
+17c17
+< _B-go (obj)
+---
+> _B_go (obj)

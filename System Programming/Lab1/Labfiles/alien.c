@@ -1,0 +1,18 @@
+/* note that C comments are enclosed
+   within a slash and a star, and may
+   wrap over lines */
+// if you use gcc, two slashes will
+// work too (and may be preferred) #include <stdio.h>
+/* main returns an integer */
+#include <stdio.h>
+
+void main(int argc, char *argv[])
+{
+    /* printf is our output function;
+       by default, writes to standard out */
+    /* printf returns an integer, but we ignore that */ 
+    printf("hello, world2\n");
+    /* return 0 to indicate all went well */
+    
+}
+

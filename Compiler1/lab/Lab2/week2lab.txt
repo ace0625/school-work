@@ -1,0 +1,88 @@
+-----------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I                   Week 2 Lab Exercises
+-----------------------------------------------------------------------------
+
+These exercises are designed to give you some practice experimenting
+with and modifying the Quick Calculator program, which can be found
+in the Week 2 section of Course Content on D2L, or downloaded at the
+Unix command line using:
+
+  curl -O http://web.cecs.pdx.edu/~mpj/cs321/QuickCalc.java
+
+These exercises require a Java development environment.  A command line
+based toolset providing javac and java will work well, but pretty
+much any Java IDE should also be fine ... so long as you already know
+how to use the IDE.
+
+Where the Week 1 exercises required you to focus on high-level structure
+and concepts in minitour, this set of exercises will require you to dig
+in to the implementation details of the Quick Calculator.  Fortunately,
+the Quick Calculator is much simpler system than minitour.  Nevertheless,
+there may still be some parts that will take time to absorb.  If you get
+stuck, try to make sure that you understand what the original code is
+doing, for example, by simulating a dry run on a simple source program.
+(In other words, trace through the execution of the program using paper
+and pencil to track what is happening at each step.)  When you are asked
+to add new features, try to identify existing features that are similar
+in some way, and then use those as a model/guide for the extensions
+that you build, copying but also adapting the code as necessary.
+
+As always, if you get stuck, please ask for help!
+
+-----------
+0) Compile and run the quick calculator program and confirm that it
+is working as you expect it to.  [Hint: there are instructions on how
+to do this at the top of the QuickCalc.java source file ...]
+
+-----------
+1) Draw diagrams to show the abstract syntax of the following quick
+calculator expressions:
+
+  a)  (1+2+3)
+  b)  (1 + 2) + 3
+  c)  1 + (2) + 3
+  d)  1 – 1 – 1
+  e)  (1*2)*(3*4)
+  f)  1*2*3*4
+
+[Note: (If you think that two of these expressions have the same
+abstract syntax, you don’t need to draw two copies of the same data
+structure: just write something like “same as part (x)” for the second
+(and any subsequent) occurrence!]
+
+-----------
+2) Modify your quick calculator to support unary minus.  You will need
+to do the following:
+
+- Extend the data structures with a representation for unary minus
+
+- Add methods to construct and evaluate the new forms of expression
+
+- Modify the parser, giving unary minus a higher precedence than any
+  other operator (for example, –2+3, – (2+3), 4 * –5, and – – 23
+  should give 1, –5, –20, and 23, respectively)
+
+Draw diagrams to show the abstract syntax for each of the following
+expressions in your modified calculator: –2+3, – (2+3), 4 * –5, and
+– – 23.  (Aside: Without running the program, what do you think would
+happen if you omit the space between the two minus signs in that last
+example?  Once you've reached your own conclusion, try it out to see
+if you were correct!)
+
+-----------
+3) Modify your quick calculator to include a syntax for absolute
+values using vertical bars.  For example, the expressions |2|,  |–2|,
+and | 2 – 4 |  should each give 2.  Explain the steps that you used to
+build your modified calculator program.  How does your program
+distinguish between a vertical bar token at the beginning of an
+absolute value expression and a vertical bar token at the end of an
+absolute value expression?
+
+-----------
+4) Build a further extension of the quick calculator in Question 3
+that allows you to use abs(e) as an alternative syntax for absolute
+value expressions.  Your modified calculator should now accept
+expressions like abs(1 + | 2 – 4 |) and 1 + abs(7).  Explain the
+additional steps that you used to complete this extension.
+
+-----------------------------------------------------------------------------

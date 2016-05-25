@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: FromField, object is not of ObjType: (ArrayType IntType)
+---
+> Checker$TypeException: (In Field) Object is not of ObjType: (ArrayType IntType)

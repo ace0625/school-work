@@ -1,0 +1,51 @@
+//CS321
+//Homework #3 part2
+//Hyunchan Kim
+
+//-- Define a program that consumes tokens: ----------------------------------
+
+PARSER_BEGIN(ASTGen)
+
+public class ASTGen {
+    public static void main (String args[]) throws ParseException {
+        new ASTGen(System.in); // Read from standard input
+        Top();
+        System.out.println("Input syntax is valid");
+    }
+}
+
+PARSER_END(ASTGen)
+
+// -- Define the grammatical rules of the input language: -----
+
+void Top() : { } { ( ClassDecl() ) * <EOF> }
+void ClassDecl() : { } { Class() | AbstractCls() }
+void Class()  : { } { "class" Id() [BracketDecl()] }
+void AbstractCls() : { } { "abstract" "class" Id()[AbstrArg()] }
+void BracketDecl()  : { } { ParenthDecl() [CurlyBracket()] }
+void AbstrArg() : { } { [ ParenthDecl() ] CurlyBracket()  }
+void ParenthDecl() : { } { "(" Argument() ("," Argument())* ")" }
+void CurlyBracket()  : { } { "{" (Class() | AbstractCls() ) * "}"}
+void Argument()  : { } { [ClassType()] Type() Id() }
+void Type() : { } { Id() ( "." Id()) * ("[" "]")* }
+void ClassType()  : { } { "public" | "private" | "protected" }
+void Id()   : { } { <IDENT> }
+
+//Input elements that should be ignored/skipped:
+SKIP : 
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+| <"/*" (~["*"])* ("*" | ~["*","/"] (~["*"])* "*")* "/">
+}
+
+// Lexemes that should be reported as valid tokens:
+TOKEN : 
+{
+  <IDENT:   <LETTER> (<LETTER> | <DIGIT>)*> 
+| <#LETTER: ["A"-"Z","a"-"z","_"]>
+| <#DIGIT:  ["0"-"9"]>
+}

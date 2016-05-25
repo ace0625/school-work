@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Call, Param and arg types are not matching: IntType vs. BoolType
+---
+> Checker$TypeException: (In Call) Param and arg types don't match: IntType vs. BoolType

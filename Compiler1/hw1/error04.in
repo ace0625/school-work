@@ -1,0 +1,6 @@
+//error04
+// ill-formed hexadecimal integers
+
+0xAB //ok 
+0xF7 //ok
+0xGF // ill-formed hexadecimal integers

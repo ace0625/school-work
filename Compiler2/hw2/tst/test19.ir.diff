@@ -1,0 +1,18 @@
+8,11c8,11
+<  t5 = call _A_f(a)
+<  call _printInt(t5)
+<  t6 = call _A_f(b)
+<  call _printInt(t6)
+---
+>  t1 = call _A_f(a)
+>  call _printInt(t1)
+>  t2 = call _A_f(b)
+>  call _printInt(t2)
+15c15
+< _A-f (obj)
+---
+> _A_f (obj)
+20c20
+< _B-f (obj)
+---
+> _B_f (obj)

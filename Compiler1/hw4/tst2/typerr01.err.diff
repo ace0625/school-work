@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Id, not able to find variable x
+---
+> Checker$TypeException: (In Id) Can't find variable x

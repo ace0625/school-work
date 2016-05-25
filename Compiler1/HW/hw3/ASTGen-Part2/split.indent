@@ -1,0 +1,20 @@
+C
+  isAbstract=false
+  Args
+    protected int x
+  Methods
+  Classes
+    D1
+      isAbstract=false
+      Args
+        protected int x
+        private int y
+      Methods
+      Classes
+    D2
+      isAbstract=false
+      Args
+        protected int x
+        int z
+      Methods
+      Classes

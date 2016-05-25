@@ -1,0 +1,7 @@
+//error03
+// ill-formed octal integers
+
+0x04 //ok
+0x06 //ok
+0x08 //ill-formed
+

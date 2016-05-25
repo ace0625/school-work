@@ -1,0 +1,347 @@
+-----------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I                   Week 3 Lab Exercises
+-----------------------------------------------------------------------------
+
+These exercises are designed to give you some practice experimenting
+with and modifying the JFlex lexical analyzer generator.   You can
+download the accompanying code examples for this lab from the Week 3
+section of Course Content on D2L or via the Unix command line using:
+
+  curl -O http://web.cecs.pdx.edu/~mpj/cs321/jflextour.zip
+
+These exercises require a Java development environment and a working
+installation of the JFlex lexical analyzer generator.  The latter can
+be downloaded from jflex.de; for maximum compatibility, I recommend
+that you use JFlex 1.4.3, which is the version that is currently
+installed on the Linux Lab machines, but other versions should also
+work just as well in practice because we are not using any
+particularly advanced or unusual features here.  (Note that, on some
+Linux systems, you may be able to download a version of JFlex via
+your usual package manager.)
+
+The purpose of these exercises is to guide you through the main
+features of JFlex using a series of example programs.  To get the
+most out of these exercises, I'm assuming that you have already read
+the corresponding slides and/or watched the video presentation of
+those slides; these items are available via the Week 2 section of
+course content on D2L.
+
+As mentioned above, none of these examples require very advanced
+features of JFlex.  While you may occassionally want to refer to the
+JFlex documentation, if you find yourself trying to do something that
+is well beyond the techniques that I've covered in the slides, then
+you are probably not doing what was intended, and may be looking for
+a more complicated or advanced solution than is necessary.
+
+The basic plan for these lab exercises is to work your way through
+the examples in each of the directories 00, 01, .., 11, experimenting
+with each one to ensure that you understand what is happening and why
+each one works in the way it does.  As always, if you get stuck, or
+if something doesn't work as you expect, then please ask for help!
+
+The following notes should give you some specific points to look out
+for and questions to be asking/answering along the way ...
+
+-----------------------------------------------------------------------------
+00 Basic structure of a .jflex file
+
+This program is intended to illustrate the following properties:
+
+- Text matching rules with empty actions is ignored
+- Text not matching any rule is copied unchanged to the output
+
+Take a look at the code in Example.jflex and observe the basic
+structure of a JFlex program, punctuated by %%s.
+
+As described in the JFlex manual, the %standalone directive in this
+program:
+  "Creates a main function in the generated class that expects the
+  name of an input file on the command line and then runs the scanner
+  on this input file. The values returned by the scanner are ignored,
+  but any unmatched text is printed to the Java console instead (as
+  the C/C++ tool flex does, if run as standalone program).  To avoid
+  having to use an extra token class, the scanning method will be
+  declared as having default type int, not YYtoken"
+
+(Remember that "scanner" is used as a synonym for "lexer" or "lexical
+analyzer.)
+
+What should this program do?  Compile and run it to see if your
+answer was correct.
+
+-----------------------------------------------------------------------------
+01 More of the same:
+
+This purpose of this program is to deletes \r characters in the input
+file.  (For example, this might be used to build a Windows/DOS ->
+Unix text file converter.)
+
+Compile and run this program.  Use the "od" command to examine the
+contents of the input and output files to see that the \r characters
+have indeed been removed.  (The name "od" is short for "octal dump";
+the "-c" command line options specifies a character dump, but there
+are other options that might be useful in other settings.)
+
+-----------------------------------------------------------------------------
+02 Output produced by an action replaces original input
+
+Suppose that you've written a mini program like the following (source
+code conveniently provided in test.mini):
+
+  // A simple test
+  int i, t;
+  i = 0;
+  t = 0;
+  while (i<10) {
+    i = i + 1;
+    t = t + i;
+  }
+  print t;
+
+And suppose that somebody criticizes your code, suggesting that you
+should have used more readable or intuitive variable names like count
+and total instead of i and t.
+
+The JFlex program in this folder is intended to let you rename the
+variables in your code automatically to fix this problem, approaching
+this as an opportunity for "global search and replace".  Take a look
+at the code, and then try testing the code.  What goes wrong?
+
+-----------------------------------------------------------------------------
+03 Longest lexeme wins
+
+This version of the program fixes the problem that we saw in the 02
+directory.  Test to see that it does indeed work as hoped.
+
+The trick here was to add an extra rule that matches longer words.
+But what property of JFlex are we exploiting here?  Which rules match
+an occurrence of the variable name "i"?  Which rules match an
+occurrence of the string "int"?
+
+Can you draw a picture of the DFA that you think JFlex would have
+generated for this program?  How do you suppose the JFlex implements
+the longest lexeme/maximal munch property for this example?
+
+-----------------------------------------------------------------------------
+04 If two rules match the same input, choose the earliest rule
+
+This version of the program looks very similar to the previous one.
+What is different?  Does this one work correctly?  Can you explain
+why?  Does JFlex provide any useful output to help diagnose problems
+in cases like this?
+
+-----------------------------------------------------------------------------
+05 There is no need for actions to produce output
+
+This folder contains a simple JFlex program for counting lines and
+characters.  Compile and run it, and compare its results with those
+that you get by using wc.  (It can be very useful to test one program
+by using another one that is supposed to do the same thing, and then
+checking to see that they give the same results!)
+
+Some details to note here:
+
+- The . character matches any input character except \n, which
+  matches the newline character.  What happens if you temporarily
+  comment out the line for \n?
+
+- The %{ ... %} lines instruct JFlex to insert some arbitrary
+  code in to the generated Java output code.  Take a peek at that
+  code in this example, both to get a sense of what the generated
+  code looks like, and to see if you can find the two lines used in
+  this specific example.  How else might such a feature be used?
+
+- The %eof{ ... %eof} lines are used to insert code that will
+  be executed when the lexer reaches the end of the input: "eof" is
+  short for "end of file".  There is a similar feature using %init{
+  ... %init} markers that can be used to insert code that is executed
+  immediately before the lexer starts reading input.  Use this latter
+  feature to make this program print a friendly greeting before it
+  starts consuming input.  How can you tell from the resulting output
+  that your greeting was indeed displayed before the program started
+  reading input?
+
+-----------------------------------------------------------------------------
+06 There is no need for actions to produce output
+
+This program is a version of the utility described in the lecture
+slides that cuts out text between BEGIN and END brackets, each of
+which must be anchored to the start of a line.  (This was originally
+developed as a custom utility that I needed many years ago to cut
+"proof scripts" out of a large transcript, so it is included here as
+an example of something that was written to meet a practical need,
+and not as a "toy" example for the purposes of this lab!)
+
+Compile and run this program using the sample input provided.  For
+each of the three rules in the final section of this program, can you
+predict what would happen if that line were to be commented out?
+Make your best guesses, and then try it to see if you were correct!
+
+-----------------------------------------------------------------------------
+07 A period doesn't match newlines (Part 1)
+
+This program is very similar to the one in the previous directory
+... but something is missing: can you spot it?  can you predict
+what will happen when you run this version of the program?
+
+Aside: you can use the pr command to view the contents of two files
+side by side.  In this case, you can use a command like the following
+to compare the input to and the output from our little JFlex program:
+
+  java Yylex sample | pr -mt - sample 
+
+Use "man pr" if you want to find out more about how this works; this
+can be a very handy tool in some situations!
+
+-----------------------------------------------------------------------------
+08 A period doesn't match newlines (Part 2)
+
+This program can be used to remove all of the C++/Java-style one line
+comments from an input file.  Try it out on the test file that is
+provided, or on test files that you build yourself.
+
+You might notice that, although it removes one line comments (all the
+characters up to the end of a line), it doesn't actually remove the
+end of line character.  Can you think of reasons (yes, plural!) why
+this might be a good thing?  Can you think of a way to change the
+program if you didn't want this behavior.
+
+Now try changing the regular expression for the rule in this program
+to "//"(.|\n)* and try our usual game: try to predict what you think
+will happen, and then run the program to see if you were right.
+
+We've argued that lexical analysis typically requires some form of
+buffering in its implementation.  Based on this example, how big do
+you think the internal JFlex buffer should be?
+
+-----------------------------------------------------------------------------
+09 Files can introduce useful abbreviations
+
+This program makes use of some more complicated regular expressions
+that would be painful to write out without the use of abbreviations.
+
+Here are some details to focus on as you read through this code:
+
+- :jletter: and :jletterdigit: are special regular expressions in
+  JFlex (sometimes called "builtin character classes") that match any
+  Java letter, or any Java letter or digit.  (So they are very
+  closely related to the Java library functions that we looked at
+  while exploring the topic of a handwritted lexer for recognizing
+  identifiers ...)
+
+- Note the use of {...} to refer to previously defined names.
+
+- What happens if you change the order in which the definitions are
+  listed?  What happens in you introduce a recursive definition?
+
+- You're not expected to understand all the syntax in this example,
+  but still might like to know that [^*] will match any char except
+  *, and that ~a will match text upto an occurrence of a.
+
+- Notice the use of the yytext() function.  Do you remember what
+  this function does?  Maybe it's time to be bold and take a look at
+  the generated Java code for this example to find the implementation
+  for yytext(), and to remind yourself about what machine generated
+  programs might look like!
+
+Experiment with the definitions and rules in this example to make
+sure you understand how they work.
+
+What impact do you think it might have in practical software
+development using JFlex if you were to write long and complicated
+regular expressions without the use of carefully chosen abbreviations
+to build up your rules in more readable ways?
+
+What impact do you think it might have on your grade for an
+assignment if you write long and complicated regular expressions
+without using carefully chosen abbreviations to make them more
+readable and easier to maintain (and grade)?  :-)
+
+-----------------------------------------------------------------------------
+10 jflex can be used to build useful utilities!
+
+This is a complete syntax coloring utility that reads input programs
+written in the mini programming language and generates a
+corresponding HTML output file with syntax coloring annotations.
+
+Walk your way through the (heavily commented) code to make sure you
+understand how this program works.  Although this is a much larger
+program than all the previous examples, it doesn't use any features
+of JFlex that you haven't already seen.
+
+Run this program on the supplied input file and then open the resulting
+HTML file in a browser.  (You can also take a peek at the generated
+HTML code directly if you like, but don't expect it to be quite as
+readable :-)
+
+How does this program behave if you try to run it on an invalid
+mini program, for example:
+- A program with an unterminated comment?  /* like this ...
+- A program with an unmatched parenthesis?  x = (1+1;
+- A program with a type error?              x = 1 + true;
+
+By changing as few characters as possible, modify the program to
+output identifier names in green.
+
+Further modify the program so that it will display integer
+literals between 0 and 63 in green, integer literals between
+64 and 299 in red, and integer literals greater than or
+equal to 300 in blue.  (These colors correspond to the literal,
+red, and keyword labels, respectively, in the supplied code.)
+
+-----------------------------------------------------------------------------
+11 jflex can be used to build lexers!
+
+All of the programs we have seen so far are examples of text
+processing utilities, so perhaps we should end with at least one
+example to show that JFlex can actually be used to build lexical
+analyzers too.  The key feature here is to use actions that "return"
+a token code when they are executed to specify which type of token
+has been read.  This means that the parser will need to call the
+generated yylex() function multiple times, once for each token in the
+input stream.
+
+The code in this folder is comparable to Version 06 in the minitour,
+so there are a few other things going on here besides just the code
+for the lexer.  You'll find the JFlex code for this example in the
+file mini/Mini.jflex.  This is the only example in this collection
+that doesn't use the %standalone directive because this lexer is
+designed to be used as part of a larger program, and not as a
+standalone utility.
+
+Take a look at the JFlex source code (you don't need to understand
+every detail, but most of it should make sense to you), peek at
+the code in Compiler.java, and then compile and run using:
+
+ jflex mini/Mini.jflex 
+ javac Compiler.java 
+ java Compiler test
+
+If you haven't done it already, pause to look at the output from
+JFlex describing the number of states, minimization, etc. in the
+underlying DFA and reflect on how big a piece of paper you would
+need to draw that out by hand :-)
+
+You should also take a look at the original handwritten lexer,
+which is not used here, but is preserved in lexer/MiniLexer.java
+for the purposes of comparison with the jflex-generated lexer in
+mini/MiniLexer.java.  Observe how fragments of the jflex source
+are spliced together with (largely incomprehensible) data tables
+and chunks of generated code in the latter; this is how JFlex
+represents the underlying DFA and associates states in that DFA
+with action code taken from the original .jflex file.
+
+As you close up this lab, you might like to reflect on a mildly
+controversial question: you can write lexers by hand, or by using
+a lexer generator, but which gives the best results?  Write down
+some pros and cons in each case, perhaps using the following
+questions as a guide:
+- How efficient is the generated code?
+- How easy is it to maintain?
+- How good are the error messages?
+- How easily does it interface to other code?
+- How natural is the input? (If the language you are compiling has
+  some awkward features, the lexers produced by a tool might need
+  some massaging to “do the right thing”)
+
+-----------------------------------------------------------------------------

@@ -1,0 +1,149 @@
+yjacob@ada:~/CS202_prj/prj3$ gdb song
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from song...done.
+(gdb) run
+Starting program: /u/yjacob/CS202_prj/prj3/song
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/x86_64/strlen.S:106
+106     ../sysdeps/x86_64/strlen.S: No such file or directory.
+(gdb) b main
+Breakpoint 1 at 0x4027d5: file song_table.cpp, line 195.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song
+
+Breakpoint 1, main () at song_table.cpp:195
+195             song_hash_table sht;
+(gdb) n
+196             String song_file = "song_cont.dat";
+(gdb)
+197             sht.load_songs(song_file);
+(gdb)
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/x86_64/strlen.S:106
+106     ../sysdeps/x86_64/strlen.S: No such file or directory.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song
+
+Breakpoint 1, main () at song_table.cpp:195
+195             song_hash_table sht;
+(gdb) n
+196             String song_file = "song_cont.dat";
+(gdb)
+197             sht.load_songs(song_file);
+(gdb) s
+String::String (this=0x7fffffffe9e0, s=...) at string.cpp:17
+17              len = s.len;
+(gdb)
+18              str = new char[len];
+(gdb) n
+19              strcpy(str, s.str);
+(gdb)
+20      }
+(gdb)
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/x86_64/strlen.S:106
+106     ../sysdeps/x86_64/strlen.S: No such file or directory.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song
+
+Breakpoint 1, main () at song_table.cpp:195
+195             song_hash_table sht;
+(gdb) n
+196             String song_file = "song_cont.dat";
+(gdb)
+197             sht.load_songs(song_file);
+(gdb) s
+String::String (this=0x7fffffffe9e0, s=...) at string.cpp:17
+17              len = s.len;
+(gdb) p s
+$1 = (const String &) @0x7fffffffe9d0: {len = 14, str = 0x605070 "song_cont.dat"}
+(gdb) n
+18              str = new char[len];
+(gdb) p len
+$2 = 14
+(gdb) n
+19              strcpy(str, s.str);
+(gdb) p str
+$3 = 0x605090 ""
+(gdb) p s
+$4 = (const String &) @0x7fffffffe9d0: {len = 14, str = 0x605070 "song_cont.dat"}
+(gdb) n
+20      }
+(gdb) p str
+$5 = 0x605090 "song_cont.dat"
+(gdb) p s
+$6 = (const String &) @0x7fffffffe9d0: {len = 14, str = 0x605070 "song_cont.dat"}
+(gdb) n
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/x86_64/strlen.S:106
+106     ../sysdeps/x86_64/strlen.S: No such file or directory.
+(gdb) b song_hash_table::load_songs
+Breakpoint 2 at 0x401e8e: file song_table.cpp, line 75.
+(gdb) d
+Delete all breakpoints? (y or n) y
+(gdb) b song_hash_table::load_songs
+Breakpoint 3 at 0x401e8e: file song_table.cpp, line 75.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song
+
+Breakpoint 3, song_hash_table::load_songs (this=0x7fffffffe9f0, song_file_name=...) at song_table.cpp:75
+75      {
+(gdb) n
+76              const int MAX_LINE_LEN = 500;
+(gdb)
+77              const int MAX_TOKEN = 6;
+(gdb)
+78              const char* DELIM = ";";
+(gdb)
+81              ifstream fin;
+(gdb)
+82              ofstream fout;
+(gdb)
+85              fin.open(song_file_name.getCharP());
+(gdb)
+86              if(fin.fail()) {
+(gdb)
+90              String song_artitst = NULL; // song_artitst (city, state)
+(gdb)
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/x86_64/strlen.S:106
+106     ../sysdeps/x86_64/strlen.S: No such file or directory.
+(gdb) q
+A debugging session is active.
+
+        Inferior 1 [process 15576] will be killed.
+
+Quit anyway? (y or n) y
+yjacob@ada:~/CS202_prj/prj3$ make
+g++ -o song string.cpp song_entry.cpp song_table.cpp -g
+yjacob@ada:~/CS202_prj/prj3$ ./song
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+song_no:0

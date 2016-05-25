@@ -1,0 +1,5 @@
+class A(java.lang.Integer a1, boolean a2) {
+  class B(int[] b1, boolean[][] b2) {
+    class C(int c1, boolean c2)
+  }
+}

@@ -1,0 +1,11 @@
+// Represents a list of methods, stored using the same "reverse"
+// ordering as Args:
+class Methods(private Methods before, private Method last)
+
+// Represents a single method with a given return type ("void" if ret
+// is null), name, and list of parameters (represented by an array):
+class Method(private Type ret, private String name, private Param[] params)
+
+// Represents a single method parameter:
+class Param(private Type type, private String name)
+

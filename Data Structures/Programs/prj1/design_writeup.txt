@@ -1,0 +1,62 @@
+// CS163
+//Design Write-up
+//Program #1
+//Hyunchan Kim
+
+
+1) What functions your ADT will need to have
+2) How each function will report success/failure back to the calling routine
+3) How each function will shield the client program from the details of the data structure
+4) What data structures you will be using and how each of the special cases. Consider
+ drawing pointer diagrams with “before” and “after” diagrams for each special case.
+5) Include a “test plan”, which outlines each test case and the expected outcomes.
+
+
+	In the first program, the main part of implementation is use of a flexible array as the main 
+	data structure in the program. For the Abstract data type, there is a linear linked list of arrays 
+	of the data that is stored. There are two classes to implement this program. One is the candidate class 
+	creates, removes, copies, or displays a data that holds name, major views on their party's political platforms,
+	rank, and thoughts about the candidate. The other one is the list class, it manages all candidates as 
+	inserting, updating, or displaying information with LLL. In other words, in candidate class, there should be
+	five functions needed; add candidate, copy candidate, find candidate, display a candidate, remove a candidate. For the list
+	class, ther should be four class needed; insert a new information(a new candidate), update poll, update information,
+	and display all data. 
+	
+	The candidate class fills out a data type structure with all of the appropriate data, and then 
+	passes this by reference to the Abstract data type, which then copies all of the data into the next avaliable position in 
+	the flexible array. If it calculates that it needs another node to do so, it appends a node onto the end of 
+	the linear linked list that is stored in the list.
+	
+	In regards to deletion part, the function that I used to achieve deletion like effect which was that every data type
+	that holds candidate information has an additional integer value of valid(1). This value has an inital value 
+	of true which is 1, which indicates that the information is valid. When outputting the data, 
+	within the iteration that cycles through all of the values, it checks to see if the current array is valid. 
+	If it is valid, then it will display it. If it is not valid then it does not display it. 
+	If this program wrote to a file, these could be easily deleted by simply not writing the non-valid entries to the file.
+	
+	The way that the numbering system works is that as the system works, when recieving data,
+	the overall count determines the total candidates and they are sorted by rank in the poll. 
+	
+	As using linear linked list, the client program will be covered. Users will not be able to know how the data is dealt with
+	or what the data structure is implemented.
+	
+	Here is a brief ADT algorithm explanation for this program.
+	- If passed in a new data, determine the address of the data which in the context of this program is 
+	the amount of traversal and the array index that is needed to access the next newest piece of data. 
+	If a new node is necessary, append one to the end of the linear linked list that holds the nodes. And access 
+	the address location and copy the passed data into the already existsing structure.
+	
+	- If passed a display all command, go through all of the currently existing data. If a cycled data member is valid,
+	output it to the screen.
+	
+	-If passed in a remove request, make sure the numnber is within valid terms, not below zero, not above the current 
+	number of data. Then, find the location of the data to be removed. Set the valid boolean to false, 
+	indicating that is no longer valid data
+	
+	- If passed in find function, recieve passed candidate name, go to the matching address, 
+	and copy the data into the recieved structure.
+	
+	-If asked to delete all, run code that is similar to the destructor, to deallocate memory.
+	append a node to the end so that the ADT is ready to recieve more data
+	
+

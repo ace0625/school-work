@@ -1,0 +1,11 @@
+// An abstract base class for representing simple arithmetic expressions
+abstract class Expr {
+  class IntExpr(private int value)
+  abstract class BinExpr(protected Expr left, protected Expr right) {
+    class AddExpr
+    class SubExpr
+    class MulExpr
+    class DivExpr
+  }
+}
+

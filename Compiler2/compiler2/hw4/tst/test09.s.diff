@@ -1,0 +1,26 @@
+61,63c61,63
+< 	movq $2,%r10
+< 	movq $1,%r11
+< 	cmpq %r10,%r11
+---
+> 	movq $1,%r10
+> 	movq $2,%r11
+> 	cmpq %r11,%r10
+73,75c73,75
+< 	movq $4,%r10
+< 	movq $3,%r11
+< 	cmpq %r10,%r11
+---
+> 	movq $3,%r10
+> 	movq $4,%r11
+> 	cmpq %r11,%r10
+88d87
+< 	movq $6,%r11
+89a89
+> 	movq $6,%r11
+93,94c93,94
+< 	movq $5,%r11
+< 	cmpq %rsi,%r11
+---
+> 	movq $5,%r10
+> 	cmpq %rsi,%r10

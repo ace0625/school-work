@@ -1,0 +1,265 @@
+------------------------------------------------------------------------------
+CS 321 Winter 2016 Lab 5      Sample Solutions     Parsing Regular Expressions
+------------------------------------------------------------------------------
+This file documents sample solutions for the Week 5 lab exercises.
+
+As a reminder, all of thes exercises have to do with the following grammar
+for a simple language of regular expressions:
+
+   regexp = "%"                  // matches the empty string
+          | LETTER               // a single letter, a-z
+          | regexp "|" regexp    // an alternative
+          | regexp regexp        // a sequence of two regexps
+          | regexp "*"           // a repetition (0 or more times)
+          | "(" regexp ")"       // a parenthesized regexp
+
+------------------------------------------------------------------------------
+EXERCISE 1:
+-----------
+The tokens in the grammar, listed in the order that they appear above, are
+as follows:
+
+   Token    | Regular expression
+   ---------+-------------------
+   EMPTY    | "%"
+   LETTER   | ["a"-"z"]
+   OR       | "|"
+   STAR     | "*"
+   OPEN     | "("
+   CLOSE    | ")"
+
+------------------------------------------------------------------------------
+EXERCISE 2:
+-----------
+A sample solution for this exercise is provided as a JavaCC program in
+the file RegExpParser0.jj that is distributed with these notes.  This
+program is based directly on early examples from the javacctour.  It
+will read an arbitrary regular expression from the standard input and
+output a corresponding list of token codes and images.
+
+Use the following commands to compile this program:
+
+   javacc RegExpParser0.jj
+   javac  RegExpParser0.java
+
+To run the resulting program, reading from the standard input, use:
+
+   java   RegExpParser0
+
+Alternatively, edit the supplied Makefile to set the PROG name to
+RegExpParser0 and the use the commands "make", make "run", or
+"make clean" to build the program, run the program, or clean up
+(i.e., delete any temporary files that can be recreated by
+rebuilding).  In general, you can move from one sample solution to
+the next by running "make clean", then editing the PROG setting
+in the Makefile, and then running "make run".
+
+------------------------------------------------------------------------------
+EXERCISE 3:
+-----------
+Writing "R" instead of "regexp" and L(X) to represent a LETTER token
+with the specified character X as attribute, we can construct the parse
+trees listed below for the examples in the question.  (NOTE: you should
+read this document using a fixed width font to ensure that the diagrams
+below appear correctly.
+
+       R           R             __R__               __R__
+       |          / \           /  |  \             /     \
+     L("a")      R  "*"        R  "|"  R          _R_      R
+                 |             |       |         /   \     |
+               L("a")       L("a")   L("b")     R    "*"  L("b")
+                                                |
+                                              L("a")
+      "a"         "a*"           "a|b"                 "a*b"
+
+
+                   ___R___                  ___R___
+                  /   |   \                /       \
+                _R_  "|"   R      OR      R       __R__
+               /   \       |              |      /  |  \
+              R     R    L("c")         L("a")  R  "|"  R
+              |     |                           |       |
+           L("a") L("b")                     L("b")   L("c")
+         
+                  "ab|c"                      "ab|c"
+
+
+            R                 ___R___               __R__
+           / \               /       \             /  |  \
+          R  "*"            R         R         "(" __R__ ")"
+         / \               / \        |            /  |  \
+        R  "*"           _R_  "*"   L("c")      "("   R   ")"
+        |               /   \                         |
+      L("a")           R     R                     L("a")
+                       |     |
+                    L("a")  L("b")
+
+       "a**"                "(ab)*c"                "((a))"
+
+Notes:
+- There are no parse trees for "a+b" because "+" is not a valid token.
+- There are two possible parse trees for "ab|c"
+- There are not parse trees for "**a" or "()" because these strings do
+  not match the grammar.
+
+------------------------------------------------------------------------------
+EXERCISE 4:
+-----------
+The grammar is AMBIGUOUS, as illustrated by the fact shown above that we
+can find two distinct parse trees for a single input, in this case "ab|c".
+
+------------------------------------------------------------------------------
+EXERCISE 5: Top-down parser
+-----------
+(Note that, because of the ambiguity in the source grammar, the given
+input expression could be parsed as either (a|(bc))* or as a|((bc)*).
+The following table shows the sequence of parsing steps that are needed
+to obtain the second result, but there is an alternative, perfectly
+valid sequence that corresponds to the first too.)
+
+  Remaining input   |  Goal Stack             | Action
+  ------------------+-------------------------+--------------
+  a|(bc)*           |  _ R                    | R -> R | R
+  ------------------+-------------------------+--------------
+  "                 |  _ R | R                | R -> L
+  ------------------+-------------------------+--------------
+  "                 |  _ L | R                | Match "a"
+  ------------------+-------------------------+--------------
+  |(bc)*            |  _ | R                  | Match "|"
+  ------------------+-------------------------+--------------
+  (bc)*             |  _ R                    | R -> R *
+  ------------------+-------------------------+--------------
+  "                 |  _ R *                  | R -> ( R )
+  ------------------+-------------------------+--------------
+  "                 |  _ ( R ) *              | Match "("
+  ------------------+-------------------------+--------------
+  bc)*              |  _ R ) *                | R -> R R
+  ------------------+-------------------------+--------------
+  "                 |  _ R R ) *              | R -> L
+  ------------------+-------------------------+--------------
+  "                 |  _ L R ) *              | Match "b"
+  ------------------+-------------------------+--------------
+  c)*               |  _ R ) *                | R -> L
+  ------------------+-------------------------+--------------
+  "                 |  _ L ) *                | Match "c"
+  ------------------+-------------------------+--------------
+  )*                |  _ ) *                  | Match ")"
+  ------------------+-------------------------+--------------
+  *                 |  _ *                    | Match "*"
+  ------------------+-------------------------+--------------
+                    |  _                      | Accept!
+  ------------------+-------------------------+--------------
+
+------------------------------------------------------------------------------
+EXERCISE 6: Bottom-up parser
+-----------
+(As in the previous exercise, there are two possible answers to this
+question as a result of the ambiguity in our source grammar.  Only one
+of those answers is shown here.)
+
+  Workspace   |  Remaining input        | Action
+  ------------+-------------------------+-------------------
+              |  a|(bc)*                | Shift
+  ------------+-------------------------+-------------------
+            a |  |(bc)*                 | Reduce R -> L
+  ------------+-------------------------+-------------------
+            R |  "                      | Shift
+  ------------+-------------------------+-------------------
+          R | |  (bc)*                  | Shift
+  ------------+-------------------------+-------------------
+        R | ( |  bc)*                   | Shift
+  ------------+-------------------------+-------------------
+      R | ( b |  c)*                    | Reduce R -> L
+  ------------+-------------------------+-------------------
+      R | ( R |  "                      | Shift
+  ------------+-------------------------+-------------------
+    R | ( R c |  )*                     | Reduce R -> L
+  ------------+-------------------------+-------------------
+    R | ( R R |  )*                     | Reduce R -> R R
+  ------------+-------------------------+-------------------
+      R | ( R |  "                      | Shift
+  ------------+-------------------------+-------------------
+    R | ( R ) |  *                      | Reduce R -> ( R )
+  ------------+-------------------------+-------------------
+        R | R |  *                      | Shift
+  ------------+-------------------------+-------------------
+      R | R * |                         | Reduce R -> R *
+  ------------+-------------------------+-------------------
+        R | R |                         | Reduce R -> R | R
+  ------------+-------------------------+-------------------
+            R |                         | Accept!
+  ------------+-------------------------+-------------------
+
+------------------------------------------------------------------------------
+EXERCISE 7:
+-----------
+A sample solution for this exercise is provided as a JavaCC program in
+the file RegExpParser1.jj that is distributed with these notes.  This
+program is a simple variant of the RegExpParser0.jj program from
+EXERCISE 3 that uses a transcription of the grammar in the question in
+to JavaCC notation.
+
+We can try to compile this program in the same way as RegExpParser0.jj
+above, but JavaCC reports an error because the grammar is left recursive.
+We need to fix this, but that's the next exercise ....
+
+------------------------------------------------------------------------------
+EXERCISE 8:
+-----------
+We can rewrite the original grammar to make the fixities specified in
+the question explicit in the structure of the new grammar.  We can start
+with an "atom", which is just "%", LETTER, or a parenthesized
+expression:
+
+  Atom -> "%" | LETTER | "(" R ")"
+
+Repetitions have high precedence and are written as an atom followed by
+zero or more "*" symbols (of course, there is no purpose to having more
+than one "*" because, for any regular expression r, r** matches the same
+strings as r* ... but we don't have to enforce this in the grammar):
+
+  Rep -> Atom ( "*" ) *
+
+Sequencing, which groups to the right, is at the next precedence level,
+so each of the components in a sequence should be a Rep:
+
+  Seq -> Rep ( Seq ) ?
+
+[Think of this as follows: a sequence is a Rep, which can optionally be
+followed by a sequence ...]
+
+Finally, we can chain multiple Seqs together using "|"s, with the lowest
+precedence and also grouping to the right, to produce an arbitrary
+regular expression:
+
+  R -> Seq ( "|" R ) ?
+
+In other words: a regular expression (R) comprises a list of alternatives,
+each of which is a sequence (Seq) of repetitions (Rep) of atoms (Atom).
+
+Coding this grammar in JavaCC notation gives us the program in the file
+RegExpParser2.jj that is distributed with these notes.
+
+------------------------------------------------------------------------------
+EXERCISE 9:
+-----------
+All that remains now is to add actions (i.e., fragments of Java code,
+enclosed in braces) within the grammar to construct the appropriate
+AST fragments.  This requires the use of the abstract syntax class
+constructor functions that were illustrated in the interlude.  The
+resulting code---adding in some extra functionality for generating DOT
+diagrams of the AST, NFA, and DFA in the main() method---is given in
+the file RegExpParser.jj that is distributed with these notes.
+
+------------------------------------------------------------------------------
+EXERCISE 10:
+------------
+A sample solution for this exercise is provided as a JavaCC program in
+the file SimpleLex.jj that is distributed with these notes.  There is
+not much more to add here because all the details needed to construct
+this solution were already given in the notes ... but please do not
+hesitate to ask if you have questions about how this works!
+
+------------------------------------------------------------------------------
+Done!
+------------------------------------------------------------------------------

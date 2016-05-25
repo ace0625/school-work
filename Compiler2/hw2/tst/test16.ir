@@ -1,0 +1,21 @@
+# IR Program
+
+_main ()
+(b)
+{
+ b = 0
+ t3 = call _B_go(b)
+ call _printInt(t3)
+ return 
+}
+
+_A-echo (obj, a)
+{
+ return a
+}
+
+_B-go (obj)
+{
+ t1 = call _A_echo(obj, 2)
+ return t1
+}

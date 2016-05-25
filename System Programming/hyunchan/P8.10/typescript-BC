@@ -1,0 +1,9 @@
+Script started on Mon 24 Feb 2014 02:53:10 PM PST
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ gcc 8.10BC.c
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ ./a.out
+<<B&C. longjmp & setjmp >>
+1 2 3
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ exit
+exit
+
+Script done on Mon 24 Feb 2014 02:53:26 PM PST

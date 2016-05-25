@@ -1,0 +1,16 @@
+6,7c6,7
+<  t2 = call _malloc(8)
+<  b = t2
+---
+>  t1 = call _malloc(8)
+>  b = t1
+9,10c9,10
+<  t3 = [b]:I
+<  call _printInt(t3)
+---
+>  t2 = [b]:I
+>  call _printInt(t2)
+14c14
+< _B-setval (obj, u)
+---
+> _B_setval (obj, u)

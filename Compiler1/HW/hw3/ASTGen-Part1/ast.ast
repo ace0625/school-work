@@ -1,0 +1,19 @@
+// AST Specification: ------------------
+
+class Class(private boolean isAbstract,
+            private String  name,
+            private Args    args,
+            private Class[] subclasses)
+
+class Args(Args before, Args last)
+
+class Arg(private String visibility,
+          private Type   type,
+          private String id)
+
+abstract class Type {
+  class NameType(private String[] ids)
+  class ArrayType(private Type elem)
+}
+
+// -------------------------------------

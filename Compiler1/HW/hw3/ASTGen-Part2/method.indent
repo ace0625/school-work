@@ -1,0 +1,22 @@
+Methods
+  isAbstract=false
+  Args
+    private Methods before
+    private Method last
+  Methods
+  Classes
+Method
+  isAbstract=false
+  Args
+    private Type ret
+    private String name
+    private Param[] params
+  Methods
+  Classes
+Param
+  isAbstract=false
+  Args
+    private Type type
+    private String name
+  Methods
+  Classes

@@ -1,0 +1,10 @@
+# IR0 Program
+ n = 1
+ if n <= 0 goto L1
+ print (n)
+L1:
+L3:
+ if n != 0 goto L3
+ print (n)
+ goto L3
+L4:

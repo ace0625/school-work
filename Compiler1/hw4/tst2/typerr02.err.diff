@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From CallStmt, not able to find method f
+---
+> Checker$TypeException: (In CallStmt) Can't find method f

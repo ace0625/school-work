@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From NewObj, not able to find class c
+---
+> Checker$TypeException: (In NewObj) Can't find class c

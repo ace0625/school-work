@@ -1,0 +1,83 @@
+//CS163
+//Assignment#5
+//Hyunchan Kim
+
+Design Write-up
+
+1) How well did the data structure selected perform for the assigned application?
+	This task information program is implemented by a graph algorithm. For this program there are two data file; one is task information and the other is edge information. 
+	The tasks are divided in four sections; users can choose one of section and get direction of path information by depth first traversal of the graph. 
+	Each selection composes of task number, term, step, and description, implemented as vertices and each vertex has an adjacency list by linked list as an edge to connect each vertex.
+	To implement display in display method is a boolean array for checking visit the vertex. The program's structures are as follows.
+	
+	1. structure of vertex
+	struct vertex
+	{
+		taskk_entry* entry;	// entry
+		struct node* head;	// edge(adjacency) list
+	};
+
+	2. structure of node
+	struct node
+	{
+		vertex* adjacent;
+		node* next;
+	};
+	
+	3. class for task entry
+	class task_entry
+	{
+		public:
+			task_entry(void);
+			~task_entry(void);
+			int create_entry(char* task_no, char* term, char* step, char* desc);
+			int copy_entry(const task_entry & a_new_entry);
+			int retrieve(char* matching_name, task_entry & found) const;   
+			int retrieve(task_entry & found) const;  
+			bool compare (char* match);
+			int display(void) const;
+			int display_step();
+			char* get_task_no() const;
+			char* get_term() const;
+
+		private:
+			char* task_no;
+			char* term;
+			char* step;
+			char* desc;
+};
+	3. class for graph
+
+	class table
+	{
+		public:
+			table(int size = 50);
+			~table(void);
+			int insert_vertex(const task_entry & to_add);
+			int find_location(char* key_value);
+			int insert_edge(char* current_vertex, char* to_attach);
+			int remove_all();
+			int load_task_info_file(char file_name[]);
+			int load_task_edge_file(char file_name[]);
+			int display_all();
+			int display_taskno(char* key);
+		
+		private:
+			vertex * adjacency_list;
+			int list_size;
+			void display_recur(node* current, bool visited[]);
+	};
+
+2) Would a different data structure work better? If so, which one and why...
+	This program is implemented with a graph. To express edge (relationship of vertex) a linked list as an adjacent list is used. 
+	If the data is small, it can be developed by an array but I think the linked list is more efficient.
+
+3) What was efficient about your design and use of the data structure?
+	Graph is a very efficient data structure that can express the relationship between the object connected each other.
+	 In particular, using a linked list as a adjacent list for edge is efficient algorithm.
+		
+4) What was not efficient?
+	The goal of graph is expressing relationship of links. So, for this goal I could not find the inefficient point in this structure.
+
+5) What would you do differently if you had more time to solve the problem?
+	If I had more time, I would like to develop a weighted graph. It can express consume time for using rides or average waiting time.

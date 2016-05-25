@@ -1,0 +1,27 @@
+A
+  isAbstract=false
+  Args
+    java . lang . Integer a1
+    boolean a2
+  Methods
+  Classes
+    B
+      isAbstract=false
+      Args
+        java . lang . Integer a1
+        boolean a2
+        int[] b1
+        boolean[][] b2
+      Methods
+      Classes
+        C
+          isAbstract=false
+          Args
+            java . lang . Integer a1
+            boolean a2
+            int[] b1
+            boolean[][] b2
+            int c1
+            boolean c2
+          Methods
+          Classes

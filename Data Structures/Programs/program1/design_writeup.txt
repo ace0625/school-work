@@ -1,0 +1,54 @@
+// CS163
+//Design Write-up
+//Program #1
+//Hyunchan Kim
+
+
+1) How well did the data structure selected perform for the assigned application? 
+-> For this assignment which is DIY program that implements reading in a text file having part data and
+   sorting and display them depending on user's command, I decided to use two data structures, one for part 
+   that includes part number, description, quantity, step number and steps, and one for node that builds linear
+   lined list. This LLL gets to manage the data. As soon as the program reads the text file, it saves the part
+   data line by line in each node. And also, the data are saved dynamically. 
+    
+2) Would a different data structure work better? If so, which one and why... 
+-> I am pretty satisfied with linear linked list for this assignment. However, for more specific function or
+   various implementations, DLL or different structure such as with class would be considered. 
+   I was thinking that I would probably make the node in as class. Even though structure looks more neat or efficient,
+   class could be used in various ways if you think of expanding program. 
+
+3) What was efficient about your design and use of the data structure? 
+-> Basically, as using data structures the data have been stored in the dynamically allocated spaces and the 
+   linear linked list gives ordered structure so that it is easily re-used for any information needed. Furthermore,
+   the structure can be many different uses depending on what data you want to use or display such as displaying
+   parts only, searching a particular data, or soring in ascending/descending order. 
+
+4) What was not efficient? 
+-> I set up the readfile function to read in the text file. This command would not be neccessary because there
+   is only one text file this program needs to read in. I could have made the read-in implementation in the
+   constructor that implements when the program starts. The reason is that I seperated this out is there can
+   be something different data files we have to use. 
+   And also, for displaying parts in order, my implementation was sorting the data depending on the part number
+   first and then displaying the data structure. In my opinion, it would be more efficient that if I put the
+   sorting algorithm in the readfile function so that the data get stored in order when they are read from the
+   text file. Then, it would not need sorting algorithm later in the display part.
+
+5) What would you do differently if you had more time to solve the problem?
+-> First of all, I would use step_head to be more efficient program. I basically used the part_head to implement
+   all the functions in LLL so I had to use the part_head pointer for the all function operations. 
+   However, I would have dealt with the functions related to steps if I used the step_head. Therefore, 
+   it could be easy to manage steps. 
+   Secondly, I would add function that write a textfile such as writefile function. This would write an external
+   text file including the data in order according to how the user wanted to write. 
+   Third, I would have two structures for part and step to manage data easily. For example, if I wanted to add or 
+   find something about steps, I would not have to go through the data related to part. Furthermore, it would be 
+   efficient to extend the program. 
+   Lastly, I would want to solve the program that we could keep track of process such as how many 1 inch bolts
+   are left or how far have you gone through. Just showing the remaining process.
+
+
+
+
+
+
+

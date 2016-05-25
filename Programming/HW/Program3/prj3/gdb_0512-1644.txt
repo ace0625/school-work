@@ -1,0 +1,439 @@
+Script started on Tue 12 May 2015 04:44:34 PM PDT
+yjacob@ada:~/CS202_prj/prj3$ gdb song
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from song...done.
+(gdb) run
+Starting program: /u/yjacob/CS202_prj/prj3/song 
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+*** Error in `/u/yjacob/CS202_prj/prj3/song': free(): invalid pointer: 0x0000000000603120 ***
+
+Program received signal SIGABRT, Aborted.
+0x00007ffff7531cc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+56	../nptl/sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) b song_hash_table::add_song_hash_table
+Breakpoint 1 at 0x401ead: file song_table.cpp, line 183.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song 
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606300 "Blank Space\r", p_song_artitst=0x6062c0 "Taylor Swift", 
+    p_song_genre=0x6062e0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) s
+song_entry::song_entry (this=0x7fffffffe300, p_song_title=0x606300 "Blank Space\r", p_song_artitst=0x6062c0 "Taylor Swift", p_song_genre=0x6062e0 "Country, Pop")
+    at song_entry.cpp:33
+33		if(!p_song_title || !p_song_artitst || !p_song_genre)
+(gdb) p p_song_title
+$1 = 0x606300 "Blank Space\r"
+(gdb) n
+36		if(song_title) delete [] song_title;
+(gdb) p song_title
+$2 = 0x603120 <std::cout@@GLIBCXX_3.4> "\370\376\333\367\377\177"
+(gdb) n
+*** Error in `/u/yjacob/CS202_prj/prj3/song': free(): invalid pointer: 0x0000000000603120 ***
+
+Program received signal SIGABRT, Aborted.
+0x00007ffff7531cc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+56	../nptl/sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) y[Kqy[K
+A debugging session is active.
+
+	Inferior 1 [process 31019] will be killed.
+
+Quit anyway? (y or n) y
+yjacob@ada:~/CS202_prj/prj3$ make
+g++ -o song song_entry.cpp song_table.cpp -g
+yjacob@ada:~/CS202_prj/prj3$ ./song
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Style
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Shake It Off
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Everything Has Changed (feat. Ed Sheeran)
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:I Knew You Were Trouble
+Segmentation fault
+yjacob@ada:~/CS202_prj/prj3$ cd ../prj2
+yjacob@ada:~/CS202_prj/prj2$ dir
+bak  bst  course  degree1  degree2  degree2_0508-0700.tar  degree2_0508-0718.tar  degree2_0508-0722.tar  degree2_0508-1226.tar	degree2.tar  doc  lll
+yjacob@ada:~/CS202_prj/prj2$ cd degree2
+yjacob@ada:~/CS202_prj/prj2/degree2$ dir
+base_class.cpp	cal_class.cpp  course.cpp  course.h  degree.cpp  design_writeup.txt  program2.tar  student.h
+base_class.h	cal_class.h    course.dat  degree    degree.h	 makefile	     student.cpp
+yjacob@ada:~/CS202_prj/prj2/degree2$ grep copy *
+course.cpp:		// copy information to LLL
+Binary file degree matches
+Binary file program2.tar matches
+yjacob@ada:~/CS202_prj/prj2/degree2$ cd .././.[K[K[K./[K./degree1
+bash: cd: ../../degree1: No such file or directory
+yjacob@ada:~/CS202_prj/prj2/degree2$ cd ../
+yjacob@ada:~/CS202_prj/prj2$ cd ./.[K[K./prj1
+yjacob@ada:~/CS202_prj/prj1$ dir
+bak  bst  bst.cpp  bst.h  card.cpp  card.h  dll  dll_bak  doc  game1  game.cpp	game.h	go  gofish  gofish_main.cpp  makefile  player  player_bak  ref
+yjacob@ada:~/CS202_prj/prj1$ cd [K[K[Kgrep copy *
+grep: bak: Is a directory
+grep: bst: Is a directory
+grep: dll: Is a directory
+grep: dll_bak: Is a directory
+grep: doc: Is a directory
+grep: game1: Is a directory
+Binary file go matches
+Binary file gofish matches
+grep: player: Is a directory
+grep: player_bak: Is a directory
+grep: ref: Is a directory
+yjacob@ada:~/CS202_prj/prj1$ cd ../prj3
+yjacob@ada:~/CS202_prj/prj3$ dir
+gdb_0512-1644.txt  makefile  song  song_cont.dat  song_entry.cpp  song_entry.h	song_table.cpp	song_table.h
+yjacob@ada:~/CS202_prj/prj3$ make
+g++ -o song song_entry.cpp song_table.cpp -g
+song_entry.cpp: In copy constructor ‘song_entry::song_entry(const song_entry&)’:
+song_entry.cpp:55:10: error: no match for ‘operator==’ (operand types are ‘song_entry* const’ and ‘const song_entry’)
+  if(this == copy_from) return;
+          ^
+song_entry.cpp:55:10: note: candidates are:
+In file included from /usr/include/c++/4.8/iosfwd:40:0,
+                 from /usr/include/c++/4.8/ios:38,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/postypes.h:216:5: note: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^
+/usr/include/c++/4.8/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::fpos<_StateT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_pair.h:214:5: note: template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_pair.h:214:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::pair<_T1, _T2>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_iterator.h:291:5: note: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:291:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::reverse_iterator<_Iterator>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_iterator.h:341:5: note: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:341:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::reverse_iterator<_Iterator>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:41:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/allocator.h:128:5: note: template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:128:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::allocator<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:41:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/allocator.h:133:5: note: template<class _Tp> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_CharT>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:133:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::allocator<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2486:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::basic_string<_CharT, _Traits, _Alloc>&, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2486:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT, _Traits, _Alloc>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2493:5: note: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::basic_string<_CharT>&, const std::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2493:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2507:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2507:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   ‘const song_entry’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2519:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2519:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT, _Traits, _Alloc>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/4.8/bits/basic_ios.h:37,
+                 from /usr/include/c++/4.8/ios:44,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/streambuf_iterator.h:204:5: note: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^
+/usr/include/c++/4.8/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::istreambuf_iterator<_CharT, _Traits>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+make: *** [all] Error 1
+yjacob@ada:~/CS202_prj/prj3$ cls
+No command 'cls' found, but there are 18 similar ones
+cls: command not found
+yjacob@ada:~/CS202_prj/prj3$ cls
+No command 'cls' found, but there are 18 similar ones
+cls: command not found
+yjacob@ada:~/CS202_prj/prj3$ clear
+[H[2Jyjacob@ada:~/CS202_prj/prj3$ make
+g++ -o song song_entry.cpp song_table.cpp -g
+song_entry.cpp: In copy constructor ‘song_entry::song_entry(const song_entry&)’:
+song_entry.cpp:55:10: error: no match for ‘operator==’ (operand types are ‘song_entry* const’ and ‘const song_entry’)
+  if(this == copy_from) return;
+          ^
+song_entry.cpp:55:10: note: candidates are:
+In file included from /usr/include/c++/4.8/iosfwd:40:0,
+                 from /usr/include/c++/4.8/ios:38,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/postypes.h:216:5: note: template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)
+     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+     ^
+/usr/include/c++/4.8/bits/postypes.h:216:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::fpos<_StateT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_pair.h:214:5: note: template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^
+/usr/include/c++/4.8/bits/stl_pair.h:214:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::pair<_T1, _T2>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_iterator.h:291:5: note: template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator==(const reverse_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:291:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::reverse_iterator<_Iterator>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/4.8/bits/char_traits.h:39,
+                 from /usr/include/c++/4.8/ios:40,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/stl_iterator.h:341:5: note: template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator==(const reverse_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/4.8/bits/stl_iterator.h:341:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::reverse_iterator<_Iterator>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:41:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/allocator.h:128:5: note: template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)
+     operator==(const allocator<_T1>&, const allocator<_T2>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:128:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::allocator<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:41:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/allocator.h:133:5: note: template<class _Tp> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_CharT>&)
+     operator==(const allocator<_Tp>&, const allocator<_Tp>&)
+     ^
+/usr/include/c++/4.8/bits/allocator.h:133:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::allocator<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2486:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::basic_string<_CharT, _Traits, _Alloc>&, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2486:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT, _Traits, _Alloc>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2493:5: note: template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::basic_string<_CharT>&, const std::basic_string<_CharT>&)
+     operator==(const basic_string<_CharT>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2493:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2507:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::basic_string<_CharT, _Traits, _Alloc>&)
+     operator==(const _CharT* __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2507:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   ‘const song_entry’ is not derived from ‘const std::basic_string<_CharT, _Traits, _Alloc>’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/bits/locale_classes.h:40,
+                 from /usr/include/c++/4.8/bits/ios_base.h:41,
+                 from /usr/include/c++/4.8/ios:42,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/basic_string.h:2519:5: note: template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/4.8/bits/basic_string.h:2519:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::basic_string<_CharT, _Traits, _Alloc>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+In file included from /usr/include/c++/4.8/bits/locale_facets.h:48:0,
+                 from /usr/include/c++/4.8/bits/basic_ios.h:37,
+                 from /usr/include/c++/4.8/ios:44,
+                 from /usr/include/c++/4.8/ostream:38,
+                 from /usr/include/c++/4.8/iostream:39,
+                 from song_entry.cpp:11:
+/usr/include/c++/4.8/bits/streambuf_iterator.h:204:5: note: template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)
+     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+     ^
+/usr/include/c++/4.8/bits/streambuf_iterator.h:204:5: note:   template argument deduction/substitution failed:
+song_entry.cpp:55:13: note:   mismatched types ‘const std::istreambuf_iterator<_CharT, _Traits>’ and ‘song_entry* const’
+  if(this == copy_from) return;
+             ^
+make: *** [all] Error 1
+yjacob@ada:~/CS202_prj/prj3$ cls
+No command 'cls' found, but there are 18 similar ones
+cls: command not found
+yjacob@ada:~/CS202_prj/prj3$ exit
+exit
+
+Script done on Tue 12 May 2015 04:53:41 PM PDT

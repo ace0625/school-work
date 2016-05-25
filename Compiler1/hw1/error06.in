@@ -1,0 +1,5 @@
+//error06
+// unterminated multi-line comments
+
+/* start comment 
+ * ... missing the end

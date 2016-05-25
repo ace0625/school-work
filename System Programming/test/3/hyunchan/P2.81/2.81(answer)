@@ -1,0 +1,41 @@
+Problem #2.81
+Hyunchan Kim
+
+<Description>
+
+We are running programs on a machine where values of type int are 32-bits. They are represented in twos
+complement, and they are right shifted arithmetically. Values of type unsigned are also 32-bits.
+3We generate arbitrary values x and y, and convert them to unsigned values as follows:
+
+int x = random();
+int y = random();
+
+unsigned ux = (unsigned) x;
+unsigned uy = (unsigned) y;
+
+A. (x < y) == (-x > -y)
+B. ((x + y) << 4) + y - x == 17 * y + 15 * x
+C. ~x + ~y + 1 == ~(x + y)
+D. (ux - uy) == -(unsigned) (y - x)
+E. ((x >> 2) << 2) <= x
+
+->>  Indicate whether or not the expression always yields 1. 
+If it always yields 1, describe the underlying mathematical principles. 
+Otherwise, give an example of arguments that make it yield 0.
+
+<Answers>
+
+A. (x < y) == (-x > -y).
+No, when y = 0.
+
+B. ((x+y)<<4) + y-x == 17 * y + 15 * x.
+Yes, from the ring properties of twos complement arithmetic.
+
+C. ~x + ~y + 1 == ~(x+y).
+Yes, ~x + ~y + 1 = (-x - 1) + (-y - 1) + 1 = -(x + y) - 1 = ~(x + y).
+
+D. (ux-uy) == -(unsigned)(y - x).
+Yes. Due to the isomorphism between twos complement and unsigned arithmetic.
+
+E. ((x >> 2) << 2) <= x.
+Yes. Right shift rounds toward minus infinity.

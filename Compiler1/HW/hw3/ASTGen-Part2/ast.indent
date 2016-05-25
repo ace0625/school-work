@@ -1,0 +1,41 @@
+Class
+  isAbstract=false
+  Args
+    private boolean isAbstract
+    private String name
+    private Args args
+    private Class[] subclasses
+  Methods
+  Classes
+Args
+  isAbstract=false
+  Args
+    Args before
+    Args last
+  Methods
+  Classes
+Arg
+  isAbstract=false
+  Args
+    private String visibility
+    private Type type
+    private String id
+  Methods
+  Classes
+Type
+  isAbstract=true
+  Args
+  Methods
+  Classes
+    NameType
+      isAbstract=false
+      Args
+        private String[] ids
+      Methods
+      Classes
+    ArrayType
+      isAbstract=false
+      Args
+        private Type elem
+      Methods
+      Classes

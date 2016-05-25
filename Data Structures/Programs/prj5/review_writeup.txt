@@ -1,0 +1,123 @@
+//CS163
+//Program #5
+//Hyunchan Kim
+
+<< Review Write up >>
+
+This program implements a directional graph with weighted edges using an adjacency list.
+For this program I used a previously developed ADT since it is pretty similar to the other
+program we have gone through, a flexible array, to implement the adjacency list. 
+The program is very modular in its design, as there is very little copying that is done 
+within the graph ADT.  Most of the copying is done a in the flexible array or 
+the structs that hold the data. 
+Much of the actual organization of the data is handled within the flexible already itself 
+while the graph ADT mainly handles the edges. The method that the graph ADT uses to handle
+the edges is that it first determines the ID of the desired vertex, retrieves the data 
+from the adjacency list, works with the data as required, then it edits the entry in the 
+ajacency list so that it reflects any changes.  This is important when it comes to 
+entering edges into the abstract data type.  This allows the algorithm to simply retrieve 
+the old head pointer, store it in a temporary variable, then allocate a new node, and connect
+ the linear linked list back up.
+Data insertion works by first inserting the names of event initially, then
+defining the connections between them. When initially inserting a new event, only
+an array of characters is passed to the Graph abstract data type, and then the array of 
+characters is designated an number, which references its absolute location in the flexible
+array. This number is then used when creating edges.  The process for creating an edge is
+to use command to view all of the different entries in the flexible array so that you can
+determine their event name and friends' names so you can reference them while inserting.
+When the user decides to insert an edge, they are prompted for the event of the first event 
+and then the name of the second event. This information is then inserted into the correct 
+edge node based off of the head pointer that was found in the adjacency list.  
+
+1) How well did the data structure selected perform for the assigned application?
+
+=> The data structure performed extremely well for this application.  The graph ADT performed
+ extremely well as a method of connecting the intersections in a meaningful way, that is 
+ easier for a user to interface with. The flexible array from the first assignment also 
+ provided a very effective way of implementing an adjacency list. 
+ For this program there are two data file; one is task information and the other is edge 
+ information. 
+	
+	1. structure of vertex
+	struct vertex
+	{
+		friend_entry* entry;	// entry
+		struct node* head;	// edge(adjacency) list
+		struct node* tail;
+	};
+
+	2. structure of node
+	struct node
+	{
+		vertex * adjacent;
+		node* next;
+	};
+	
+	3. class for friend_entry
+	class friend_entry
+	{
+		public:
+			friend_entry(void);
+			~friend_entry(void);
+			int create_entry(char* event char * name);
+			int copy_entry(const friend_entry & a_new_entry);
+			int retrieve(char* matching_name, friend_entry & found) const;   
+			int retrieve(friend_entry & found) const;  
+			bool compare (char* match);
+			int display(void);
+
+		private:
+			char * event;
+			char * name;
+	
+};
+	3. class for graph
+
+	class table
+	{
+		public:
+			table(int size = 11);
+			~table(void);
+			int insert_vertex(const friend_entry & to_add);
+			int find_location(char* key_value);
+			int insert_edge(char* current_vertex, char* to_attach);
+			int remove_all();
+			int load_data_file(char file_name[]);
+			int load_edge_file(char file_name[]);
+			int display_all();
+		
+		private:
+			vertex * adjacency_list;
+			int list_size;
+	};
+
+2) Would a different data structure work better? If so, which one and why...
+	=> This program is implemented with a graph. To express edge (relationship of vertex)
+	a linked list as an adjacent list is used. 
+	If the data is small, it can be developed by an array but I think the linked list is
+	more efficient. I do not currently know of a data structure that would work better
+	than this graph implementation. 
+
+3) What was efficient about your design and use of the data structure?
+	=> Graph is a very efficient data structure that can express the relationship between
+	the object connected each other. In particular, using a linked list as a adjacent 
+	list for edge is efficient algorithm. An efficient aspect of my program was 
+	how I implemented the flexible array, so that it can dynamically have as much memory
+	as it needs for the adjecency list, and not too much more.
+	
+4) What was not efficient?
+	=> The goal of graph is expressing relationship of links. So, for this goal I could 
+	not find the inefficient point in this structure.
+
+5) What would you do differently if you had more time to solve the problem?
+	=> If I had more time, I would like to develop a weighted graph. It can express 
+	consume time for using rides or average waiting time.
+	There were some aspects of my design that we're not efficient, some much more than 
+	others. One of the examples that stands out, is the method used for the final deallocation 
+	of all dynamically allocated memory. This system involves the traversing through the adjacency
+	list deallocating each node individually, but it traverses to the node every time, instead
+	of iterating through once. Also, I would fix the issues that were inefficient in 
+	my implementation.  I would also attempt to create more cohesion between the two major 
+	abstract data types.  I know this thing that I would implement, would be a deletion system.
+	There is already a delete function from the flexible array abstract data type, but it has 
+	not been implemented in the graph abstract data type.

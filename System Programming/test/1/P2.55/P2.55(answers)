@@ -1,0 +1,9 @@
+CS201
+Problem #2.55
+Hyunchan Kim
+
+*As the show-bytes program executes, it prints pointer and hexadecimal value of the int value requested. 
+ Following the result, the computer puts the least significant byte within lowest address. This is called
+"little-endian" order usually operated in Intel CPU. On the other hand, other computers such as Mac, Sun 
+put the least significant byte within highest address. Therefore, the result would be 
+(0x00 0x00 0x3d 0x6d). 

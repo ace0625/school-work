@@ -1,0 +1,89 @@
+//----------------------------------------------------------
+// Raw grammar for the miniJava Language (CS321 Winter 2015) 
+//
+// Jingke Li, Portland State University
+//----------------------------------------------------------
+// Homework #2
+// Hyunchan Kim
+
+Program    -> {ClassDecl}
+
+ClassDecl  -> "class" <ID> ["extends" <ID>] "{" {VarDecl} {MethodDecl} "}"
+
+MethodDecl -> "public" m1()
+
+m1	   -> ExtType() <ID> "(" [Param() ("," Param())*] ")" "{" m2()
+		| "static" "void" "main" "(" "String" "[" "]" <ID> ")" "{" m2()
+
+m2	   -> (LOOKAHEAD(2) VarDecl())* (LOOKAHEAD(2) Stmt())* "}"
+
+Param      -> Type <ID>
+
+VarDecl    -> Type <ID> ["=" InitExpr] ";"
+
+ExtType    -> Type | "void" 
+
+Type       -> BasicType                 
+           |  BasicType "[" "]"             // array type
+           |  <ID>                          // object type
+
+BasicType  -> "int" | "double" | "boolean"
+
+Stmt  ->   "{" {Stmt} "}"                         // stmt block
+           |  ExtId "(" [Args] ")" ";" | ["[" Expr() "]"] "=" InitExpr() ";"           // call stmt
+           |  Lvalue "=" InitExpr ";"             // assignment
+           |  "if" "(" Expr ")" Stmt ["else" Stmt]    
+           |  "while" "(" Expr ")" Stmt               
+           |  "System" "." "out" "." "println" 
+                "(" [PrArg] ")" ";"                
+           |  "return" [Expr] ";"                     
+
+Args       -> Expr {"," Expr}
+
+PrArg      -> Expr | <STRLIT>
+
+InitExpr   ->   "new" BasicType() "[" <INTLIT> "]"
+    		| <ID> "(" ")"
+		| Expr() 
+
+Expr       ->  UnOp() Expr() b1()
+		| "(" Expr() ")" b1()
+		| ExtId() e2()
+		| Literal() b1()
+
+e2	   ->   "(" [Args()] ")" b1()
+		| ["[" Expr() "]"] b1()
+
+b1         ->  BinOp() Expr()
+    		| {}
+
+
+
+Lvalue     -> ExtId() ["[" Expr() "]"]
+
+ExtId      -> ["this" "."] <ID> {"." <ID>}  // object field or just ID
+
+Literal    -> <INTLIT> | <DBLLIT> | "true" | "false"
+
+BinOp      -> "+"  | "-"  | "*" | "/"  | "&&" | "||"
+           |  "==" | "!=" | "<" | "<=" | ">"  | ">=" 
+
+UnOp       -> "-" | "!"
+
+
+Operator Associativity and Precedence
+-------------------------------------
+The arithmetic and logical binary operators are all left-associative.
+The operators' precedence is defined by the following list (from high
+to low):
+
+  ------------------------
+  new, ()
+   [],  ., method call
+    -,  ! 
+    *,  / 
+    +,  - 
+   ==, !=,  <, <=,  >, >=
+   &&
+   ||
+  ------------------------

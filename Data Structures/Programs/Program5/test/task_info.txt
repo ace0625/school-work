@@ -1,0 +1,28 @@
+AA|A10|STEP7|It's a playground classic... upscaled! Our giant slide offers riders 3 tracks to choose from, each sending riders racing to the bottom in record time. Minimum height: 34", or ride with an adult.
+AA|A20|STEP4|The oldest ride in the park, our American-made 1911 Hershall-Spillman hand carved menagerie carrousel is often called "the heartbeat of The Neverland". Minimum height: 34", or ride with an adult.
+AA|A30|STEP6|Bump, crash, and drive your way around this classic bumper car ride, now with kid-sized cars so the whole family can play together. Minimum height: 50", or 42"-50" with an adult.
+AA|A3R|STEP2|Sample different beers at the Bayside Brews food and drink stand at Adventure Park
+AA|A40|STEP3|Neverland Park's newest ride, opens June 2014! Kids take the driver's seat for a wheely popping tour of Oregon! Minimum Height: 34", or ride with an adult. 54" or taller must ride in sidecar.
+AA|A50|STEP5|One of our most spine-tingling thrill rides, the Disk'O dives, spins, and leaves riders saying "Who's up for round two?". Minimum height limit: 48".
+AA|A5S|STEP1|Neverland Souvenir Store - Gift Cards make great gifts for any occasion.
+BB|B10|STEP7|The highs and lows of this classic spinning, tilting thrill ride will get you dizzy and delighted. Minimum height: 42".
+BB|B20|STEP4|Beautiful views of downtown Portland await couples as they pass over the top of our beautiful, antique Ferris Wheel. Minimum Height: 48", or ride with an adult.
+BB|B30|STEP6|Boing! Boing! Bounce your way to big smiles on this family favorite. Minimum height: 34", or ride with an adult.
+BB|B40|STEP5|The race is on! Put your driving skills to the test as you speed toward the finish line. Minimum driver height: 58". Passengers must be 3 years old or 45 pounds, and may only ride with a licensed driver 16 or older.
+BB|B4R|STEP1|Sign with wood carving of a tiger's head, The Bengal Barbecue restaurant in Fantasy World Park
+BB|B50|STEP3|One of Neverland Park's newest rides, you'll feel the thrill of choppy seas in our vividly painted vessels. Minimum height: 36", or ride with an adult.
+BB|B60|STEP2|Feel the thunder as you careen toward the ground, launch into a 360¡Æ loop, then twist through hairpin turns. Minimum height: 54".
+CC|C10|STEP4|Rock out with high speeds and high energy as you whirl around under a dazzling light array. Minimum height: 53".
+CC|C1R|STEP1|The sign for Clarabelle's snack stand at Happy World Park features a smiling Clarabelle Cow
+CC|C20|STEP3|Hold on tight to your friends and family as you get tossed every which way on the good ship Rockin' Tug. Minimum height: 42", or ride with an adult.
+CC|C30|STEP2|Ferris Wheel meets Squirrel Cages in this high flying, upside-down ride. Minimum height: 42", or ride with an adult.
+CC|C40|STEP6|Feel the exhilaration as you race at breakneck speeds toward the other riders, then spin away just in time. Minimum height: 48", or ride with an adult.
+CC|C50|STEP5|Neverland Park's most popular and death-defying ride, the Screamin' Eagle vaults riders 70' in the air, then sends them plunging as the giant arm swings and rotates for a total thrill experience. Minimum height: 48".
+DD|D10|STEP6|Little ones save the day on this vintage fighter pilot ride. Maximum height: 48".
+DD|D20|STEP7|The classic American carnival ride has had a home on our midway for over 50 years, spinning, dropping, and delighting generations. Minimum height: 42", or ride with an adult.
+DD|D2R|STEP1|A plate featuring different delectable treats at the Fantasmic! Dessert Party in Magic Kingdom Park
+DD|D30|STEP5|One of the Neverland newest rides, the beautiful, modern Tilt-A-Whirl replicates the original that has been part of our experience since its inception. Minimum height: 46", or ride with an adult.
+DD|D40|STEP4|Beep, beep! Kids coming through! Young guests can enjoy a spin in their very own fanciful car. Maximum height: 48".
+DD|D50|STEP3|Slow down and take in the beauty of Neverland Park's picnic grounds as you loop the park and enjoy lovely views of the Willamette River. Minimum height: 34", or ride with an adult.
+DD|D60|STEP2|It's a ballooning adventure high above the trees! Spin your hot air balloon and see all the sights. Minimum height: 42", or ride with an adult.
+DD|D70|STEP8|All ages will feel the thrill of this small but mighty coaster. Minimum height: 34", or ride with an adult.

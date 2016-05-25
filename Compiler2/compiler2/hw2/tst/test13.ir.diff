@@ -1,0 +1,17 @@
+3c3
+<  if n <= 0 goto L1
+---
+>  if n <= 0 goto L0
+4a5
+> L0:
+6,7c7
+< L3:
+<  if n != 0 goto L3
+---
+>  if n != 0 goto L2
+9,10c9,10
+<  goto L3
+< L4:
+---
+>  goto L1
+> L2:

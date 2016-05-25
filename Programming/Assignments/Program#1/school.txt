@@ -1,0 +1,29 @@
+Name of School : West Linn High School
+Age : 19
+Number of Classes : 100
+Best Class Size : 20
+Average Class Size : 22
+
+Name of School: Corbett Charter school
+Age: 13
+Number of Classes : 30
+Best Class Size : 15
+Average Class Size : 17  
+
+Name of School: Lake Oswego
+Age: 15
+Number of Classes : 45
+Best Class Size : 24 
+Average Class Size : 27
+
+Name of School: Grant High school
+Age: 14
+Number of Classes : 50 
+Best Class Size : 18
+Average Class Size : 20
+
+Name of School: Wilson High School
+Age: 18
+Number of Classes : 40
+Best Class Size : 15
+Average Class Size : 18

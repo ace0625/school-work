@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From CallStmt, Param and arg counts are not matching: (ObjType B) vs. (ObjType A)
+---
+> Checker$TypeException: (In CallStmt) Param and arg types don't match: (ObjType B) vs. (ObjType A)

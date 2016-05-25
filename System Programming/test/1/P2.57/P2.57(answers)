@@ -1,0 +1,5 @@
+===Data Representation===
+
+short integers - aligned on a two-byte boundary
+long integers - 32 bits, aligned on a four-byte boundary
+double - 64 bits, aligned on an eightr-byte boundary

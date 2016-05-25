@@ -1,0 +1,58 @@
+/* 
+	CS163
+	Assignment #3
+	Hyunchan Kim
+*/
+
+<< Design Write_up>> 
+
+
+In this program, the design is based on three class files including main file. 
+One class was mainly responsible for handling the application data and operations 
+on one app entry, hence, the app_entry class. Next, I implemented a hash table class 
+to take care of the hashing and importing and storing the list of data. 
+The main data structure performed very for the task at hand. Each application data was placed
+within its own linked list with a key value which is key word, and also for when searching by key word,
+that gave me instant access to a list already sorted by my key (key word). 
+One of the major downsides to this design was the traversal that was a result of
+chaining. 
+A different data structure might work depending on the number of entries or how the data would be 
+stored and used.  
+Given a large number of entries, the hash table that was used would prove to
+distribute the lists nicely. If a smaller number of entries were being dealt with,
+just a simple array may have been more than enough, as it would eliminate the
+need for traversal.
+
+One major problem with my design would be dealing with key word. Key word could be more 
+than one for an application. Even if it could be many, I set to have up to three key words. 
+I was not able to file more efficient way to do that and I was not sure how to take the 
+key words to store/retrieve so I happened to repeat it over and over again the 
+needed functions, at least by making it more runnable. 
+
+I also missed a step somewhere when validating something. Maybe it's a display
+function. When displayAll() outputs there is some garbage displayed. There's
+probably a simple answer to why this is happening. I might not be initializing
+everything right. Maybe I should be type checking before I output. 
+Just more checks all around are needed. 
+
+One thing I did like about my data structure was the hashing function I used. 
+I find that it does a very effective job at randomly and evenly distributing 
+the data. Also, inputting the data, and setting the data into the activity
+objects, I feel that, even though the code is a bit wordy and some not efficient,
+it does what you think it does. It's very easy to parse it, because it's very much the same
+thing happening over and over. It's horribly UN-DRY coding, but at the very
+least it's very readable. 
+
+If I had more time, I would try to have another hash table that managed by application name.
+And I would try something more in main to be more attractive and intuitive and
+generally more fleshed out. 
+And also, with an external data file, I would run fill up my datafile with more data to be
+loaded, maybe I'd take a more the sample data. 
+
+
+
+
+
+
+
+

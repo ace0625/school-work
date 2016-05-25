@@ -1,0 +1,16 @@
+Script started on Tue 28 Jan 2014 02:55:01 PM PST
+hyunchan@kororaa:~/cs201/hyunchan/P2.81$ ls
+2.81  2.81(answer)  2.81.c  2.81.o  a.out  Makefile  typescript
+hyunchan@kororaa:~/cs201/hyunchan/P2.81$ gcc 2.81.c
+hyunchan@kororaa:~/cs201/hyunchan/P2.81$ ./a.out
+ux = 1804289383, uy = 846930886
+
+A. (x < y) == (-x > -y) :  1
+B. ((x + y) << 4) + y-x == 17*y+15*x :  1
+C. ~x + ~y + 1 == ~(x+y) :  1
+D. (ux-uy) == -(unsigned)(y-x) :  1
+E. ((x >> 2) << 2) <= x :  1
+hyunchan@kororaa:~/cs201/hyunchan/P2.81$ exit
+exit
+
+Script done on Tue 28 Jan 2014 02:55:28 PM PST

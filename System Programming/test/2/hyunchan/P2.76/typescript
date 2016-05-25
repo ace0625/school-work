@@ -1,0 +1,52 @@
+Script started on Tue 21 Jan 2014 12:34:23 PM PST
+hyunchan@royal:~/cs201/hyunchan/P2.76$ make
+make: Nothing to be done for `all'.
+hyunchan@royal:~/cs201/hyunchan/P2.76$ ./a.out
+Multiply a number by a constant K(17, -7, 60, -112) only using operations +,- and <<
+x = 2
+
+K=17 using ((x << 4) + x)
+2 x 17 = 34
+
+K=-7 using (x - (x << 3))
+2 x -7 = -14
+
+K=60 using ((x << 6) - x - x - x - x)
+2 x 60 = 120
+
+K=-112 using (x - (x << 6) - (x << 5) - (x << 4) - x)
+2 x -112 = -224
+hyunchan@royal:~/cs201/hyunchan/P2.76$ ./a.out
+Multiply a number by a constant K(17, -7, 60, -112) only using operations +,- and <<
+x = 5
+
+K=17 using ((x << 4) + x)
+5 x 17 = 85
+
+K=-7 using (x - (x << 3))
+5 x -7 = -35
+
+K=60 using ((x << 6) - x - x - x - x)
+5 x 60 = 300
+
+K=-112 using (x - (x << 6) - (x << 5) - (x << 4) - x)
+5 x -112 = -560
+hyunchan@royal:~/cs201/hyunchan/P2.76$ ./a.out
+Multiply a number by a constant K(17, -7, 60, -112) only using operations +,- and <<
+x = 10
+
+K=17 using ((x << 4) + x)
+10 x 17 = 170
+
+K=-7 using (x - (x << 3))
+10 x -7 = -70
+
+K=60 using ((x << 6) - x - x - x - x)
+10 x 60 = 600
+
+K=-112 using (x - (x << 6) - (x << 5) - (x << 4) - x)
+10 x -112 = -1120
+hyunchan@royal:~/cs201/hyunchan/P2.76$ exit
+exit
+
+Script done on Tue 21 Jan 2014 12:34:46 PM PST

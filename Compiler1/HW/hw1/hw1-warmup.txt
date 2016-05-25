@@ -1,0 +1,178 @@
+------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I, Winter 2016
+
+Assignment 1: "Warmup"
+------------------------------------------------------------------------
+
+Preamble:
+---------
+Due: 10pm, Wednesday, January 20, 2016, via the hw1 dropbox on D2L.
+Your submission should be in the form of a single text file, based
+on the template described in Part 1 below with your answers to Parts
+2 and 3 (in plain text) following immediately after that.  Solutions
+that are submitted in other formats or by other means may not be
+accepted/graded.  For example, please do not submit a solution in
+Word or pdf format, and please do not use email to submit a
+solution.  Please contact the instructor at the earliest possible
+opportunity if you think that you may not be able to meet these
+requirements for submission.  Read and follow the instructions
+carefully, noting that you may not be able to earn full marks if you
+do not follow the instructions or do not include all of the expected
+details.
+
+This assignment assumes that you have completed the minitour portion
+of the Week 1 lab.  Do not skip the lab work as an attempted
+shortcut to getting this assignment done quickly; you may well find
+that these exercises take much longer in that case!  And remember
+that you are welcome to ask for help at any time, not just with
+specifics of this assignment, but also with questions about the
+minitour lab, or any of the other materials that have been shared
+with you in this course.
+
+This assignment will be graded out of 25 points following the
+distribution described below.  This is intended as a quick warmup
+exercise, however, so even a perfect score will only contribute a
+maximum of 5% towards your final grade for the class.  Note,
+however, that every student is required, as a minimum, to earn a non
+zero score on every assignment.
+
+Please ask for help or clarification if you need it.  Remember also
+that all submissions must be individual work only.
+
+------------------------------------------------------------------------
+Part 1: [20 points]
+-------
+We've seen that compilers are typically structured as a pipeline of
+phases.  At each step, we may find errors in the input and/or pass
+on a representation of the input program (such as a stream of
+characters, a list of tokens, or an abstract syntax tree) to the
+next phase.  If the input is valid, then the compiler will
+eventually output a valid target language program that has the same
+semantics as the original source program.
+
+In this first part of the assignment, you will be given a collection
+of twenty programs, each intended as a possible input to the mini
+compiler that is built up in the minitour portion of the Week 1 lab.
+To receive your specific collection of programs, log in to the
+Linuxlab and, in your home directory, run the following command,
+replacing the string "PSUID" with your nine digit PSU Id number:
+
+   ~mpj/hw1-gen PSUID
+
+This will create a new folder called cs321-hw1-PSUID that contains
+your collection of mini programs (with names p1.mini, ..., up to
+p20.mini) and a template file called hw-submission.  Note that every
+student should receive a slightly different set of programs, and
+that the PSUID numbers will be used for assigning scores to
+students, so it is important that you enter the correct number!  If
+you have any problems obtaining your collection of programs in this
+way, please contact the instructor for help.  You are not required
+to use the Linux Lab once you have obtained your programs; you may,
+for example, download the files to a personal machine that you use
+to complete the assignment.
+
+[Warning: Any changes that you have made to your files, including
+any solutions that you have already recorded in your template file,
+will be lost if you run the command above multiple times.]
+
+As it happens, however, all twenty of the programs that you are
+given have a problem that will cause one or more versions of the
+minitour compiler to report an error or a warning.  Remembering that
+the minitour is presented as a sequence of versions, numbered from
+00 to 21, your task is to identify, for each program, the earliest
+version of the mini compiler that will report an ERROR or a WARNING
+(using one of those two strings in the output) for that program.
+
+For example, if a particular program can be used as input to
+versions 00, 01, and 02 of the minitour compiler without triggering
+a diagnostic, but then running it on version 03 produces output that
+reports either an ERROR or a WARNING, then your answer for that
+program should be "03".
+
+In principle, it is possible for you to solve this problem by brute
+force methods, running every program on every version of the
+minitour compiler and analyzing the results.  We hope, however, that
+you will use your understanding of compiler phases to speed up the
+process.  In particular, for each program, you should: review the
+given code; identify the specific problem; determine which parts of
+minitour are responsible for detecting that kind of error; and then
+run some quick tests to confirm your results.
+
+All of your answers should be entered in to the template file that
+is included with your collection of programs, replacing the two
+underscores on each line with the appropriate 2-digit version number
+(just like the directories in the minitour, version numbers should
+be padded with up to one '0' on the left to ensure that they are two
+digits long).
+
+You will receive one point for each correct answer, but no points if
+your submission does not match the required format.  So please make
+sure that all 20 lines are present (and have an answer) in the
+version of the template that you submit!
+
+NOTES:
+
+1) In general, you should not assume that an ERROR or WARNING that
+is triggered in one version of the compiler will necessarily show up
+in any later version.
+
+2) Errors that are caused by mistakes in the way that the mini compiler
+is constructed or invoked should not be considered in this assignment.
+
+------------------------------------------------------------------------
+Part 2: [2 points]
+-------
+Provide a detailed justification for one of your answers in Part 1,
+not by relying on test runs of minitour compiler versions, but using
+an argument that considers the specific nature of the error in the
+program you've chosen and the role/function of the different
+compiler phases that are involved.  For example, if you're
+describing an error that is detected for the first time during
+parsing, then you should explain why such an error would not cause a
+problem for earlier phases like lexical analysis (e.g., because the
+input is a valid sequence of tokens), and also why it is reasonable
+to expect that this specific error could be detected as a natural
+side effect of parsing.
+
+Your answer to this part of the assignment should be carefully
+labeled and included, in plain text, immediately after your answers
+to Part 1 in the supplied template file.  You may choose any one of
+the twenty programs in your collection but you must include the
+source code for that program as part of your answer so that we know
+what you are referring to.  In most cases, a few sentences of
+(valid!) justification will suffice.
+
+------------------------------------------------------------------------
+Part 3: [3 points]
+-------
+The different versions of the minitour compiler catch many common
+mistakes in input programs, but do not detect all possible errors
+that a programmer might make.  Your final task for this assignment
+is to identify and describe one such error.  Specifically, you are
+required to:
+
+- Construct a mini program that contains a programming error that
+  you think should trigger an error (because it likely reflects a
+  mistake on the part of the programmer), but demonstrate that it
+  is accepted by the minitour compiler without raising any error.
+  You should include the text of your program and the output that
+  is produced by running it through Version 21 of minitour as part
+  of your solution.  [1 point]
+
+- Explain carefully why you think it would be useful for a compiler
+  to report an error for the kind of problem that is illustrated by
+  your sample program.  [1 point]
+
+- Explain why you think it is reasonable for a compiler to be able
+  to detect problems of this kind.  [1 point]
+
+Note, of course, that we cannot expect a compiler to detect logic
+errors; that is, we cannot expect a compiler to report an error if
+the input is a valid program, even if that program has bugs or does
+not have the meaning that the programmer intended.
+
+Your answer to this part of the assignment should be included, in
+plain text, at the end of your submission, carefully labeled, and
+following your answer to the previous parts.
+
+------------------------------------------------------------------------

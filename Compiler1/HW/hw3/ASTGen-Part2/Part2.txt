@@ -1,0 +1,557 @@
+------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I, Winter 2016
+
+Assignment 3, Part 2: "AST"
+------------------------------------------------------------------------
+
+Preamble:
+---------
+In the first part of this assignment, you've walked through the
+process of generating Java code from an ".ast" file by hand, and
+you've built a parser that can recognize syntactically valid ".ast"
+files.  In this second part, you'll complete the implementation of
+ASTGen by adding actions to the parser to construct abstract syntax
+trees for ".ast" files (using the data structures described by the
+"ast.ast" file) and by adding methods to those AST classes for
+generating corresponding Java code.
+
+There are two main tasks to complete in this assignment, summarized as
+follows: (the numbering scheme continues from Part 1).
+
+Task 3:
+-------
+Extend the parser code in ASTGen.jj to build abstract syntax trees
+using the classes in AST.java, and add methods to the latter class so
+that your program generates an appropriate collection of Java class
+definitions as output.
+
+Task 4:
+-------
+Extend the ".ast" language to allow the definition of method
+signatures, each of which specifies a name, return type, and list of
+parameter types.  Use ASTGen to help build new abstract syntax classes
+for these features, extend the parser to recognize method signature
+definitions, and add code to the abstract syntax classes to generate
+placeholders for each of the declared methods.
+
+------------------------------------------------------------------------
+Assignment Notes:
+=================
+The rest of this document provides more detailed notes to help you
+with these tasks.  It is quite long, but I hope that the assignment
+will be much easier if you take the time to read and understand these
+details properly.  (And if you read something that you don't
+understand, please feel free to ask for further help or
+clarification!)
+
+General Advice:
+---------------
+DIVIDE AND CONQUER: Although you are NOT REQUIRED to submit work for
+any intermediate stages in the development, you are still STRONGLY
+ENCOURAGED to look for ways to break the full task down in to smaller
+steps that you can implement and test independently.  (Approaching the
+problems in this way will also make it much easier for us to provide
+help if you get stuck.)  This will require you to develop extra test
+cases as you work through the problem, but it will also make the
+overall assignment much easier for you to complete.  The notes below
+provide detailed guidance about some (but not all!) of the "smaller
+steps" that you might want to follow.  But these are only examples
+and, modulo the comments above, incremental development is not a
+strict requirement for this assignment.
+
+BACK UP YOUR WORK! To avoid losing the results of your work on this
+assignment while you are only part way through, you are strongly
+encouraged to keep back ups as you proceed.  There are many ways to
+accomplish this.  A simple and safe approach that should work for
+everybody is to create a directory called "backup" and put copies of
+your main files (ASTGen.jj and AST.java) each time you have completed
+a step in the development.  Creating the backup folder is as easy as
+typing "mkdir backup", while making copies of the files is easily
+accomplished using "cp ASTGen.jj AST.java backup".
+
+PUBLIC REPOSITORIES: Those who are familiar with git or github may
+choose to use those tools for this assignment, which will also provide
+a solution to the backup problem.  One important caveat, however, is
+that your repository should not be public or visible to other users
+because the rules announced at the start of this course specify that
+any person who allows another person to copy their code has violated
+the academic integrity policy for this course.  (Making your
+repository public after the submission deadline, however, will not be
+considered a violation although, as a precaution, I would encourage
+you to delay doing this until after the assignment has been graded.)
+
+UPDATING PARSER FUNCTIONS: Of course, you will need to revise the
+parsing code that you used to build your syntax checker in Part 1 of
+this assignment.  But adding actions to support the construction of
+abstract syntax data structures is likely to require more than just
+small "tweaks" to the grammar rules that you used for syntax
+checking.  Here are some examples (not an exhaustive list!) of the
+kinds of changes that you might need to make in the process:
+
+a) Setting appropriate return types for different parsing functions.
+   (After all, a "void" function cannot return an abstract syntax
+   tree!)
+
+b) Adding local variables to parsing functions to hold intermediate
+   results.
+
+c) Adding variable names to parsing function calls, such as t=Type(),
+   to capture the abstract syntax tree fragments that are returned by
+   those calls (as in the javacctour, Version 18, among others).
+
+d) Adding parameters to parsing functions where necessary to provide
+   additional context for parsing.  (The "soFar" parameter in Version
+   08 of the javacctour is one example of this.)
+
+e) Splitting complex parsing functions in to multiple parts.  In your
+   syntax checker, you might have been able to squeeze quite a lot of
+   parsing functionality in to a single parsing function.  But the
+   introduction of actions is likely to make parsing functions more
+   complicate and harder to read.  Breaking them in to smaller,
+   logically consistent pieces can help, not only to make the
+   individual pieces easier to understand, but also easier to debug
+   because you can test the pieces independently.   For example, even
+   if your original parser only included one function for all
+   possible forms of Type, don't be afraid to focus, exclusively at
+   first, on a function for parsing NameTypes, and, only when that is
+   working, to add extra functionality for ArrayTypes using a second
+   parsing function.
+
+f) Rewriting the grammar so that it is easier to insert actions.  As
+   some simple examples, you might start by modifying code of the
+   form
+
+     (...)?             // an optional "..."
+
+   so that it looks like:
+
+     (... | )           // either a "..." or empty
+
+   The latter format is useful because it allows you to add
+   different actions on either side of the "|" symbol, as in:
+
+     (... { action1; } | { action2; })
+
+   (See the Rules() parsing function in SimpleLex.jj in the Week 5
+   lab solutions for an example of this.)
+
+   As another example, you may have written something like:
+
+     (...)+
+
+   in the syntax checking grammar, but perhaps then will discover
+   that it is useful to use an alternative formulation for + once
+   you add in code for actions:
+
+     (... {action1;} ) (... {action2;})*
+
+   Ultimately, this corresponds to the fact that A+ = A A*, except
+   that the second form allows you to specify different actions for
+   the two occurrences of A.  Note, by the way, that we can also
+   write A+ = A* A.  However, this form is NOT suitable for top down
+   parsing.  For example, if a parser is trying to match a pattern
+   of the form A* A with a character from FIRST(A) at the start of
+   the token stream, then it cannot immediately determine whether
+   that token should be treated as part of the input matching A*, or
+   else if we should just skip the A* part (treating it has having
+   matched zero occurrences of A), and proceed immediately to match
+   the trailing A.
+
+   PLEASE NOTE that the grammar rewrites described here are intended
+   to be viewed only as examples to illustrate the kinds of
+   transformation that might be required.  There are quite a few
+   different ways to approach this assignment, and the specific
+   patterns shown above may occur in some student solutions but not
+   in others.
+
+Parsing types (First steps for Task 3):
+---------------------------------------
+A good place to get started with the implementation of ASTGen for
+Task 3 is to add actions to your code for parsing types in Task 2.
+In fact, if you need to, you can further break this down in to three
+smaller steps:
+
+- write a parsing function that will return a String[] corresponding
+  to a sequence of identifiers separated by periods
+
+- write a parsing function that will return a NameType corresponding
+  to a sequence of identifiers separated by periods
+
+- write a parsing function that will return a Type value,
+  corresponding to an arbitrary type, including both NameType and
+  ArrayType values.
+
+At each stage, you should modify your main function to call the
+parsing function that you are writing so that you can test it
+properly.  Adding some code for printing out the parsed values can
+be a good way to help with this.  Specifically, you should add the
+following two methods to your NameType and ArrayType classes in
+AST.java:
+
+  public String toString() {  // Add this method to the NameType class
+    if (ids.length==1) {
+      return ids[0];
+    } else {
+      StringBuffer buf = new StringBuffer(ids[0]);
+      for (int i=1; i<ids.length; i++) {
+        buf.append(" . ");
+        buf.append(ids[i]);
+      }
+      return buf.toString();
+    }
+  }
+
+  public String toString() {  // Add this method to the ArrayType class
+    return elem.toString() + " []";
+  }
+
+In Java, every object supports a method called "toString()" that can
+be used to generate a printable representation of that object.  The
+two implementations of "toString()" shown here just print out values
+of the NameType and ArrayType classes in a readable format.  Note
+that the code for code above adds extra spaces around the "."
+character and in front of the "[" character, which means that, for
+example, a type that appears in the input as "java.lang.Integer"
+will be displayed as "java . lang . Integer".  This might be helpful
+as a way to check that your code for parsing types is recognizing
+"java.lang.Integer" correctly as having three distinct string
+components, and not treating it incorrectly as a single string.
+
+Adding More Parsing Actions (Part of Task 3):
+---------------------------------------------
+When you are satisfied that your parsing functions for types are
+working correctly, you are ready to move on to adding actions to the
+rest of your ".jj" file.  Again, you are strongly encouraged to
+proceed incrementally; for example, you might want to start with a
+parsing function for Arg values, before moving on to Args lists,
+etc... but specific details of how you do this, including the tests
+that you use at each step, are up to you.
+
+As a tool to help you check your final results, the supporting files
+for this part of the assignment include the source code for an extra
+class, "IndentOutput.java", that can be used to produce an
+"indented" description of an array of Class objects.  To make use of
+this, you will need to add the following method definitions to the
+specified abstract syntax classes in AST.java:
+
+In Class.java:
+
+  /** Output an indented description of this class.
+   */
+  void indent(IndentOutput out, int n) {
+     out.indent(n, name);
+     out.indent(n+1, "isAbstract="+isAbstract);
+     out.indent(n+1, "Args");
+     Args.indent(out, n+2, args, null);
+     out.indent(n+1, "Classes");
+     indent(out, n+2, subclasses);
+  }
+
+  /** Output an indented description of an array of classes.
+   */
+  public static void indent(IndentOutput out, int n, Class[] classes) {
+    for (int i=0; i<classes.length; i++) {
+      classes[i].indent(out, n);
+    }
+  }
+
+In Args.java:
+
+  /** Output an indented description of a list of arguments.
+   */
+  public static void indent(IndentOutput out, int n, Args args, Args end) {
+    if (args!=end) {                    // Add to the Args class
+      indent(out, n, args.before, end);
+      args.last.indent(out, n);
+    }
+  }
+
+In Arg.java:
+
+  /** Output an indented description of this argument.
+   */
+  public void indent(IndentOutput out, int n) {
+    StringBuffer buf = new StringBuffer();
+    if (visibility!=null) {
+      buf.append(visibility);
+      buf.append(" ");
+    }
+    buf.append(type.toString());
+    buf.append(" ");
+    buf.append(id);
+    out.indent(n, buf.toString());
+  }
+
+With these definitions in place, and if that the variable "classes" is
+a suitably initialized array of Class values, then you should be able
+to display a corresponding indented description of those classes by
+using a call something like the following. (Of course, you can delete
+or comment this out once you are done with testing.)
+
+    Class.indent(new IndentOutput(System.out), 0, classes);
+
+Sample outputs for each of the provided ".ast" files are available to
+you in the corresponding ".indent" files.
+
+Pay very careful attention to the structure of the "indent()"
+definitions given above because they illustrate the general patterns
+that are needed to "walk" across or traverse the abstract syntax
+structures that are constructed by the parser.
+
+The code for Args is particularly noteworthy because it highlights an
+unusual feature in the abstract syntax for argument lists.
+Specifically, argument lists are represented by simple linked lists of
+Arg values, with each Args node containing one Arg value (called
+"last") and a link to another list of arguments (called "before").
+The empty list of argument values is represented by a "null" pointer.
+The unusual feature about these lists, as suggested by the names
+before and last, is that the elements are stored in what many might
+consider to be a kind of "reverse order".  This, for example, is why
+the code for printing out an indented list of Args above ensures that
+the "args.before" list is displayed before the final "args.last"
+component.
+
+The ordering of elements in Args lists will be important in the
+implementation of ASTGen.  Consider the following example (which is
+supplied in "split.ast"):
+
+  class C(protected int x) {
+    class D1(private int y)
+    class D2(int z)
+  }
+
+The two classes D1 and D2 are defined as subclasses of C, so the
+constructors for D1 and D2 will need to take an "x" argument in
+addition to the "y" argument (for D1) or the "z" argument (for D2).
+Thanks to the ordering of Arg values in Args lists, it is easy for us
+to share the Args list for C as a common "before" segment for the two
+subclasses D1 and D2, as illustrated by the following diagram
+
+       Args list for C   +-- [int y] <--- Args list for D1
+                 |       |
+                 V       |
+    null <--- [int x] <--|
+                         |
+                         +-- [int z]  <--- Args list for D2
+
+The fact that D1 and D2 have arguments in common with C is also shown
+in the indented output for "split.ast", although the fact that (parts
+of) the same Args list is actually shared between all of the classes
+is not reflected in this output:
+
+  C
+    isAbstract=false
+    Args
+      protected int x
+    Classes
+      D1
+        isAbstract=false
+        Args
+          protected int x
+          private int y
+        Classes
+      D2
+        isAbstract=false
+        Args
+          protected int x
+          int z
+        Classes
+
+Generating Java Code (Final part of Task 3):
+--------------------------------------------
+By this point, you should have a working parser that builds abstract
+syntax representations for arbitrary ".ast" files.  (That said, don't
+be too surprised if you need to go back and tweak your ".jj" file in
+small ways as you proceed with the rest of the assignment!) "All" that
+remains is to write code that will generate a skeleton of a Java class
+for each of the classes specified in the ".ast" file.
+
+The expected format for each generated class skeleton should be as
+follows:
+
+  class <NAME> extends <PARENT> {
+    // declare the fields for this class
+    <FIELDS>
+
+    // declare the default constructor for this class
+    <NAME>(<PARAMS>) {
+      super(<SUPERS>);
+      <INITS>
+    }
+
+    // add methods and fields here ...
+  }
+
+The various parts of this output are as follows:
+
+  <NAME> is the name of the class whose code is being generated.
+
+  <PARENT> is the name of the parent class whose code is being
+     generated.  If there is no parent class, then the <PARENT>
+     portion of the output, as well as the "extends" keyword that
+     preceeds it, should be omitted.  In your implementation, you
+     might consider passing a pointer to the "parent" Class as an
+     argument to the function that prints out a description of a given
+     class, using the null pointer in cases where there is no parent.
+
+  <FIELDS> is a list of the fields---including visibility, type,
+     and name details in each case---for the fields that are
+     introduced in this class.
+
+  <PARAMS> is a list of all parameters (including type and name
+     details) that are needed to construct an instance of this class.
+     This list will include entries for all of the fields that are
+     introduced in this class as well as those that are required for
+     superclasses.
+
+  <SUPERS> is a list of all the fields (names only) that are
+     defined in a superclass of <NAME>.  If this class does not have a
+     superclass (i.e., if it does not have a parent), then the list of
+     <SUPERS> will be empty and should be omitted from the output,
+     together with the surrounding "super(...);".
+
+  <INITS> is a list of initializers for all of the fields that
+     are defined in the class (i.e., for all of the items that are
+     mentioned in <FIELDS>).  Each initializer takes the form:
+     this.<FIELDNAME> = <FIELDNAME>;
+
+In each of the places above (FIELDS, PARAMS, SUPERS, and INITS) where
+object fields are listed, the order of the field declarations should
+be the same as the order in which those fields are mentioned in the
+original ".ast" file.  As one example, the generated Java for the
+"split.ast" file described above should include the following class
+declaration:
+
+  class D1 extends C {
+    // declare the fields for this class
+    private int y;
+
+    // declare default constructor for this class
+    D1(int x, int y) {
+      super(x);
+      this.y = y;
+    }
+
+    // add methods and fields here ... 
+  }
+
+[The full generated code output for this particular file is included,
+in the file "split.java", with the other materials for this part of
+the assignment.]
+
+Generating Method Stubs (Task 4):
+---------------------------------
+We cannot expect a tool like ASTGen to be able to include full method
+definitions as part of the generated Java code: different methods will
+typically be implemented in different ways from one class to another,
+and there is no information in an ".ast" file to describe any of these
+details.  However, one tedious aspect of working with a collection of
+AST classes is the need to add implementations of a single method in
+multiple classes.  For example, suppose that we wanted to include
+eval() and print() methods to the Quick Calculator classes that were
+used as a motivating example at the start of the text for Part 1 of
+this assignment.  In this case, we would need to add implementations
+of these methods in each of the Expr, IntExpr, and BinExpr classes.
+The details of these methods would vary from one class to the next
+(e.g., the methods for Expr would likely be abstract, while the
+methods for IntExpr and BinExpr would reflect the fact that these
+describe fundamentally different kinds of expression).  However, all
+of the implementations for eval() would have the same return type and
+parameters, as is also the case for all of the methods of print().
+Suppose that it were possible to write something like the following in
+our ".ast" files:
+
+  abstract class Expr {
+    int eval()                           // An evaluation method
+    void print(java.io.PrintStream out)  // A print method
+    class IntExpr(private int value)
+    class BinExpr(private char op, private Expr left, private Expr right)
+  }
+
+and then have ASTGen figure out that it should include method
+definition stubs like the following in each of the Expr, IntExpr, and
+BinExpr classes:
+
+  int eval() {
+    // TODO: edit this method body
+  }
+
+  void print(java . io . PrintStream out) {
+    // TODO: edit this method body
+  }
+
+Given these templates, a programmer would still have to edit the
+definitions in Expr to make the methods abstract, and, as suggested by
+the "TODO" comments, fill in the implementations of these methods for
+the other two classes.  But at least they wouldn't have to retype the
+first line of each method declaration in every class.
+
+Let's make this "dream" come true! :-)
+
+1) Use your ASTGen implementation with the following input to generate
+   three new abstract syntax classes (also provided in "method.ast").
+
+   // Represents a list of methods, stored using the same "reverse"
+   // ordering as Args:
+   class Methods(private Methods before, private Method last)
+
+   // Represents a single method with a given return type ("void" if ret
+   // is null), name, and list of parameters (represented by an array):
+   class Method(private Type ret, private String name, private Param[] params)
+
+   // Represents a single method parameter:
+   class Param(private Type type, private String name)
+
+   ADD THE NEW JAVA CLASSES TO THE END OF YOUR AST.java SOURCE FILE;
+   BE VERY CAREFUL THAT YOU DO NOT ACCIDENTALLY OVERWRITE THE REST OF
+   YOUR CODE IN THE PROCESS!
+
+2) Add new code to your parser to recognize method signatures and
+   build abstract syntax structures for them using the new Methods,
+   Method, and Param classes.  You will also need to add a new
+   field of type Methods to the code for Class in AST.java to store
+   the list of methods associated with each class.  The syntax for
+   method signatures should follow the examples above:
+
+   - a return type that is either "void" or else a normal type.
+   - a name that is just a single identifier/String.
+   - a list of zero or more parameters, stored in an array.
+   - all method declarations must appear before the definitions
+     of any subclasses.
+
+3) Add code to generate method stubs, as necessary, in the generated
+   Java code.
+
+All of the code that you need for this part of the assignment should
+followe the same patterns that you've seen and used in earlier parts
+(specifically, Task 3).  In other words, this part of the assignment
+is not about developing new ideas, but instead about applying ideas
+that you've already seen to new situations.
+
+A sample, raw output for the specific example given above is included
+with the materials for this assignment in the file "quick1.gen".
+
+Timeline:
+---------
+The final versions of your "ASTGen.jj" and "AST.java" files must be
+uploaded to the relevant hw3 dropboxes on D2L before 10pm on Thursday,
+February 25.  It is ESSENTIAL that the files you submit will compile
+and run using the appropriate combination of javacc, javac, and java
+commands.  Please keep this in mind if you are not able to complete
+all of the assigned tasks/implement all of the expected functionality
+before the deadline.  If necessary, you may need to comment out
+unfinished sections of your code before submitting them to ensure that
+it will compile and run.  You are encouraged not to delete such code
+from your submission because there is a chance that you may still be
+able to receive at least some partial credit for it.
+
+All submitted programs should presented in as readable a form as
+possible.  (For example: use careful/appropriate comments to document
+your solution; avoid long lines; use appropriate variable and method
+names; use indentation to show program structure; etc...)
+
+As always, if you need any guidance or clarification, please ask for
+help in the D2L discussion forums; in lab sessions, lectures, or
+office hours; or by email as appropriate.
+
+------------------------------------------------------------------------

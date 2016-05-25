@@ -1,0 +1,11 @@
+Script started on Mon 24 Feb 2014 02:51:55 PM PST
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ gcc 9[K8.10A.c
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ ./a.out
+<<A. fork() >>
+from parent 
+
+from child 
+hyunchan@lepton:~/cs201/hyunchan/P8.10$ exit
+exit
+
+Script done on Mon 24 Feb 2014 02:52:10 PM PST

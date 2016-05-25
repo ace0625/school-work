@@ -1,0 +1,4 @@
+int t;
+print t+1;
+
+//int a; print 2 - a;

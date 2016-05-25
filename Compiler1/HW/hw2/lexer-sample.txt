@@ -1,0 +1,108 @@
+[You can find a plain text version of the text in this file on
+the web at: http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.txt]
+
+This is a test file that includes a number of date references.
+It is provided for you in support of a homework assignment that
+is due on February 2, 2016.  If you are reading this on the
+web at http://web.cecs.pdx.edu/~mpj/cs321/lexer-sample.html,
+then you should have noticed how that date was highlighted; in
+any case, there are plenty more highlights in the rest of this
+file!
+
+A lot of people use a calendar that starts on Jan 1.  As you
+know, there are common abbreviations for months such as Feb,
+Mar, and Apr for people who don't like to use the full names of
+February, March, and April.  And although it's not technically
+correct to do so (because they are proper nouns) some people
+don't capitalize the first letter in the name of a month (and
+we'll assume that all other letters in month names are written
+in lower case).  There are also times when people write the day
+of the month before the name of the month, and other times when
+they write the month first.  As such, you might also see the
+first day of the calendar written as january 1, jan 1, 1 Jan, 1
+January, and so on.  Most people would recognize each of these
+as a valid date, so I hope that your programs will too!  Notice
+that one of these examples had a line break in the middle, but
+it is still recognizable as a date, and hence should still be
+highlighted.
+
+Although we're not requiring that each of the dates that we
+recognize includes a year component, there's certainly no reason
+not to highlight year information too when it is provided.
+Sometimes people like to separate the month and day information
+from the year with a comma, as in 20 July, 1969 (which you might
+recognize as the date of the first moon landing), but it is also
+common to see it written without as 20 July 1969.  For current
+purposes, we'll only worry about years between 1500 and 2500.
+As such, we might debate whether the next millenium begins on
+Jan 1, 3000, or on 1 january 3001, but only the first part of
+each of these dates will be highlighted.  (On the other hand,
+both Jan 1, 2000 and 1 january 2001 will be highlighted in full
+because their associated years are in the range that we
+recognize.) (You can find out more about the Millenium debate at
+http://en.wikipedia.org/wiki/Millenium.)
+
+Dates are also commonly written in a more compact form with
+(short) sequences of numbers separated by slashes, sometimes
+including a year, but sometimes not.  For instance, Most people
+would consider 10/10/10 to be a valid date, in addition to
+examples like 10/10/2010, 1/1/12, or even 9/30.  But few of us
+are likely to mistake 123/12, or even 99/33 for a date because
+some of the numbers in these examples are out of range.  Of
+course, something like 10/10/10/10 contains substrings that look
+like a date, but clearly should not be treated as date itself
+because it has too many parts to it.  It is also worth noting
+that single digit numbers are commonly used for the month and
+day numbers when dates are written in this way, although it is
+also quite common to see them padded with leading zeros so that
+the month and day fields are exactly two characters wide.  For
+example, we can expect that the following examples will all be
+highlighted: 1/1, 01/01, 12/01, and 02/14.  When years are
+included, however, they are usually either abbreviated to the
+last two digits (as in 1/20/16, which is a short notation for
+January 20, 2016) or written with all four digits, as in
+1/20/2016.
+
+Different months have different numbers of days in them, and you
+should be sensitive to that.  You can assume that February 29 is
+always a valid date (i.e., you're not expected to worry about
+leap years), but April, June, September, and November only have
+30 days in them, so you would want to highlight June 30 but not
+June 31.  All of the other months, of course, have 31 days in
+them, so 31 dec is good, but January 32 and March 0 are not.
+There are different conventions in different parts of
+the world about whether the month or day number should come
+first in a date like 6/23.  We will require the US ordering
+here, which places the month first, before the day, and hence
+we will not consider 23/6 to be a valid date.  Of course there
+are dates like 1/7/10 that might be interpreted differently
+in the US (as January 7) or the UK (as July 1); this ambiguity
+can be a problem for readers, but our highlighting program
+isn't able to help with that!
+
+For the purposes of this exercise, we'll assume that dates
+reference specific combinations, at least, of a month and a day
+within that month.  As such, phrases like "Monday", "next
+Thursday", or "in April" should not be considered as dates.  Nor
+should you feel any need to highlight the names of days that
+appear next to a date, as in a phrase like "Monday, June 3"; the
+"June 3" portion should be highlighted here, but not the
+"Monday, " section.  I'm not sure what "Bunov 21" or "remar 6"
+might be, but it's clear that neither of them are dates, so
+neither should be marked a such (even though "nov 21" and
+"mar 6", which appear as substrings in these examples, are
+clearly recognizable as dates and will be highlighted).
+
+In the interests of providing a few more examples, I hope you'll
+forgive me for writing a little nonsense to end this file.  I'll
+mention, for example, that March 22 is my favorite day, second
+only to 29 April.  (I know that last sentence doesn't make
+sense, but it was not intended to be either true or logically
+consistent, just an example of text that mentions dates like 22
+March.)  I'll also note that I'm not a big fan of April 99,
+mostly because there is no such day on my calendar.  (It is true
+that people sometimes refer to periods of time such as July
+2001, which you might interpret as a date.  However, for the
+purposes of this exercise, we won't consider that to be valid
+because it references a whole month, and we are only looking for
+dates that refer to a specific day.

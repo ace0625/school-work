@@ -1,0 +1,70 @@
+//CS163
+//Assignment #4
+//Hyunchan Kim
+
+<<Design Write-up>>
+
+1) What functions your ADT will need to have
+2) How each function will report success/failure back to the calling routine
+3) How each function will shield the client program from the details of the data structure
+4) What data structures you will be using and how each of the special cases. Consider
+ drawing pointer diagrams with “before” and “after” diagrams for each special case.
+5) Include a “test plan”, which outlines each test case and the expected outcomes.
+
+For this program, I will be working on building a binary search tree that has information of 
+concepts of the Carrano's book. With using an external data file, this program implements various
+functions which are insert, retrieve by concept, display in sorted order, remove by concept, 
+remove by data structure, and remove all. There is a lot of separation between the binary search
+tree and the actual data that is stored in it. All it really does is manage the nodes, 
+and it simply calls functions that move the data around that interface with a class that
+is stored in the nodes. Before we approach this problem, with the intent of making my program much more modular, 
+I will be designing it such that the data are mostly handled in a separate function from the BST's function, 
+so all of the deallocation (and allocation) is handled in a separate class for the data 
+which greatly simplified the development of the ADT.
+This data structure is going to perform fairly well for the assigned application because it allows for 
+the efficient storage of information, while also allowing it to be sorted extremely easily. 
+I do not know of a data structure that would work better. This data structure was efficient 
+because it allows for minimal traversal to get to data structure, and the data structure and 
+design will be efficient because it stores a second key in the nodes, so that when an item is requested to be deleted, 
+then it is going to be deleted without having to search the other trees (because there are two trees 
+that will be used, one that organizes by data structure, and the other by concept). In this specific application, 
+it is not efficient because it actually stores two copies of the data, and I will probably challenge something to go further
+and to make this program more efficient. I will try to make it so that both trees pointed to the same data class, 
+which will then eliminate some of the inefficiencies of the current implementation. 
+
+
+Main Executing Function's algorithm:
+
+	1. Display Choices to user
+	2. Read in the user's choice
+	3. Process the choice
+		a. If the user wants to add an entry
+			i. Read in the information for the concept
+			ii. Insert the entry into both lists, directing the trees to place the appropriate search key in the appropriate place
+		b. If the user wants to display a data
+			i. Determine if the user wants to sort by key word or concept name
+			ii. Tell the correct tree to display in sorted order their contents
+		c. If the user wants to delete an entry or delete from the tree
+			i. Determine if the user wants to delete by key word or by app name
+			ii. Send a request to the appropriate trees instructing them to delete the appropriate entries
+		d. If the user wants to search for a concept
+			i. Determine if the user wants to search by key word or by app name
+			ii. Read in the name of the search key
+			iii. Search the relevant tree for the information, then return it to the client program, which then outputs it
+		f. If the user chose to exit the function
+			i.  Exit the loop
+			ii. If they did not, continue to loop the function
+			
+
+There are a number of algorithms associated with the binary search tree.
+	1. Insert new entry
+		i. Determine, based on the passed number, whether the data that has been passed should be inserted as a primary search key or as an alternate search key
+			I. The originally called function then calls the addAtEnd function which then adds the passed data to the end of the binary search tree, sorted based upon the primary search key (the alternate key that is not used, is still inserted so that it can be deleted later
+	2. Find by key word
+		i. When this is called, this retrieves the matching data by key word
+	3. Find by concept name
+		i. When this is called, this retrieves the matching data by concept name
+	4. Display all
+		i. display all data in the binary search tree
+	5. Remove all
+

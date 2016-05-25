@@ -1,0 +1,4 @@
+1;Hash table;Array of linear linked lists;Allows for direct access to all items that collide to the same chain;Does not support sorting
+3;Queue;Linked list;first in, first out system meaning that it keeps its order; is it's hard to tell an empty queue from a full queue without retaining additional information
+4;Stack;Linked list;(LIFO)Collection of elements organized in a linear sequence where elements may be inserted or deleted only at one end;Lack of scalability,Inflexible 
+2;Binary Search Tree;tree;BST is fast in insertion and deletion etc when balanced, and very efficient and its code is easier than link lists;Shape of the tree depends upon order of insertion and it can be degenerated, Searching takes long time

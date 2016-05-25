@@ -1,0 +1,14 @@
+11,13c11,13
+< 	movq $2,%r10
+< 	movq $1,%r11
+< 	cmpq %r10,%r11
+---
+> 	movq $1,%r10
+> 	movq $2,%r11
+> 	cmpq %r11,%r10
+33,34c33,34
+< 	movq $10,%r10
+< 	cmpq %r10,%rax
+---
+> 	movq $10,%r11
+> 	cmpq %r11,%rax

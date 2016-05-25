@@ -1,0 +1,295 @@
+------------------------------------------------------------------------
+CS 321 Languages and Compiler Design I, Winter 2016
+
+Assignment 3, Part 1: "Grammar"
+------------------------------------------------------------------------
+
+Preamble:
+---------
+One of the recurring themes in this class is the idea that there are
+significant benefits in writing programs that can, in turn, be used
+to automate the task of writing other programs.  For example:
+
+- We use traditional compilers like javac or gcc to translate programs
+  written in high-level languages to equivalent programs in lower-level
+  languages like Java bytecode or x86 assembly or machine language.
+
+- We use lexer generators like JFlex to translate descriptions of text
+  processing utilities, expressed as a collection of lexical rules, in
+  to a low-level DFA, a then in to a corresponding chunk of Java code
+  that eliminates any nondeterminism that was present in the original
+  description and implements the required matching process.
+
+- We use parser generators like JavaCC to translate descriptions of
+  languages, expressed as high-level context free grammars, in to
+  efficient parsers based on a low-level LR machine (or pushdown
+  automaton).
+
+In each case here, by using programs to generate the code for parts of
+an application automatically, we can avoid the need for low-level
+coding by hand, which can be tedious and/or error prone.  Instead, we
+are able to focus on higher-level descriptions of those components.
+This can lead to an increase in programmer productivity, and also to
+improvements in tthe overall quality---fewer bugs, for example--- of
+the software systems that we develop.
+
+This homework exercise is about building a new tool, ASTGen, that fits
+right in with this pattern of using high-level descriptions to
+automate a low-level coding task.  More specifically, your ultimate
+task in this assignment will be to build a tool that can help to
+generate initial skeletons for the abstract syntax classes in an
+interpreter, compiler, or related system.
+
+The construction of ASTGen will turn out to be a fairly substantial
+project, so we have split the work for this assignment in to two
+parts.  The document that you are reading right now describes the work
+that you are expected to have completed for the first part of the
+assignment by February 16.
+
+The primary focus in this first part of the work is on developing a
+grammar and then a parser to describe the input language to ASTGen.
+Details and guidance for the second part will be distributed at some
+point before then.  But because the date for that release has
+(intentionally) not be announced at this time, and because those items
+will not help with this first part, you should not delay in getting
+started right away.
+
+The two specific tasks described at the end of this document must be
+completed by the deadline of 10pm on Tuesday, February 16.  Further
+details and expectations about the timeline are described in the last
+section of this document.
+
+Introducing ASTGen:
+-------------------
+In the Quick Calculator (Week 2), for example, we used three different
+classes to represent abstract syntax trees: an abstract base class
+(Expr), and two concrete classes (IntExpr and BinExpr) for representing
+integer and binary operator expressions.  The initial definitions of
+those classes, before we start adding methods, looks something like the
+following:
+
+    abstract class Expr {
+      // default constructor for this class
+      Expr() {
+      }
+
+      // methods and fields go here ... 
+    }
+
+    class IntExpr extends Expr {
+      // declare the fields for this class
+      private int value;
+
+      // default constructor for this class
+      IntExpr(int value) {
+        this.value = value;
+      }
+
+      // methods and fields go here ... 
+    }
+
+    class BinExpr extends Expr {
+      // declare the fields for this class
+      private char op;
+      private Expr left;
+      private Expr right;
+
+      // default constructor for this class
+      BinExpr(char op, Expr left, Expr right) {
+        this.op = op;
+        this.left = left;
+        this.right = right;
+      }
+
+      // methods and fields go here ... 
+    }
+
+Each of the class definitions shown here follows the same basic pattern.
+Each class declares a set of attributes and provides a basic constructor
+function for initializing new objects of that class.  None of this code
+is very difficult, but writing it all out by hand can indeed be quite
+dull and the chance for making mistakes in the process can be quite
+high.  These overheads get worse as we move on larger examples.  The
+simple regular expression language in the Week 5 lab, for example,
+requires one RegExp base class and 5 subclasses (Epsilon, Char, Alt,
+Rep, and Seq) to describe specfic forms of regular expressions.  And the
+implementation of the Week 1 "minitour" uses a collection of thirty
+different classes to represent the abstract syntax of the mini
+programming language.  But as the name suggests, this is still a "mini"
+language: in a compiler for a more complete programming language, we
+could easily find ourselves working with more than a hundred abstract
+syntax classes.
+
+Is it possible to write the initial code for abstract syntax classes
+like this by hand?  Of course.  But it's not likely to be much fun.
+And imagine what happens if we make even a simple change to the class
+hierarchy, such as changing the name of the "Expr" base class to
+"Expression".  Conceptually, that should just be a simple change.  But
+in practice it will require us, not only to edit the code for the
+"Expr" class, but also to update every other class that "extends Expr".
+Wouldn't it be nice if there was a way to automate this process?  This
+sounds like a job for ASTGen!
+
+The goal of the ASTGen program that you will be developing in this
+assignment is to to take a simple, high-level description of a set
+of classes, and then generate the full initial skeletons for those
+classes automatically.  Conceptually, all that we we need to be able
+to generate those class skeletons is:
+
+- The name of each class
+
+- The names and types of each class attribute/field
+
+- Details about the inheritance relationships between the classes
+  (that is, which classes "extend" other classes)
+
+All of the information that we need to generate the 35 lines of Java
+code for the Quick Calculator example above can be neatly encapsulated
+in the following four lines of "ASTGen" code:
+
+  abstract class Expr {
+    class IntExpr(private int value)
+    class BinExpr(private char op, private Expr left, private Expr right)
+  }
+
+The intuition here is that the names of individual classes are
+introduced by using the "class" keyword, optionally preceded by an
+"abstract" keyword, and then followed, first, by a parenthesised list of
+fields, and then, between a pair of braces, a list of subclasses.  As
+the code above shows, either or both the list of fields and the list of
+subclasses can be omitted as necessary.  An "Expr", for example, has no
+fields, and neither "IntExpr" or "BinExpr" have any subclasses.
+
+As another illustration, the following example shows an ASTGen
+description--7 lines in total---of the abstract syntax classes for
+representing regular expressions.  By comparison, writing out the full
+set of class declarations in Java takes more than 60 lines:
+
+  abstract class RegExp {
+    class Epsilon
+    class Char(private int c)
+    class Alt(private RegExp r1, private RegExp r2)
+    class Rep(private RegExp r)
+    class Seq(private RegExp r1, private RegExp r2)
+  }
+
+By now, you should have a good sense of what ASTGen is intended to
+do, and of why it might be useful.  But there are still a few details
+of the ASTGen syntax to discuss.  For example, we should mention
+that each of the field descriptions can begin with an (optional)
+"accessibility modifier" (i.e., one of the keywords "public",
+"protected", or "private").  In addition, because ASTGen is intended
+to generate Java code, we need to allow for two possible forms of
+type:
+
+- Named types, which are made up of a sequence of simple identifiers
+  separated by periods.  For example, "java.lang.Integer" or "String"
+  both fit this pattern, the former with three identifier components,
+  the latter just one, which is likely to be a common case in
+  practice.  Note that, for the purposes of ASTGen, we do not need to
+  treat Java's builtin types like "int" or "char" in any special way;
+  they can be treated as named types with just a single identifier
+  component.
+
+- Array types, which are written by following a type with an empty
+  pair of square brackets, as in "int[]" or "java.lang.Integer[]",
+  or even "boolean[][]", the latter being a two dimensional array
+  of "booleans" (or, more precisely, an array of arrays of booleans).
+
+The following sample ASTGen input, although not intended for any
+real-world application, still provides some indication of what these
+forms of type name might look like in practice:
+
+  class A(java.lang.Integer a1, boolean a2) {
+    class B(int[] b1, boolean[][] b2) {
+      class C(int c1, boolean c2)
+    }
+  }
+
+One last detail of ASTGen syntax is that a single source file may
+contain declarations for multiple, independent classes (i.e.,
+classes that are not related by inheritance).  The last ASTGen
+sample that we will include in this document shows what this looks
+like (and also illustrates that Java-style, single line comments
+beginning with "//" are permitted in ASTGen source files; although
+not shown here, bracketed comments, beginning and ending with "/*"
+and "*/", respectively, are also supported).
+
+  // AST Specification: ------------------
+
+  class Class(private boolean isAbstract,
+              private String  name,
+              private Args    args,
+              private Class[] subclasses)
+
+  class Args(Args before, Args last)
+
+  class Arg(private String visibility,
+            private Type   type,
+            private String id)
+
+  abstract class Type {
+    class NamedType(private String[] ids)
+    class ArrayType(private Type elem)
+  }
+
+  // -------------------------------------
+
+Study this last example very carefully (you'll also find code for this
+in the file "ast.ast", along with ".ast" versions for all of the other
+examples mentioned in this document).  Can you imagine a setting where
+the abstract syntax defined in this last example might be useful?
+
+While you're still pondering that last question, let's get (at last!)
+to the specific tasks that you need to complete for this first part of
+the assignment.
+
+Task 1:
+-------
+To gain some familiarity with the work that ASTGen is expected to do,
+your first task is to construct, *by hand*, the set of Java class
+skeletons corresponding to the final ASTGen example shown above (from
+"ast.ast").  You should write the definitions for these six classes in a
+single Java source file called "AST.java".  Don't expect the resulting
+code to do anything useful at this stage, but it should at least be
+possible to compile "AST.java" without any errors, producing a
+collection of six new ".class" files as a result.
+
+Task 2:
+-------
+Your second task, using the examples and descriptions above is to
+construct a grammar for the ASTGen language, and to use that grammar to
+build a syntax checker for ASTGen source files.  Your syntax checker
+should be implemented in JavaCC and stored in a file called "ASTGen.jj".
+You are NOT expected to build a full ASTGen implementation at this
+point, just a simple program using void parsing functions, in the style
+of Example 17 in the Week 4 javacctour, that can recognize valid ASTGen
+source files, including all of the sample ".ast" files that are provided
+with this assignment.  Of course, your syntax checker should also reject
+any examples that do not follow the rules described and illustrated
+above.
+
+Timeline:
+---------
+The two tasks described above must be completed so that you have time
+to upload your "AST.java" and "ASTGen.jj" files to the hw3 dropbox on
+D2L before 10pm on Tuesday, February 16.  Your full implementation of
+ASTGen will not be required until more than a week later on Thursday,
+February 25.  More details and guidance to help you with this second
+part of the assignment will be distributed at some (intentionally
+unspecified for now) point before the first deadline on February 16.
+But those materials will NOT provide any additional information to
+help you with this first part of the assignment, and you should NOT
+under any circumstances wait for their release before starting the
+first part of this assignment.  In fact, given the descriptions above,
+you may already be able to guess many of the steps that will be
+required for the second part of the assignment.  The delay in releasing
+those details, however, is intended to reinforce the importance of
+completing the two tasks above first and in a timely manner, to ensure a
+strong foundation for the follow-on work.
+
+As always, if you need any guidance or clarification, please ask for
+help in the D2L discussion forums; in lab sessions, lectures, or office
+hours; or by email as appropriate.
+
+------------------------------------------------------------------------

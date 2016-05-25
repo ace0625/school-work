@@ -1,0 +1,99 @@
+//-- A model of a simple lexical analyzer generator: -------------------------
+
+PARSER_BEGIN(SimpleLex)
+
+import regexp.*;
+
+public class SimpleLex {
+  public static void main(String args[]) throws ParseException {
+      new SimpleLex(System.in);  // Read from standard input
+      RegExp[] rules = Top();
+      System.out.println("Input syntax is valid");
+
+      // Make a start state:
+      State start = new State();
+      start.trans = new Transition[rules.length];
+
+      // Generate a transition to an NFA for each regexp:
+      for (int i=0; i<rules.length; i++) {
+          State done     = new State();
+          done.trans     = new Transition[0];
+          done.accept    = i+1;
+          start.trans[i] = new Transition(rules[i].toNFA(done));
+      }
+
+      // Generate an NFA, and then a DFA:
+      State[] nfaStates = start.reachableStates();
+      State[] dfaStates = State.toDFA(nfaStates);
+
+      // Output dot versions of the NFA and DFA:
+      regexp.DotOutput.showLabels = false;
+      DotOutput.toDot(nfaStates, "nfa.dot");
+      DotOutput.toDot(dfaStates, "dfa.dot");
+
+      // Run the DFA on any inputs provided as command line arguments:
+      for (int i=0; i<args.length; i++) {
+          System.out.println("Input: \"" + args[i] + "\":");
+          String s = args[i];  // String to match
+          int    p = 0;        // position in string
+          while (p<s.length()) {
+              int q = dfaStates[0].match(s, p);
+              if (q<=p) {      // match failed or no characters read
+                  System.out.println("  No match \"" + s.charAt(p) + "\"");
+                  p++;
+              } else {
+                  System.out.println(
+                    "  Accept " + State.acceptState.accept +
+                    " \"" + s.substring(p,q) + "\"");
+                  p = q;
+              }
+          }
+          System.out.println("  Done!");
+      }
+  }
+}
+
+PARSER_END(SimpleLex)
+
+//-- Define the grammatical rules of the input language: ---------------------
+
+RegExp[] Top() : { RegExp[] rules; } {
+  rules=Rules(0) <EOF> { return rules; }
+}
+
+RegExp[] Rules(int soFar) : { RegExp r; RegExp[] rs; } {
+   r=R() (";" rs=Rules(soFar+1) | { rs = new RegExp[soFar+1]; } )
+   { rs[soFar] = r; return rs; }
+}
+
+RegExp R() : { RegExp r, s; } {
+   r=Seq() ("|" s=R() {r = new Alt(r,s);})?
+   { return r; }
+}
+
+RegExp Seq() : { RegExp r, s; } {
+   r=Rep() (s=Seq() {r = new Seq(r,s);} )?
+   { return r; }
+}
+
+RegExp Rep() : { RegExp r; } {
+   r=Atom() ( "*" {r = new Rep(r);}) *
+   { return r; }
+}
+
+RegExp Atom() : { RegExp r; Token t; } {
+  ("%"           {return new Epsilon();})
+| (t=<LETTER>    {return new Char((int)t.image.charAt(0));})
+| ("(" r=R() ")" {return r;})
+}
+
+//-- Define the lexical structure of an input language: ----------------------
+
+// Input elements that should be ignored/skipped:
+SKIP : { " " | "\t" | "\n" | "\r" }
+
+// Lexemes that should be reported as valid tokens:
+TOKEN : {
+ <LETTER : ["a"-"z"]>
+}
+

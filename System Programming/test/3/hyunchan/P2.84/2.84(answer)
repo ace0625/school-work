@@ -1,0 +1,26 @@
+problem #2.84
+Hyunchan Kim
+
+<Description>
+Given a oating-point format with a k-bit exponent and an n-bit fraction, write formulas for the exponent
+E, significand M, the fraction f, and the value V for the quantities that follow. In addition, describe the
+bit representation.
+
+A. The number 7.0
+B. The largest odd integer that can be represented exactly
+C. The reciprocal of the smallest positive normalized value
+
+<Answer>
+
+A. 7.0 has E(exponent)=2, M(significand)=1.112, f(fraction)=0.112, and V=7.
+   Therefore, the exponent-bits is 100...01 and the fraction-bits is 1100....0.
+
+B. The largest odd integer will be E = n, M = 1.11....1(2) = 2-2^(-n), f = 0.11....1(2) = 1 - 2^(-n), 
+   and v = 2^(n+1) -1. The exponent in the binary representation is n + 2^(k-1) -1. 
+   The bit representation of the fraction is 11....11.(The integer has a binary representation consisiting of n+1 ones).
+
+C. The reciprocal of the smallest positive normalized value is V = 2^2^(k-1) -2, E = 2^(k-1) -2, M = 1, and f = 0.
+   Therefore, the bit representation of the exponent is 11…101. The fraction bit is 00…00.
+
+
+ 

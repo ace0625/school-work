@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From Return, Return type mismatch: BoolType <- IntType
+---
+> Checker$TypeException: (In Return) Return type mismatch: BoolType <- IntType

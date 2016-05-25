@@ -1,0 +1,124 @@
+1. Write a query that lists the ratings for sailors who are less than 30 years old.
+
+
+2. Define a view that lists the ratings for sailors who have reserved red boats. Your query answer should 
+show only ratings - no other attributes. Make sure that each rating is listed at most once. 
+Make sure that your query answer is sorted, from lowest rating to highest rating. 
+Name this view: ratingsRed
+
+
+3.Define a view that lists the sailor id and name for each sailor who has reserved two different red boats. 
+Make sure that each sailor id/name is listed at most once. 
+Name this view: twoRedBoats
+
+
+4. Write a query that lists the city and country of agents who have a salary between 50000 and 50400 (inclusive); 
+omit the duplicate rows, and sort your query answer by city, country.
+
+
+5. Define a view that lists the agent id, first, middle, and last for each agent that speaks German and has 
+the skill of Surveillance. 
+Name this view: germanSpeakingSpies
+
+
+6. Define a view that lists the language id/skill id combinations that are not held by any agent. 
+Make sure that each language/skill combination is listed at most once. 
+Name this view: languageSkillCombosNotHeld
+
+
+For each of the following queries (or views), write the query in SQL and also in relational algebra.
+7. List the sailor id and name for each sailor who has reserved two different red boats. 
+Make sure that each sailor id/name is listed at most once. You must use group by/having.
+
+=> select s.sid, s.sname from sailors s
+natural join reserves r
+natural join boats b
+where b.color = 'red'
+group by s.sid
+having count(distinct r.bid) = 2;
+
+
+8. List the country and the count of agents, the min, max, and average salary for all agents who are from the country.
+
+=> select country, count(*), min(salary), max(salary), avg(salary) from agent
+group by country;
+
+9. List the team id and team name for teams where the number of languages spoken by the members of the
+team is exactly double the number of agents on the team. For example, if there is a team with 5 members and, collectively, those 5 members speak 10 languages, then that team belongs in the query answer.
+
+=>  select r.team_id , t.name
+from teamrel r natural join team t
+natural join languagerel l
+natural join agent a
+group by r.team_id, t.name
+having count ( distinct a.agent_id ) < count ( distinct l.lang_id );
+
+
+10. For all languages (spoken by at least one agent), list the language and the count of agents 
+(with an attribute name of "speakers") who have a salary > 100000 and who speak that language. 
+Your query answer should be in alphabetical order, by language.
+
+=> select language, count(agent_id) as speakers from language
+natural join languagerel
+natural join agent
+where salary > 100000
+group by lang_id
+order by language;
+
+11. List the language and the count of the number of agents with the skill of .Lip Reader. who speak that language.
+
+=> select language, count(agent_id) from language
+natural join languagerel
+natural join agent
+natural join skillrel
+natural join skill
+where skill = 'Lip Reader'
+group by language;
+
+12. List language id/skill id combinations that are not held by any agent. 
+Make sure that each language/skill combination is listed at most once.
+
+=>  select lang_id, skill_id from languagerel
+cross join skillrel
+group by lang_id, skill_id
+except
+select lang_id, skill_id
+from languagerel natural join skillrel;
+
+13. Define a view in SQL that returns, in this order: team_id and mission count (with the attribute name mission_count), 
+for all teams. Name your view: team_missioncnt
+
+14. Define a view in SQL that returns, in this order: team_id and number of team members 
+(with the attribute name: number_of_members), for each team that has a meeting frequency of
+'weekly'.
+Name your view: weeklyteam_membercnt
+
+=> select t.team_id, count(tr.agent_id) as number_of_members
+from team t join teamrel tr on t.team_id = tr.team_id
+where t.meeting_frequency = 'weekly'
+group by t.team_id;
+
+
+15. Define a view in SQL that returns: team_id of teams that have exactly 9 team members.
+Name your view: ninemembers
+
+=> select team_id from teamrel
+group by team_id
+having count(agent_id) = 9;
+
+16. Define a view in SQL that returns, in this order: skill_id and the average salary of agents that have that skill 
+(with the attribute name: average_salary) for each skill where the average salary of the agents 
+who have that skill is > 90000. 
+Name your view: skill_salary_above_90k
+
+=>  select s.skill_id, avg(a.salary) as average_salary from agent a 
+natural join skillrel s
+group by s.skill_id 
+having avg(a.salary)>90000;
+
+17. Write a relational algebra query that is appropriate for the relational algebra equivalences shown in 
+Section 16.2.1, 16.2.2, 16.2.3, 16.2.4, 16.2.5, 16.2.6, and 16.2.7
+
+18. Complete problem 16.2.2, parts a-d.
+
+19. Complete problem 16.2.4, parts a-c.

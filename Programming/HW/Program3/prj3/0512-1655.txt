@@ -1,0 +1,432 @@
+Script started on Tue 12 May 2015 04:55:40 PM PDT
+yjacob@ada:~/CS202_prj/prj3$ gdb song
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from song...done.
+(gdb) run
+Starting program: /u/yjacob/CS202_prj/prj3/song 
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Style
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Shake It Off
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Everything Has Changed (feat. Ed Sheeran)
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:I Knew You Were Trouble
+
+Program received signal SIGSEGV, Segmentation fault.
+__GI___libc_free (mem=0x432073614820676e) at malloc.c:2929
+2929	malloc.c: No such file or directory.
+(gdb) g[Kb song_hash_table::add_song_hash_table
+Breakpoint 1 at 0x401e2f: file song_table.cpp, line 183.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /u/yjacob/CS202_prj/prj3/song 
+song_artitst :Taylor Swift
+song_genre:Country, Pop
+song_title:Blank Space
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606300 "Blank Space\r", p_song_artitst=0x6062c0 "Taylor Swift", 
+    p_song_genre=0x6062e0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) s
+song_entry::song_entry (this=0x7fffffffe300, p_song_title=0x606300 "Blank Space\r", p_song_artitst=0x6062c0 "Taylor Swift", p_song_genre=0x6062e0 "Country, Pop")
+    at song_entry.cpp:35
+35		if(!p_song_title || !p_song_artitst || !p_song_genre)
+(gdb) n
+38		song_title = new char[strlen(p_song_title) + 1];
+(gdb) 
+39		strcpy(song_title, p_song_title);
+(gdb) 
+41		song_artitst = new char[strlen(p_song_artitst) + 1];
+(gdb) 
+42		strcpy(song_artitst, p_song_artitst);
+(gdb) 
+44		song_genre = new char[strlen(p_song_genre) + 1];
+(gdb) 
+45		strcpy(song_genre, p_song_genre);
+(gdb) 
+46	}
+(gdb) 
+song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606300 "Blank Space\r", p_song_artitst=0x6062c0 "Taylor Swift", 
+    p_song_genre=0x6062e0 "Country, Pop") at song_table.cpp:187
+187		int hash_val = hash(p_song_artitst);
+(gdb) 
+190		lll_artist_node* temp = new lll_artist_node(entry);
+(gdb) 
+193		temp->go_next() = p_hash_table[hash_val];
+(gdb) 
+194		p_hash_table[hash_val] = temp;
+(gdb) 
+195	}
+(gdb) 
+song_hash_table::load_songs (this=0x7fffffffea00, song_file_name=0x7fffffffea50 "song_cont.dat") at song_table.cpp:169
+169		}
+(gdb) 
+133		while(!fin.eof()) {
+(gdb) 
+134			song_entry entry;
+(gdb) 
+137			fin.getline(buff, MAX_LINE_LEN);
+(gdb) 
+139			const char* token[MAX_TOKEN] = {};
+(gdb) 
+141			token[0] = strtok(buff, DELIM);
+(gdb) 
+142			if(!token[0]) break;
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+149			if(song_title) delete [] song_title;
+(gdb) 
+150			if(song_artitst)  delete [] song_artitst;
+(gdb) 
+151			if(song_genre) delete [] song_genre;
+(gdb) 
+153			song_artitst = new char[strlen(token[0]) + 1];
+(gdb) 
+154			strcpy(song_artitst , token[0]);
+(gdb) 
+156			song_genre = new char[strlen(token[1]) + 1];
+(gdb) 
+157			strcpy(song_genre, token[1]);
+(gdb) 
+159			song_title = new char[strlen(token[2]) + 1];
+(gdb) 
+160			strcpy(song_title, token[2]);
+(gdb) 
+162	cout << "song_artitst :" << song_artitst << endl;
+(gdb) 
+song_artitst :Taylor Swift
+163	cout << "song_genre:" << song_genre << endl;
+(gdb) 
+song_genre:Country, Pop
+164	cout << "song_title:" << song_title << endl;
+(gdb) 
+song_title:Style
+166			if(!add_song_hash_table(song_title, song_artitst, song_genre)) {
+(gdb) 
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606300 "Style\r", p_song_artitst=0x6062e0 "Taylor Swift", 
+    p_song_genre=0x6062c0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) 
+187		int hash_val = hash(p_song_artitst);
+(gdb) 
+190		lll_artist_node* temp = new lll_artist_node(entry);
+(gdb) 
+193		temp->go_next() = p_hash_table[hash_val];
+(gdb) 
+194		p_hash_table[hash_val] = temp;
+(gdb) 
+195	}
+(gdb) 
+song_hash_table::load_songs (this=0x7fffffffea00, song_file_name=0x7fffffffea50 "song_cont.dat") at song_table.cpp:169
+169		}
+(gdb) 
+133		while(!fin.eof()) {
+(gdb) 
+134			song_entry entry;
+(gdb) 
+137			fin.getline(buff, MAX_LINE_LEN);
+(gdb) 
+139			const char* token[MAX_TOKEN] = {};
+(gdb) 
+141			token[0] = strtok(buff, DELIM);
+(gdb) 
+142			if(!token[0]) break;
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+149			if(song_title) delete [] song_title;
+(gdb) 
+150			if(song_artitst)  delete [] song_artitst;
+(gdb) 
+151			if(song_genre) delete [] song_genre;
+(gdb) 
+153			song_artitst = new char[strlen(token[0]) + 1];
+(gdb) 
+154			strcpy(song_artitst , token[0]);
+(gdb) 
+156			song_genre = new char[strlen(token[1]) + 1];
+(gdb) 
+157			strcpy(song_genre, token[1]);
+(gdb) 
+159			song_title = new char[strlen(token[2]) + 1];
+(gdb) 
+160			strcpy(song_title, token[2]);
+(gdb) 
+162	cout << "song_artitst :" << song_artitst << endl;
+(gdb) 
+song_artitst :Taylor Swift
+163	cout << "song_genre:" << song_genre << endl;
+(gdb) 
+song_genre:Country, Pop
+164	cout << "song_title:" << song_title << endl;
+(gdb) 
+song_title:Shake It Off
+166			if(!add_song_hash_table(song_title, song_artitst, song_genre)) {
+(gdb) 
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606300 "Shake It Off\r", p_song_artitst=0x6062c0 "Taylor Swift", 
+    p_song_genre=0x6062e0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) 
+187		int hash_val = hash(p_song_artitst);
+(gdb) 
+190		lll_artist_node* temp = new lll_artist_node(entry);
+(gdb) 
+193		temp->go_next() = p_hash_table[hash_val];
+(gdb) 
+194		p_hash_table[hash_val] = temp;
+(gdb) 
+195	}
+(gdb) 
+song_hash_table::load_songs (this=0x7fffffffea00, song_file_name=0x7fffffffea50 "song_cont.dat") at song_table.cpp:169
+169		}
+(gdb) 
+133		while(!fin.eof()) {
+(gdb) 
+134			song_entry entry;
+(gdb) 
+137			fin.getline(buff, MAX_LINE_LEN);
+(gdb) 
+139			const char* token[MAX_TOKEN] = {};
+(gdb) 
+141			token[0] = strtok(buff, DELIM);
+(gdb) 
+142			if(!token[0]) break;
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+149			if(song_title) delete [] song_title;
+(gdb) 
+150			if(song_artitst)  delete [] song_artitst;
+(gdb) 
+151			if(song_genre) delete [] song_genre;
+(gdb) 
+153			song_artitst = new char[strlen(token[0]) + 1];
+(gdb) 
+154			strcpy(song_artitst , token[0]);
+(gdb) 
+156			song_genre = new char[strlen(token[1]) + 1];
+(gdb) 
+157			strcpy(song_genre, token[1]);
+(gdb) 
+159			song_title = new char[strlen(token[2]) + 1];
+(gdb) 
+160			strcpy(song_title, token[2]);
+(gdb) 
+162	cout << "song_artitst :" << song_artitst << endl;
+(gdb) 
+song_artitst :Taylor Swift
+163	cout << "song_genre:" << song_genre << endl;
+(gdb) 
+song_genre:Country, Pop
+164	cout << "song_title:" << song_title << endl;
+(gdb) 
+song_title:Everything Has Changed (feat. Ed Sheeran)
+166			if(!add_song_hash_table(song_title, song_artitst, song_genre)) {
+(gdb) 
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606560 "Everything Has Changed (feat. Ed Sheeran)\r", 
+    p_song_artitst=0x6062e0 "Taylor Swift", p_song_genre=0x6062c0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) 
+187		int hash_val = hash(p_song_artitst);
+(gdb) 
+190		lll_artist_node* temp = new lll_artist_node(entry);
+(gdb) 
+193		temp->go_next() = p_hash_table[hash_val];
+(gdb) 
+194		p_hash_table[hash_val] = temp;
+(gdb) 
+195	}
+(gdb) 
+song_hash_table::load_songs (this=0x7fffffffea00, song_file_name=0x7fffffffea50 "song_cont.dat") at song_table.cpp:169
+169		}
+(gdb) 
+133		while(!fin.eof()) {
+(gdb) 
+134			song_entry entry;
+(gdb) 
+137			fin.getline(buff, MAX_LINE_LEN);
+(gdb) 
+139			const char* token[MAX_TOKEN] = {};
+(gdb) 
+141			token[0] = strtok(buff, DELIM);
+(gdb) 
+142			if(!token[0]) break;
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+145				token[i] = strtok(0, DELIM);
+(gdb) 
+144			for(int i = 1; i < MAX_TOKEN; i++) {
+(gdb) 
+149			if(song_title) delete [] song_title;
+(gdb) 
+150			if(song_artitst)  delete [] song_artitst;
+(gdb) 
+151			if(song_genre) delete [] song_genre;
+(gdb) 
+153			song_artitst = new char[strlen(token[0]) + 1];
+(gdb) 
+154			strcpy(song_artitst , token[0]);
+(gdb) 
+156			song_genre = new char[strlen(token[1]) + 1];
+(gdb) 
+157			strcpy(song_genre, token[1]);
+(gdb) 
+159			song_title = new char[strlen(token[2]) + 1];
+(gdb) 
+160			strcpy(song_title, token[2]);
+(gdb) 
+162	cout << "song_artitst :" << song_artitst << endl;
+(gdb) 
+song_artitst :Taylor Swift
+163	cout << "song_genre:" << song_genre << endl;
+(gdb) 
+song_genre:Country, Pop
+164	cout << "song_title:" << song_title << endl;
+(gdb) 
+song_title:I Knew You Were Trouble
+166			if(!add_song_hash_table(song_title, song_artitst, song_genre)) {
+(gdb) 
+
+Breakpoint 1, song_hash_table::add_song_hash_table (this=0x7fffffffea00, p_song_title=0x606660 "I Knew You Were Trouble\r", p_song_artitst=0x6062c0 "Taylor Swift", 
+    p_song_genre=0x6062e0 "Country, Pop") at song_table.cpp:183
+183		song_entry entry = song_entry(p_song_title, p_song_artitst, p_song_genre);
+(gdb) 
+187		int hash_val = hash(p_song_artitst);
+(gdb) 
+190		lll_artist_node* temp = new lll_artist_node(entry);
+(gdb) 
+
+Program received signal SIGSEGV, Segmentation fault.
+__GI___libc_free (mem=0x432073614820676e) at malloc.c:2929
+2929	malloc.c: No such file or directory.
+(gdb) 
+
+Program terminated with signal SIGSEGV, Segmentation fault.
+The program no longer exists.
+(gdb) 
+The program is not being run.
+(gdb) 
+The program is not being run.
+(gdb) 
+The program is not being run.
+(gdb) q
+yjacob@ada:~/CS202_prj/prj3$ ma[K[Kps -ef |grep script
+yjacob    4329  3485  0 16:55 pts/54   00:00:00 script 0512-1655.txt
+yjacob    4332  4329  0 16:55 pts/54   00:00:00 script 0512-1655.txt
+graphene 13968     1  0 17:15 ?        00:00:00 bash /home/graphene/common/Documents/graphite-scripts/remote/05_minute/monitor__alive
+graphene 13970     1  0 17:15 ?        00:00:00 bash /home/graphene/common/Documents/graphite-scripts/remote/05_minute/monitor__connections_all
+graphene 13972     1  0 17:15 ?        00:00:00 perl /home/graphene/common/Documents/graphite-scripts/remote/05_minute/monitor__nfs__.pl
+graphene 13976     1  0 17:15 ?        00:00:00 perl /home/graphene/common/Documents/graphite-scripts/remote/05_minute/usage__apps__.pl
+graphene 13978     1  0 17:15 ?        00:00:00 bash /home/graphene/common/Documents/graphite-scripts/remote/05_minute/usage__users_physical
+graphene 13980     1  0 17:15 ?        00:00:00 bash /home/graphene/common/Documents/graphite-scripts/remote/05_minute/usage__users_unique
+yjacob   15823  4333  0 17:18 pts/67   00:00:00 grep script
+waninger 19475 28012  0 Apr29 pts/139  00:00:00 script
+waninger 19476 19475  0 Apr29 pts/139  00:00:01 script
+waninger 28011     1  0 Apr29 ?        00:00:00 script
+yjacob@ada:~/CS202_prj/prj3$ exit
+exit
+
+Script done on Tue 12 May 2015 05:18:47 PM PDT

@@ -1,0 +1,8 @@
+Aaron;11-11-2015;Happy Birth Day!!;5;birthday, event, friends
+Daniel;5-9-2015;Hey! How have you been?;5;birthday, event, friends
+Kelcy;10-10-2015;Anyone want to go for movies?;5;birthday, event, friends
+Max;2-18-2014;I am in love with someone;5;event
+Josh;10-8-2015;Home sweet home;5;family
+Cindy;4-15-2015;Congratuations!;5;birthday, event, friends
+Jenny;3-2-2015;I am throwing a party this Friday. Come join!!;5;Party
+Paul;9-17-2015;Movie night at my place!!;5;friends

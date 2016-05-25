@@ -1,0 +1,7 @@
+7749:1 inch bolt:411:3steps:1:4:91
+1112:2 inch bolt:200:2steps:5:9
+2212:4 inch bolt:44:2steps:64:97
+4412:1.5 inch nuts:66:4steps:3:10:7:13
+5512:6 inch bolt:88:2steps:66:45
+9912:2 inch nuts:10:1steps:99
+1000:0.3 inch nuts:10:2steps:2:6

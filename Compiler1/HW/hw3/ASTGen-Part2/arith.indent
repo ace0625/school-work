@@ -1,0 +1,46 @@
+Expr
+  isAbstract=true
+  Args
+  Methods
+  Classes
+    IntExpr
+      isAbstract=false
+      Args
+        private int value
+      Methods
+      Classes
+    BinExpr
+      isAbstract=true
+      Args
+        protected Expr left
+        protected Expr right
+      Methods
+      Classes
+        AddExpr
+          isAbstract=false
+          Args
+            protected Expr left
+            protected Expr right
+          Methods
+          Classes
+        SubExpr
+          isAbstract=false
+          Args
+            protected Expr left
+            protected Expr right
+          Methods
+          Classes
+        MulExpr
+          isAbstract=false
+          Args
+            protected Expr left
+            protected Expr right
+          Methods
+          Classes
+        DivExpr
+          isAbstract=false
+          Args
+            protected Expr left
+            protected Expr right
+          Methods
+          Classes

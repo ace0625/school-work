@@ -1,0 +1,211 @@
+/** Abstract syntax for statements.
+ */
+abstract class Stmt {
+  /** A block of statements.
+   */
+  class Block(/** The list of zero or more statements that
+               *  make up the body of this block.
+               */
+              private Stmt[] body)
+
+  /** Statements that are annotated with positions.
+   */
+  abstract class PosStmt(protected Position pos) {
+    /** Abstract syntax for empty statements.
+     */
+    class Empty
+
+    /** Abstract syntax for assignment statements.
+     */
+    class Assign(/** The variable where the result will be saved.
+                  */
+                 private Id lhs, 
+
+                 /** The expression whose value will be saved.
+                  */
+                 private Expr rhs)
+
+    /** Abstract syntax for variable declarations.
+     */
+    class VarDecl(/** The type of the declared variables.
+                   */
+                  private Type type,
+                  /** The names of the declared variables.
+                   */
+                  private Id[] vars)
+
+    /** Abstract syntax for while statements.
+     */
+    class While(/** The test expression.
+                 */
+                private Expr test, 
+
+                /** The body of this loop.
+                 */
+                private Stmt body)
+
+    /** Abstract syntax for if-then-else statements.
+     */
+    class If(/** The test expression.
+              */
+             private Expr test, 
+
+             /** The true branch.
+              */
+             private Stmt ifTrue, 
+
+             /** The false branch.
+              */
+             private Stmt ifFalse)
+
+    /** Abstract syntax for print statements.
+     */
+    class Print(/** The value that should be printed out.
+                 */
+                private Expr exp)
+  }
+}
+
+/** Abstract syntax for expressions.
+ */
+abstract class Expr(protected Position pos) {
+  /** Abstract syntax for identifiers/variables.
+   */
+  class Id(/** The identifier name.
+            */
+           String name)
+
+  /** Abstract syntax for integer literals.
+   */
+  class IntLit(/** The value of this integer literal.
+                */
+               private int num)
+
+  /** Abstract syntax for Boolean literals.
+   */
+  class BoolLit(/** The value of this Boolean literal.
+                 */
+                private boolean value)
+
+
+  /** Abstract syntax for unary expressions.
+   */
+  abstract class UnExpr(/** The operand of a unary operator expression.
+                         */
+                        protected Expr exp) {
+    /** Abstract syntax for logical not expressions (!).
+     */
+    class LNot
+
+    /** Abstract syntax for bitwise not expressions (~).
+     */
+    class BNot
+
+    /** Abstract syntax for unary expressions that operate on
+     *  numeric arguments.
+     */
+    abstract class UnArithExpr {
+      /** Abstract syntax for unary minus expressions.
+       */
+      class UMinus
+
+      /** Abstract syntax for unary plus expressions.
+       */
+      class UPlus
+    }
+  }
+
+  /** Abstract syntax for binary expressions.
+   */
+  abstract class BinExpr(/** The left subexpression.
+                          */
+                         protected Expr left, 
+                         /** The right subexpression.
+                          */
+                         protected Expr right) {
+    /** Abstract syntax for binary arithmetic expressions.
+     */
+    abstract class BinArithExpr {
+      /** Abstract syntax for add expressions.
+       */
+      class Add
+
+      /** Abstract syntax for subtract expressions.
+       */
+      class Sub
+
+      /** Abstract syntax for multiply expressions.
+       */
+      class Mul
+
+      /** Abstract syntax for divide expressions.
+       */
+      class Div
+    }
+
+    /** Abstract syntax for binary comparison expressions.
+     */
+    abstract class BinCompExpr {
+      /** Abstract syntax for less than expressions.
+       */
+      class Lt
+
+      /** Abstract syntax for less than or equal expressions.
+       */
+      class Lte
+
+      /** Abstract syntax for greater than expressions.
+       */
+      class Gt
+
+      /** Abstract syntax for greater than or equal expressions.
+       */
+      class Gte
+    }
+
+    /** Abstract syntax for binary equality test expressions.
+     */
+    abstract class BinEqualityExpr {
+      /** Abstract syntax for equality test expressions (==).
+       */
+      class Eql
+
+      /** Abstract syntax for inequality test expressions (==).
+       */
+      class Neq
+    }
+
+    /** Abstract syntax for binary logical expressions.
+     */
+    abstract class BinLogicExpr {
+      /** Abstract syntax for logical and expressions (&&).
+       */
+      class LAnd
+
+      /** Abstract syntax for logical or expressions (||).
+       */
+      class LOr
+    }
+
+    /** Abstract syntax for binary bitwise operations.
+     */
+    abstract class BinBitwiseExpr {
+      /** Abstract syntax for bitwise and expressions (&).
+       */
+      class BAnd
+
+      /** Abstract syntax for bitwise or expressions (|).
+       */
+      class BOr
+
+      /** Abstract syntax for bitwise exclusive or expressions (^).
+       */
+      class BXor
+    }
+  }
+}
+
+/** Abstract syntax for  basic types.
+ */
+class Type(private String typename)
+

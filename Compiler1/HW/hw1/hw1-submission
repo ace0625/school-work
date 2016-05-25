@@ -1,0 +1,98 @@
+------------------------------------------------------------------
+Name:
+Id: 964827696
+------------------------------------------------------------------
+Part 1:
+p1 :18
+p2 :07
+p3 :07
+p4 :18
+p5 :15
+p6 :07
+p7 :15
+p8 :07
+p9 :15
+p10:05
+p11:05
+p12:20
+p13:18
+p14:07
+p15:18
+p16:07
+p17:12
+p18:07
+p19:18
+p20:18
+------------------------------------------------------------------
+Part 2:
+	<p3.mini>
+	print 20/(40/80)
+
+      // Read program:
+      String     input  = args[0] + ".mini";
+      FileReader reader = new FileReader(input);
+      Source     source = new JavaSource(handler, input, reader);
+      MiniLexer  lexer  = new MiniLexer(handler, source);
+      MiniParser parser = new MiniParser(handler, lexer);                      // <<<
+      Stmt       prog   = parser.parseProgram();                               // <<<
+      if (handler.hasFailures()) {                                             // <<<
+        throw new Failure("Aborting: errors detected during syntax analysis"); // <<<
+      }                                                                        // <<<
+
+      // Output result:
+      System.out.println("Syntax valid");
+
+ERROR: "p3.mini", line 3, column 1
+Missing ';'
+
+=> First, it connects to the lexer program(MiniLexer) that constructs tokens corresponding to and MiniParser reads the lexer and builds appropriate abstract syntax tree. While reading the p3.mini file, print is an appropriate expression it can be read and 20/(40/80) is also an
+appropriate arithmatic expression it can be performed. However, the last part the ending expression is missing which is ';'(semi-colon) so that syntax problem is occured. 
+------------------------------------------------------------------
+Part 3:
+<p21.mini>
+int a = 3;
+
+      // Read program:
+      String     input  = args[0] + ".mini";
+      FileReader reader = new FileReader(input);
+      Source     source = new JavaSource(handler, input, reader);
+      MiniLexer  lexer  = new MiniLexer(handler, source);
+      MiniParser parser = new MiniParser(handler, lexer);
+      Stmt       prog   = parser.parseProgram();
+      if (handler.hasFailures()) {
+        throw new Failure("Aborting: errors detected during syntax analysis");
+      }
+
+      // Analyze program:
+      new ScopeAnalysis(handler).analyze(prog);
+      new TypeAnalysis(handler).analyze(prog);
+      new InitAnalysis(handler).analyze(prog);
+
+      // Optimization:
+      prog.simplify();
+
+      // Output compiled program:
+      String output = args[0] + ".s";
+      new IA32(output).generateAssembly(output, prog);                   // <<<
+      System.out.println("Assembly code output: " + output);
+
+      // Invoke assembler to produce executable:
+      Runtime.getRuntime()                                               // <<<
+             .exec("gcc -m32 -o " + args[0] + " " +                      // <<<
+                     args[0] + ".s runtime.c")                           // <<<
+             .waitFor();                                                 // <<<
+      System.out.println("Executable program: " + args[0]);
+
+- This is the code from minitour 21 that implements lexer, parser, and conversion to assembly language. Throughout this program the p21.mini that I made up(int a = 3;), it occurs an error saying that "misssing ;"
+Normally, this is appropriate with no errors but in this program it should initialize first and then assign a value. Therefore, it occurs an error.
+- The reason why I think this would be useful for a compiler to report
+an error is that the mini program looks appropriate but makes an error because of the program process. 
+
+
+
+
+
+
+
+
+------------------------------------------------------------------

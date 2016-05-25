@@ -1,0 +1,60 @@
+abstract class Expr {
+  // declare default constructor for this class
+  Expr() {
+  }
+
+  int eval() {
+    // edit this method body
+  }
+
+  void print(java . io . PrintStream out) {
+    // edit this method body
+  }
+
+  // add additional methods and fields here ... 
+}
+
+class IntExpr extends Expr {
+  // declare the fields for this class
+  private int value;
+
+  // declare default constructor for this class
+  IntExpr(int value) {
+    this.value = value;
+  }
+
+  int eval() {
+    // edit this method body
+  }
+
+  void print(java . io . PrintStream out) {
+    // edit this method body
+  }
+
+  // add additional methods and fields here ... 
+}
+
+class BinExpr extends Expr {
+  // declare the fields for this class
+  private char op;
+  private Expr left;
+  private Expr right;
+
+  // declare default constructor for this class
+  BinExpr(char op, Expr left, Expr right) {
+    this.op = op;
+    this.left = left;
+    this.right = right;
+  }
+
+  int eval() {
+    // edit this method body
+  }
+
+  void print(java . io . PrintStream out) {
+    // edit this method body
+  }
+
+  // add additional methods and fields here ... 
+}
+

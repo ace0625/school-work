@@ -1,0 +1,4 @@
+1c1
+< Checker$TypeException: From MethodDecl, return statement is missing
+---
+> Checker$TypeException: (In MethodDecl) Missing return statement

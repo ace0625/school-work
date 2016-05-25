@@ -1,0 +1,58 @@
+// CS163
+//Review Write-up
+//Program #1
+// 10/14/2015
+//Hyunchan Kim
+
+
+
+1) How well did the data structure selected perform for the assigned application? 
+-> For this assignment which is candidate program that basically manages presidential candidates. It mainly implements 
+   creating a candidate information with name, major views, rank, and thoughts, update poll which is a voting system that
+   you can poll to a particular candidate you want and the rank would change, update information that you can wriete 
+   your personal thoughts to a particular candidate, and display all candidates in the system. The update poll and update
+   information functions are implemented by last name. About the structure, I decided to use two classes, one for candidate,
+	one for list. The candidate class mainly deals with candidate information that you can add, retrieve, and display.
+	The list class is based on linear linked list which is the main data structure for this program that manages all candidates'
+	information in particular order. Every candidate data is stored dynamically to manage efficiently. 
+    
+2) Would a different data structure work better? If so, which one and why... 
+-> I am pretty satisfied with linear linked list for this assignment. However, for more specific function or
+   various implementations, DLL or different structure such as with class would be considered. 
+   I was thinking that I would probably make the node in as class. Even though structure looks more neat or efficient,
+   class could be used in various ways if you think of expanding program and also all the data in this program 
+   are stored dynamically. 
+   I was thinking that hash table would also fit this program. For each department, using table would be efficient 
+   to deal with many candidates' information. Also, you can search a particular data by hash key.
+
+3) What was efficient about your design and use of the data structure? 
+-> Basically, as using data structures the data have been stored in the dynamically allocated spaces and the 
+   linear linked list gives ordered structure so that it is easily re-used for any information needed. Furthermore,
+   the structure can be many different uses depending on what data you want to use or display such as displaying
+   candidtes by rank only, searching a particular data, or soring in ascending/descending order. 
+
+4) What was not efficient? 
+-> As soon as the program starts, there is no initial data so the user has to enter some initial data 
+	to manage this program. I would be more efficient using an external data with many candidates' information
+	so that it would be more real presidential program. 
+   And also, for displaying candidates in order, my implementation was sorting the data depending on the poll
+   first and then displaying the data structure. In my opinion, it would be more efficient that if I put the
+   sorting algorithm in a seperate function so that the data get stored in order when they are read from the
+   text file. Then, it would not need sorting algorithm later in the display part.
+
+5) What would you do differently if you had more time to solve the problem?
+-> First of all, I would add one more class for demartment. The demartment class manages candidates by 
+	department they belong to. Therefore, it would be easier to control many data. 
+   Secondly, I would add function that write a textfile such as writefile function. This would write an external
+   text file including the data in order according to how the user wanted to write. 
+   Lastly, the one thing I missed that I could have done in this program was sorting the candidates by the poll rank.
+   I was considering about the proper sorting algorithm in the linear linked list but I minutely found out at the 
+   last minute. If I had more time, I would make a functin that sorts candidates by using the number of poll so it 
+   displays the highest number, next, and next. I would definitely implement this algorithm for the next upcoming 
+   assignments if there is needed.
+
+
+
+
+
+
